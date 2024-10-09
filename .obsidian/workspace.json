@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Game theory.md",
+                "file": "Introduction to Algorithms.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Game theory.md",
+                "file": "Introduction to Algorithms.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Game theory.md",
+                "file": "Introduction to Algorithms.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Game theory.md"
+                "file": "Introduction to Algorithms.md"
               }
             }
           },
@@ -158,10 +158,14 @@
   },
   "active": "c896a57589b2aea6",
   "lastOpenFiles": [
-    "Introduction to Algorithms.md",
     "Game theory.md",
-    "Information Theory and Inference.md",
     "Ethical Hacking.md",
+    "zz. Attachments/Pasted image 20241009213635.png",
+    "zz. Attachments/Pasted image 20241009213206.png",
+    "zz. Attachments/Pasted image 20241009212919.png",
+    "zz. Attachments/DecisionOverTime.png",
+    "Introduction to Algorithms.md",
+    "Information Theory and Inference.md",
     "Vision and Cognitive Systems.md",
     "IoT and Smart Cities.md",
     "Data Management.md",
@@ -198,12 +202,7 @@
     "PCNSD/Exercises.md",
     "0. Primo Semestre/Meccanica Statistica/Talking Points.md",
     "0. Primo Semestre/Meccanica Statistica/6. Models with Exact Solutions.md",
-    "0. Primo Semestre/Meccanica Statistica/7. Violation of Perron-Frebonius.md",
     "zz. Attachments/Screenshot 2024-04-24 at 09.28.38.png",
-    "zz. Attachments/Screenshot 2024-04-24 at 09.28.34.png",
-    "zz. Attachments/Screenshot 2024-04-24 at 09.20.44.png",
-    "zz. Attachments/Screenshot 2024-04-24 at 09.14.37.png",
-    "zz. Attachments/Screenshot 2024-04-24 at 09.10.11.png",
     "Untitled.canvas"
   ]
 }
