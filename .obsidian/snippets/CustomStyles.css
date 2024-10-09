@@ -1,0 +1,95 @@
+--file-line-width: 1000px;
+:root {
+  --custom_line_width: 500px;
+  /*--custom_line_width: 500px;*/
+}
+
+
+.markdown-source-view.mod-cm6.is-line-wrap.is-readable-line-width .cm-content {
+    max-width: var(--custom_line_width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.markdown-preview-view.is-readable-line-width .markdown-preview-sizer {
+    max-width: var(--custom_line_width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+mjx-math{
+    font-size: 120% !important;
+}
+
+h1, .markdown-rendered h1 {
+    font-size: 2.5em;
+    margin: 0px;
+}
+
+h2, .markdown-rendered h2 {
+    font-size: 2.2em;
+    margin: 0px;
+}
+
+h3, .markdown-rendered h3 {
+    font-size: 1.9em;
+    margin: 0px;
+}
+
+h4, .markdown-rendered h4 {
+    font-size: 1.6em;
+    margin: 0px;
+}
+
+h5, .markdown-rendered h5 {
+    font-size: 1.3em;
+    margin: 0px;
+}
+
+h6, .markdown-rendered h6 {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.HyperMD-header-1{
+    font-size: 2.5em;
+}
+
+.HyperMD-header-2{
+    font-size: 2.2em;
+}
+
+.HyperMD-header-3{
+    font-size: 1.9em;
+}
+
+.HyperMD-header-4{
+    font-size: 1.6em;
+}
+
+.HyperMD-header-5{
+    font-size: 1.3em;
+}
+
+.HyperMD-header-6{
+    font-size: 1.1em;
+}
+
+i, em {
+    color: #74a0f8;
+}
+
+.cm-em {
+    color: #74a0f8;
+}
+
+.markdown-rendered mark {
+    background-color: #fcff0091;
+    color: #fbfbfb;
+}
+
+.markdown-preview-view blockquote, .markdown-preview-view ol, .markdown-preview-view p, .markdown-preview-view ul {
+    margin-block-start: 0px;
+}
+

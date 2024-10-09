@@ -1,0 +1,69 @@
+{
+  "items": [
+    {
+      "name": "Markdown"
+    },
+    {
+      "name": "Markdown (Hugo)"
+    },
+    {
+      "name": "Html"
+    },
+    {
+      "name": "TextBundle"
+    },
+    {
+      "name": "Typst"
+    },
+    {
+      "name": "PDF",
+      "arguments": "-f markdown --lua-filter=\"${luaDir}/pdf.lua\" -s -o \"${outputPath}\" -t pdf",
+      "customArguments": "--pdf-engine=/Library/TeX/texbin/pdflatex --resource-path=/Users/jacopocarotenuto/Library/CloudStorage/OneDrive-UniversitàdegliStudidiPadova/Magistrale/Attachments/ --template=\"MyTemplate.tex\" "
+    },
+    {
+      "name": "Word (.docx)"
+    },
+    {
+      "name": "OpenOffice"
+    },
+    {
+      "name": "RTF"
+    },
+    {
+      "name": "Epub"
+    },
+    {
+      "name": "Latex"
+    },
+    {
+      "name": "Media Wiki"
+    },
+    {
+      "name": "reStructuredText"
+    },
+    {
+      "name": "Textile"
+    },
+    {
+      "name": "OPML"
+    },
+    {
+      "name": "Bibliography"
+    }
+  ],
+  "pandocPath": {
+    "darwin": "/opt/homebrew/bin/pandoc"
+  },
+  "defaultExportDirectoryMode": "Custom",
+  "openExportedFile": false,
+  "env": {},
+  "showExportProgressBar": true,
+  "customDefaultExportDirectory": {
+    "darwin": "/Users/jacopocarotenuto/Desktop"
+  },
+  "lastEditName": "PDF",
+  "lastExportDirectory": {
+    "darwin": "/Users/jacopocarotenuto/Desktop"
+  },
+  "lastExportType": "Html"
+}

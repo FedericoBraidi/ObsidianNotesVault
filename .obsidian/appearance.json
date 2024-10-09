@@ -1,0 +1,14 @@
+{
+  "accentColor": "#855cf5",
+  "cssTheme": "AnuPpuccin",
+  "enabledCssSnippets": [
+    "custom-admonitions.155a6d",
+    "colored-boxes",
+    "extended-colorschemes",
+    "CustomStyles",
+    "media-grid-snippet"
+  ],
+  "baseFontSize": 17,
+  "theme": "obsidian",
+  "textFontFamily": "JetBrains Mono"
+}
