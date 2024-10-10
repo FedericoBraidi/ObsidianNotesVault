@@ -122,3 +122,76 @@ $\mathbb{E}(u|knowledge)=4.8$
 We can easily get that the information is worth 1.3
 
 #### Multi player games
+Let’s start from the easies form of mutli player games:
+##### Static games of complete information
+As the name suggests, these games are characterized by being:
+
+- Static: All players move without knowledge of everybody else’s moves (either together or in fow).
+- Complete information: Everyone’s payoff functions are known. Payoff functions are Common Knowledge (i.e. everybody knows them, everybody knows that everybody knows them, etc.)
+
+It is useful to think about moves in terms of a Plan of Action, a strategy that tells you, given what happened previously, what is your next best move.
+There are different kinds of Plans of Action, including random ones. We start with Certain plans, also called Pure Strategies, which are deterministic.
+
+Player $i$ chooses a strategy $s_{i}\in S_{i}$ and plays according to it, getting a series of moves $(s_{1},\dots, s_{i}, \dots,s_{n})$ and gets payoff $u(s_{1},\dots, s_{i}, \dots,s_{n}) \in \mathbb{R}$.
+We say that the normal form of the game is written as $G = \{S_{1},\dots,S_{n}\,;u_{1},\dots,u_{n}\}$
+##### Pareto efficiency
+A joint strategy $s$ is Pareto dominated by another strategy $s'$ if:
+
+- $u_{i}(s') \geq u_{i}(s) \, \text{for every player} \, i$
+- $u_{i}(s') > u_{i}(s) \, \text{for some players} \, i$
+
+A joint strategy $s$ is Pareto Efficient if it is not Pareto dominated by any strategy $s'$
+
+##### Strictly dominated strategies
+Given a certain game and a set of strategies $S$, take $s_{i},s_{i}' \in S_{i}$ .
+We say that $s_{i}$ is strictly dominated by $s_{i}'$ if  the payoff of player $i$ when playing $s_{i}'$ is greater than when playing $s_{i}$ for every choice of the moves of other players. Rational players would never play strictly dominated strategies.
+
+##### Best response
+Strategy $s_{i} \in S_{i}$ is the best response for player $i$ to the opponent moves $(s_{1},\dots,s_{i-1},s_{i+1},\dots,s_{n})$ if :
+$u(s_{1},\dots,s_{i-1},s_{i},s_{i+1},\dots,s_{n}) \geq u(s_{1},\dots,s_{i-1},s_{i}',s_{i+1},\dots,s_{n})$ for every $s_{i}' \in S_{i}$
+
+The sequence of moves $(s_{1},\dots,s_{i-1},s_{i+1},\dots,s_{n})$ is often written as $s_{-i} \in S_{-i}$ .
+The rational player that believes the opponent is gonna play $s_{-i}$ will always play the best response to that. If a strategy $s_{i} \in S_{i}$ is strictly dominated, then it can’t be a best response to any $s_{-i} \in S_{-i}$ .
+
+##### Beliefs
+A belief of a player $i$ is a possible profile of opponent’s strategies $s_{-i} \in S_{-i}$ .
+We can define a best-response correspondance $BR:S_{-i} \rightarrow \mathit{p}(S_{i})$ that associates every $s_{-i}$ to a subset of $S_{i}$ which contains the best responses to $s_{-i}$ .
+
+##### Nash equilibrium
+>[!definition] Nash Equilibrium
+>In a n-player game $G = \{S_{1},\dots,S_{n} \,;\,u_{1},\dots,u_{n}\}$, strategies $(s_{1}^*,\dots,s_{n}^*)$ are a Nash equilibrium if, for any $i$, $s_{i}^*$ is the best response of player $i$ to $(s_{1},\dots,s_{i-1},s_{i+1},\dots,s_{n})$ .
+
+This yields from the fact that every player is supposed to be playing their best response.
+A nash equilibrium basically occurs when, in the chosen strategy, each player is not incentivized to change their personal choice.
+
+![[Pasted image 20241010114153.png]]
+
+Here (M,R) is a Nash Equilibrirum because when B chooses R, A still prefers M and when A chooses M, B still prefers R.
+The result of Iterated Elimination of Strictly Dominated Strategies is a Nash Equilibrium, if there exists any.
+
+##### Weak Dominance
+Weak dominance is a relaxation of Strict dominance. We can write it as:
+
+- $u_{i}(s_{i}',s_{-i}) \geq u_{i}(s_{i},s_{-i})$ for every $s_{-i}$
+- $u_{i}(s_{i}',s_{-i}) > u_{i}(s_{i},s_{-i})$ for some $s_{-i}$
+
+Without the second condition we only say that $s_{i}'$ dominates $s_{i}$ .
+
+>[!lemma] Lemma
+>If every player has a dominant strategy $s_{i}^*$ then a Nash Equilibrium exists and it is $(s_{1}^*,\dots,s_{n}^*)$.
+
+##### Pareto efficiency Vs Nash Equilibrium
+- Pareto efficiency: There is no way someone can improve their situation without someone else getting worse.
+- Nash Equilibrium: No way to get a better outcome for some player with a unilateral change.
+
+Since we assume players are only drive by egoism, we get Pareto Inefficient Nash Equilibria. We try to estimate how much being egotistical is costing us. Let’s define a Social Costs for this aim:
+
+- Overall welfare: $K(s) = \sum_{j}-u(s_{j})$
+- Minmax fairness: $K(s) = max_{j} -u(s_{j})$
+
+The Cost of Anarchy is the ratio between the worst (socially) NE and the best Pareto efficient solution.
+
+$A = \frac{K(s^*)}{min K(s)}$
+
+We can also consider the best (socially) NE and we speak of Price of Stability. 
+

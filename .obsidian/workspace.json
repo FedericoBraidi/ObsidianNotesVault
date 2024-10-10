@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "90d4922fb7060a43",
+        "id": "8c9e63060762d73d",
         "type": "tabs",
         "children": [
           {
-            "id": "c896a57589b2aea6",
+            "id": "35e2fb07144f9207",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Introduction to Algorithms.md",
+                "file": "Game theory.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Introduction to Algorithms.md",
+                "file": "Game theory.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Introduction to Algorithms.md",
+                "file": "Game theory.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Introduction to Algorithms.md"
+                "file": "Game theory.md"
               }
             }
           },
@@ -156,15 +156,16 @@
       "webpage-html-export:Export Vault to HTML": false
     }
   },
-  "active": "c896a57589b2aea6",
+  "active": "35e2fb07144f9207",
   "lastOpenFiles": [
     "Game theory.md",
+    "zz. Attachments/Pasted image 20241010114153.png",
+    "Introduction to Algorithms.md",
     "Ethical Hacking.md",
     "zz. Attachments/Pasted image 20241009213635.png",
     "zz. Attachments/Pasted image 20241009213206.png",
     "zz. Attachments/Pasted image 20241009212919.png",
     "zz. Attachments/DecisionOverTime.png",
-    "Introduction to Algorithms.md",
     "Information Theory and Inference.md",
     "Vision and Cognitive Systems.md",
     "IoT and Smart Cities.md",
@@ -202,7 +203,6 @@
     "PCNSD/Exercises.md",
     "0. Primo Semestre/Meccanica Statistica/Talking Points.md",
     "0. Primo Semestre/Meccanica Statistica/6. Models with Exact Solutions.md",
-    "zz. Attachments/Screenshot 2024-04-24 at 09.28.38.png",
     "Untitled.canvas"
   ]
 }
