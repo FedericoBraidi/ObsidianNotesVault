@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright 2017 mathsisfun.com -->
+
+<svg
+   width="403.8"
+   height="207.1"
+   version="1.1"
+   id="svg57"
+   sodipodi:docname="probability-tree-coin2.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview59"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:current-layer="svg57" />
+  <defs
+     id="defs5">
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id01">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:black;stroke-width:1pt"
+         id="path2" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id019271"
+       inkscape:stockid="id019271">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:#204a87;stroke-width:1pt;stroke-opacity:1;fill-opacity:1;fill:#204a87"
+         id="path956" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id012863"
+       inkscape:stockid="id012863">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:#204a87;stroke-width:1pt;stroke-opacity:1;fill-opacity:1;fill:#204a87"
+         id="path959" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id019972"
+       inkscape:stockid="id019972">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:#204a87;stroke-width:1pt;stroke-opacity:1;fill-opacity:1;fill:#204a87"
+         id="path962" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id011753"
+       inkscape:stockid="id011753">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:#204a87;stroke-width:1pt;stroke-opacity:1;fill-opacity:1;fill:#204a87"
+         id="path965" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id015284"
+       inkscape:stockid="id015284">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:#204a87;stroke-width:1pt;stroke-opacity:1;fill-opacity:1;fill:#204a87"
+         id="path968" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       orient="auto"
+       id="id01410"
+       inkscape:stockid="id01410">
+      <path
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="stroke:#204a87;stroke-width:1pt;stroke-opacity:1;fill-opacity:1;fill:#204a87"
+         id="path971" />
+    </marker>
+  </defs>
+  <rect
+     x="306.911"
+     y="-0.01"
+     ry="0"
+     width="96.9"
+     height="207.1"
+     style="color:#000000;overflow:visible;fill:#19aeff;fill-opacity:0.39;stroke-width:1.5"
+     id="rect7" />
+  <circle
+     cx="5.211"
+     cy="98.39"
+     r="4.34938"
+     style="color:#000000;overflow:visible;fill:none;stroke:#0084c8;stroke-width:1.8;stroke-linejoin:round"
+     id="circle9" />
+  <path
+     d="m 13.111,95.69 87.4,-38"
+     style="fill:none;stroke:#204a87;stroke-width:1.5;marker-end:url(#id01410);stroke-miterlimit:4;stroke-dasharray:none"
+     id="path11" />
+  <path
+     d="m 12.611,102.09 87.4,38"
+     style="fill:none;stroke:#204a87;stroke-width:1.5;marker-end:url(#id015284);stroke-miterlimit:4;stroke-dasharray:none"
+     id="path13" />
+  <text
+     x="105.411"
+     y="61.89"
+     style="color:#000000;font-size:18.7px;font-family:Georgia;overflow:visible;fill:#ff6600;stroke-width:0.55px"
+     id="text15">Head</text>
+  <text
+     x="106.611"
+     y="150.59"
+     style="color:#000000;font-size:18.7px;font-family:Georgia;overflow:visible;fill:#0084c8;stroke-width:0.55px"
+     id="text17">Tail</text>
+  <text
+     x="41.311"
+     y="70.29"
+     style="color:#000000;font-size:18.7px;font-family:Arial;overflow:visible;fill:#ff6600;stroke-width:0.55px"
+     id="text19">0.5</text>
+  <text
+     x="41.311"
+     y="141.39"
+     style="color:#000000;font-size:18.7px;font-family:Arial;overflow:visible;fill:#0084c8;stroke-width:0.55px"
+     id="text21">0.5</text>
+  <path
+     d="m 153.911,52.79 90.6,-15.8"
+     style="fill:none;stroke:#204a87;stroke-width:1.5;marker-end:url(#id011753);stroke-miterlimit:4;stroke-dasharray:none"
+     id="path23" />
+  <path
+     d="m 154.411,58.49 90.6,15.8"
+     style="fill:none;stroke:#204a87;stroke-width:1.5;marker-end:url(#id019972);stroke-miterlimit:4;stroke-dasharray:none"
+     id="path25" />
+  <path
+     d="m 154.811,143.29 90.6,-15.8"
+     style="fill:none;stroke:#204a87;stroke-width:1.5;marker-end:url(#id012863);stroke-miterlimit:4;stroke-dasharray:none"
+     id="path27" />
+  <path
+     d="m 155.311,148.99 90.6,15.8"
+     style="fill:none;stroke:#204a87;stroke-width:1.5;marker-end:url(#id019271);stroke-miterlimit:4;stroke-dasharray:none"
+     id="path29" />
+  <text
+     x="253.311"
+     y="41.99"
+     style="color:#000000;font-size:18.7px;font-family:Georgia;overflow:visible;fill:#ff6600;stroke-width:0.55px"
+     id="text31">Head</text>
+  <text
+     x="254.911"
+     y="78.89"
+     style="color:#000000;font-size:18.7px;font-family:Georgia;overflow:visible;fill:#0084c8;stroke-width:0.55px"
+     id="text33">Tail</text>
+  <text
+     x="254.911"
+     y="133.89"
+     style="color:#000000;font-size:18.7px;font-family:Georgia;overflow:visible;fill:#ff6600;stroke-width:0.55px"
+     id="text35">Head</text>
+  <text
+     x="256.611"
+     y="170.79"
+     style="color:#000000;font-size:18.7px;font-family:Georgia;overflow:visible;fill:#0084c8;stroke-width:0.55px"
+     id="text37">Tail</text>
+  <text
+     x="186.711"
+     y="38.09"
+     style="color:#000000;font-size:18.7px;font-family:Arial;overflow:visible;fill:#ff6600;stroke-width:0.55px"
+     id="text39">0.5</text>
+  <text
+     x="186.711"
+     y="85.29"
+     style="color:#000000;font-size:18.7px;font-family:Arial;overflow:visible;fill:#0084c8;stroke-width:0.55px"
+     id="text41">0.5</text>
+  <text
+     x="186.711"
+     y="129.39"
+     style="color:#000000;font-size:18.7px;font-family:Arial;overflow:visible;fill:#ff6600;stroke-width:0.55px"
+     id="text43">0.5</text>
+  <text
+     x="186.711"
+     y="177.29"
+     style="color:#000000;font-size:18.7px;font-family:Arial;overflow:visible;fill:#0084c8;stroke-width:0.55px"
+     id="text45">0.5</text>
+  <text
+     x="312.306"
+     y="40.39"
+     style="color:#000000;font-style:italic;font-size:16px;font-family:Georgia;overflow:visible;fill:#2d2d2d;stroke-width:0.15;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none"
+     id="text47">Head, Head</text>
+  <text
+     x="317.642"
+     y="78.09"
+     style="color:#000000;font-style:italic;font-size:16px;font-family:Georgia;overflow:visible;fill:#2d2d2d;stroke-width:0.15;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none"
+     id="text49">Head, Tail</text>
+  <text
+     x="316.986"
+     y="131.59"
+     style="color:#000000;font-style:italic;font-size:16px;font-family:Georgia;overflow:visible;fill:#2d2d2d;stroke-width:0.15;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none"
+     id="text51">Tail, Head</text>
+  <text
+     x="322.322"
+     y="169.39"
+     style="color:#000000;font-style:italic;font-size:16px;font-family:Georgia;overflow:visible;fill:#2d2d2d;stroke-width:0.15;stroke:#000000;stroke-miterlimit:4;stroke-dasharray:none"
+     id="text53">Tail, Tail</text>
+</svg>

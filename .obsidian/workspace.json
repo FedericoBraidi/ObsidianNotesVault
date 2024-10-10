@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "8c9e63060762d73d",
+        "id": "b38f096e49b267ca",
         "type": "tabs",
         "children": [
           {
-            "id": "35e2fb07144f9207",
+            "id": "2e2ac255170fba89",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Game theory.md",
+                "file": "Second Year/First Semester/Information Theory and Inference.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Game theory.md",
+                "file": "Second Year/First Semester/Information Theory and Inference.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Game theory.md",
+                "file": "Second Year/First Semester/Information Theory and Inference.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Game theory.md"
+                "file": "Second Year/First Semester/Information Theory and Inference.md"
               }
             }
           },
@@ -142,7 +142,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -156,26 +156,32 @@
       "webpage-html-export:Export Vault to HTML": false
     }
   },
-  "active": "35e2fb07144f9207",
+  "active": "2e2ac255170fba89",
   "lastOpenFiles": [
-    "Game theory.md",
+    "zz. Attachments/probability-tree-coin2.svg",
+    "zz. Attachments/Pasted image 20241010160240.png",
+    "zz. Attachments/Pasted image 20241010160221.png",
+    "Second Year/First Semester/Vision and Cognitive Systems.md",
+    "Second Year/First Semester/IoT and Smart Cities.md",
+    "Second Year/First Semester/Game theory.md",
+    "Second Year/First Semester/Information Theory and Inference.md",
+    "Second Year/First Semester/Ethical Hacking.md",
+    "Personal Notes/Introduction to Algorithms.md",
+    "Personal Notes",
+    "First Year/Second Semester/Data Management.md",
+    "Second Year/First Semester",
+    "Second Year",
+    "First Year/Second Semester",
+    "First Year",
     "zz. Attachments/Pasted image 20241010114153.png",
-    "Introduction to Algorithms.md",
-    "Ethical Hacking.md",
     "zz. Attachments/Pasted image 20241009213635.png",
     "zz. Attachments/Pasted image 20241009213206.png",
     "zz. Attachments/Pasted image 20241009212919.png",
     "zz. Attachments/DecisionOverTime.png",
-    "Information Theory and Inference.md",
-    "Vision and Cognitive Systems.md",
-    "IoT and Smart Cities.md",
-    "Data Management.md",
     "Screenshot 2024-03-06 at 09.30.53.png.md",
     "zz. Attachments/MergeSort.png",
     "zz. Attachments/SelectionSortCode.png",
     "zz. Attachments/SelectionSort.png",
-    "zz. Attachments/DynamicArray.png",
-    "zz. Attachments/LinkedList.png",
     "MAPD/Data Processing.md",
     "MAPD/Data Management.md",
     "ASP/Stat theory.md",
@@ -185,11 +191,6 @@
     "ASP/Slides/Lecture 6.pdf",
     "ASP/Slides/Lecture 9.pdf",
     "ASP/Slides/Lecture 10.pdf",
-    "ASP/Slides/Lecture 7.pdf",
-    "ASP/Slides/Lecture 4.pdf",
-    "ASP/Slides/Lecture 2.pdf",
-    "ASP/Slides/Lecture 8.pdf",
-    "ASP/Slides/R - Part 1.pdf",
     "DLCN/Domande.md",
     "DLCN/Domande Check.md",
     "T03.md",
