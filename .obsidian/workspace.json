@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities.md",
+                "file": "Second Year/First Semester/Ethical Hacking.md",
                 "mode": "source",
                 "source": false
               }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities.md",
+                "file": "Second Year/First Semester/Ethical Hacking.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities.md",
+                "file": "Second Year/First Semester/Ethical Hacking.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities.md"
+                "file": "Second Year/First Semester/Ethical Hacking.md"
               }
             }
           },
@@ -158,6 +158,8 @@
   },
   "active": "79c529567b200af2",
   "lastOpenFiles": [
+    "zz. Attachments/Pasted image 20241011150824.png",
+    "Second Year/First Semester/IoT and Smart Cities.md",
     "zz. Attachments/Pasted image 20241011125913.png",
     "zz. Attachments/Pasted image 20241011125753.png",
     "zz. Attachments/Pasted image 20241011105736.png",
@@ -169,9 +171,7 @@
     "zz. Attachments/Pasted image 20241011100833.png",
     "Second Year/First Semester/Information Theory and Inference.md",
     "zz. Attachments/probability-tree-coin2.svg",
-    "zz. Attachments/Pasted image 20241010160240.png",
     "Second Year/First Semester/Vision and Cognitive Systems.md",
-    "Second Year/First Semester/IoT and Smart Cities.md",
     "Second Year/First Semester/Game theory.md",
     "Second Year/First Semester/Ethical Hacking.md",
     "Personal Notes/Introduction to Algorithms.md",
