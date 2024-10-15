@@ -195,3 +195,7 @@ $A = \frac{K(s^*)}{min K(s)}$
 
 We can also consider the best (socially) NE and we speak of Price of Stability. 
 
+
+
+
+

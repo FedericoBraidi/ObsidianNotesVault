@@ -133,3 +133,19 @@ The mutual information can also be written as the Kullback-Leibler divergence be
 $I[X : Y] = D_{\text{KL}}(p_{i,j} \,||\, p_i q_j) \geq 0$
 
 With equality only if they are independent.
+
+#### Information Compression
+Information theory was initially developed for telecommunications. In this field, when a communication happens, a message needs to be sent from a $sender$ to a $receiver$ through a $channel$. Before sending the message it should be transformed into a format that is suitable to be send, this process is called $encoding$, later the $receiver$ retrieves the message through a process called $decoding$. 
+The $encoding$ part needs to satisfy two requirements:
+
+- Allow faithful reconstruction.
+- Make the message as short as possible (compatibly with point 1).
+
+We need to transform a message into a string of bits and, since we want the function that maps a message to its representation to be injective (for reconstruction), in a string of bits of length $K$ we can only represent $2^{K}$ different messages. If we want to be able to encode a set of messages $A_{X}$ with dimension $|A_{X}|$ we need:
+
+$K \geq \log_{2 }|A_{X}|$
+
+Otherwise we need to get into 2 other paradigms:
+
+- Lossy coding: We tolerate that 2 or more points are mapped to the same encoding but we demand that it happens infrequently.
+- Lossless coding: In this case we allow codes of variable length instead of fixed length codes.

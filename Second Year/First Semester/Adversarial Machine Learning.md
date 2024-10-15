@@ -47,4 +47,60 @@ Which is greater than the double attack, this can be proven for any multiple att
 After $T$ steps a single point attack will have produced a displacement of
 
 $\rho_{tot}(T)=R \ln(\frac{T+N}{N})$
+###### Attacks with a number cap
+We’ve seen that the best way us to only add one malign point at each retraining but this is not always possible. Some systems try to defend against these types of attacks by setting caps on number of retrainings and number of malign points inserted (which might also not be constant across retrainings).
+
+We define:
+
+- $M_{t}$ : the number of attack points in retraining $t$. We know that $\sum_{i=0}^{T}M_{i}=M'$.
+- $\mu_{t}=\sum_{i=0}^{t} M_{i}$ : total number of training points up to retraining $t$. We know that $\mu_{0}=N$.
+
+Thanks to these definitions, our second constraint is: $\mu_{T}=N+M'$
+The displacement at step 1, starting with centroid $c_{0}$ and placing $M_{1}$ points on the connecting line to the target point at distance $R$ is:
+
+$\Delta(1)=\frac{M_{1}}{N+M_{1}}=\frac{M_{1}}{\mu_{1}}$
+
+And we can see that the same goes for other displacements:
+
+$\Delta(2)= \frac{M_{2}}{N+M_{2}}=\frac{M_{2}}{\mu_{2}}$
+
+So that the cumulative displacement after $T$ retrainings is:
+
+$D(\mu)= T-\sum_{t=1}^{T}\frac{\mu_{t}-1}{\mu_{t}}$
+
+So to decide on the best way to distribute our attack points we need to solve
+
+$\mu^{*}\in argmax_{\mu}D(\mu)$ 
+
+under the constraints that $\mu_{0}^{*}\leq \mu_{1}^{*}\leq \dots \leq \mu_{T}^{*}$ and the other assumptions on $\mu_{i}$.
+The solution to the relaxed problem where $\mu_{i}$ is not required to be an integer is:
+
+$$
+M_{t}^{*}=
+\begin{cases}
+N  \quad\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad t=0 \\
+N(\frac{M'+N}{N})^{\frac{t-1}{T}}((\frac{M'+N}{N})^{\frac{1}{T}}-1) \quad \, \, \, \, t=1,\dots, T
+\end{cases}
+$$
+###### Finite-Horizon Attacks
+So far we have seen attacks on a hypersphere learner that doesn’t discard any point that is inside of the current hypersphere so that we cannot modify the data it has already seen. There are also Data Dropping learners that substitute each new point with one that has already been seen. The centroid is updated as:
+
+$c^{(t+1)}=c^{(t)}+(x^{(t)}-x_{old})$
+
+These algorithms differ in the way they choose the point to substitute:
+
+- Oldest out: The point with the oldest timestamp is removed.
+- Random out: A random point is removed.
+- Nearest out: The closest point to the new one is removed.
+- Average out: The center of mass of the points is removed and the new centroid is
+			$c^{(t+1)}=c^{(t)}+\frac{1}{N}(x^{(t)}-c^{(t)})$
+
+The defense that makes the most sense on the method we used just now is the Nearest out rule. We need to find the attack that gets us closer to $x^{A}$ at each retraining.
+For each point $x_{old}$ find the best attack as:
+
+$\textbf{a}=argmin_{x}||c^{(t)}-\frac{x_{old}}{N}+\frac{x}{N}-x^{A}||$
+
+under the constraints that $||x-x_{j}||<||x-x_{i}|| \quad \forall i \neq j$ and $||x-c^{(t)}||< R$.
+
+All these results can be extended to arbitrarily complex decision boundaries using kernels, however we can only design base points which will then be embedded in the feature space so the problems have additional constraints that make them difficult to solve.
 
