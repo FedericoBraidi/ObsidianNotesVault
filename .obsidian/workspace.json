@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "eaa7277639fb42cc",
+        "id": "2c5f47bf6a55d140",
         "type": "tabs",
         "children": [
           {
-            "id": "b71e0b8daf24ab88",
+            "id": "37a92916645505db",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Second Year/First Semester/Adversarial Machine Learning.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -73,6 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Second Year/First Semester/Adversarial Machine Learning.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Second Year/First Semester/Adversarial Machine Learning.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -110,7 +116,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Second Year/First Semester/Adversarial Machine Learning.md"
+              }
             }
           },
           {
@@ -134,7 +142,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -148,31 +156,38 @@
       "webpage-html-export:Export Vault to HTML": false
     }
   },
-  "active": "b71e0b8daf24ab88",
+  "active": "37a92916645505db",
   "lastOpenFiles": [
     "Second Year/First Semester/Game theory.md",
+    "Ethical Hacking.md",
+    "zz. Attachments/probability-tree-coin2.svg",
     "zz. Attachments/Pasted image 20241016120704.png",
     "zz. Attachments/Pasted image 20241016120523.png",
-    "Second Year/First Semester/Adversarial Machine Learning.md",
-    "Second Year/First Semester/Information Theory and Inference.md",
-    "Second Year/First Semester/Vision and Cognitive Systems.md",
-    "Second Year/First Semester/IoT and Smart Cities.md",
     "zz. Attachments/Pasted image 20241014193423.png",
-    "Second Year/First Semester/Ethical Hacking.md",
     "zz. Attachments/Pasted image 20241014144541.png",
     "zz. Attachments/Pasted image 20241014144259.png",
     "zz. Attachments/Pasted image 20241011150824.png",
     "zz. Attachments/Pasted image 20241011125913.png",
     "zz. Attachments/Pasted image 20241011125753.png",
     "zz. Attachments/Pasted image 20241011105736.png",
-    "zz. Attachments/Pasted image 20241011103757.png",
+    "Second Year/First Semester/Vision and Cognitive Systems.md",
+    "Second Year/First Semester/IoT and Smart Cities.md",
+    "Second Year/First Semester/Information Theory and Inference.md",
+    "Second Year/First Semester/Ethical Hacking.md",
+    "Second Year/First Semester/Adversarial Machine Learning.md",
+    "Second Year/First Semester",
+    "Second Year",
     "Personal Notes/Introduction to Algorithms.md",
     "Personal Notes",
     "First Year/Second Semester/Data Management.md",
-    "Second Year/First Semester",
-    "Second Year",
     "First Year/Second Semester",
     "First Year",
+    "Introduction to Algorithms.md",
+    "Vision and Cognitive Systems.md",
+    "IoT and Smart Cities.md",
+    "Information Theory and Inference.md",
+    "Game theory.md",
+    "Data Management.md",
     "Screenshot 2024-03-06 at 09.30.53.png.md",
     "MAPD/Data Processing.md",
     "MAPD/Data Management.md",
@@ -188,13 +203,6 @@
     "T03.md",
     "t09.md",
     "Forma Algebrica a Forma Esponenziale.md",
-    "T09.md",
-    "PCNSD/Real Domande.md",
-    "PCNSD/Domande.md",
-    "PCNSD/Programma.md",
-    "PCNSD/Domande Check.md",
-    "PCNSD/Exercises.md",
-    "0. Primo Semestre/Meccanica Statistica/Talking Points.md",
     "Untitled.canvas"
   ]
 }

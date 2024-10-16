@@ -103,4 +103,23 @@ $\textbf{a}=argmin_{x}||c^{(t)}-\frac{x_{old}}{N}+\frac{x}{N}-x^{A}||$
 under the constraints that $||x-x_{j}||<||x-x_{i}|| \quad \forall i \neq j$ and $||x-c^{(t)}||< R$.
 
 All these results can be extended to arbitrarily complex decision boundaries using kernels, however we can only design base points which will then be embedded in the feature space so the problems have additional constraints that make them difficult to solve.
+#### Poinsoning
+Poisoning AML attacks are attacks that tamper with the training process and aim at making the model missclassify trigger inputs. They can be thought of as Targeted attacks. Contrarily to what one might think, they are actually different to conventional data poinsoning attacks. The latter aim at generally degrading the performance of the model and can be seen as availability attacks while the former aim at degrading the performance only for the trigger inputs while mantaining a good performance elsewhere.
+Poisoning attacks can be divided into:
+
+- Class-agnostic attacks: Every input stamped with the trigger gets classified as the class targeted by the attacker.
+- Class-specific attacks: Only inputs stamped with the trigger and from a specific class are classified as the class targeted by the attacker.
+
+There are many ways a trigger can be chosen:
+
+- An image blended semi-transparently with the trigger.
+- Distributed or spread trigger on the image.
+- Accessory as trigger (i.e. eyeglasses).
+- Specific caratteristics.
+
+Poisoning attacks of this kind can be carried out in different manners:
+
+- Outsourcing attack: The user outsources the training of the model to a external company because of lack of computational resources, expertise, etc. This external company is malicious and tampers with the data to give itself a backdoor into the model.
+- Pretrained attack: The attacker releases a model that has a backdoor in it, someone else uses it to re-train it on his dataset (Transfer Learning).
+- Data collection attacks: The attacker inserts targets into input data in order to make the model classify every future input with the trigger in a certain way. One example exploits the resize function in python, since the images are usually resized as 224x224x3, one can hide another image into the only columns that will remain once resized. Some of these types of attacks are also Trojan attacks (you need access to the model for this), here you make certain neurons very sensitive to watermarks (trojan marks) so that when an input has them it is classified according to what the attacker wants.
 
