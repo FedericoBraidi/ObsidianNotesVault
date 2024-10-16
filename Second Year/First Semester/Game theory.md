@@ -194,6 +194,67 @@ The Cost of Anarchy is the ratio between the worst (socially) NE and the best Pa
 $A = \frac{K(s^*)}{min K(s)}$
 
 We can also consider the best (socially) NE and we speak of Price of Stability. 
+##### Constitution
+Given a set of rational preferences $R(A)$, a constitution maps $\geq_{i}=(\geq_{1},\dots,\geq_{n})$ to a unique social preference $f(\geq_{i})$.
+With the notation $\geq | \,Y= \,\geq \cap \,(YxY)$ we intend to restric $\geq$ to only subset $Y$ of $A$.
+With that said, let’s see some definitions related to constitutions:
+
+- Indipendence of Irrelevant Alternatives (IIA): given two preference profiles $\geq_{i},\geq_{i}'$ and $\forall \,a,b \in A$:
+		$$
+		\begin{align*}
+        \forall \,&i, \succeq_i \mid \{a,b\} = \succeq'_i \mid \{a,b\} \\
+        \text{implies}\, &f(\succeq_i) \mid \{a,b\} = f(\succeq'_i) \mid \{a,b\}
+        \end{align*}
+        $$
+    Which basically means that if every player agrees on the relative placement of two options for two different profiles, the constitutions should also agree and ignore any other option.
+- Pareto efficiency: a constitution is Pareto efficient if $\forall \,\text{profiles}\, (\geq_{(i)})$ and $\forall \,a,b \in A$:
+	$\forall \,i, a\geq_{i}b \quad \text{implies} \quad a\geq b, \text{where} \geq=f(\geq_{(i)})$
+	Which means that if everyone prefers $a$ over $b$ then the constitution should also prefer that way.
+- Dictatorship: a constitution is a dictatorship if $\exists \,i$ such that:
+	$a \geq_{i} b\quad\text{implies}\quad a\geq b, \text{where} \geq =f(\geq_{(i)})$
+	So the constitution always mimics the preference of $i$.
+- Monotonic: a constitution is monotonic if the fact that someone ranks something better that it had ranked it before doesn’t make it worse in the constitution’s ranking.
+- Non-imposition: a constitution satisfies non-impostition if all rational preferences can be outputs.
+
+>[!theorem] Arrow’s theorem
+>The existance of a constitution that is non-dictatorship, monotonic and satisfies non-imposition and IIA is impossible.
+>In other words, if a constitution is Pareto Efficient and satisfies IIA then it is a dictatorship.
+##### Democracies and Elections
+By democracy we mean an electoral system where the candidate with the majority of the votes is elected. When there are only two candidates this is easy and it works, when the candidates increase the situation is a bit more compelx.
+There can be cases where $A>B,B>C,C>A$ , so what should we choose?
+These situations are called Condorcet Cycles, they can also coexist with a winner (i.e. $D>A,B,C$) 
+These problems also arise outside of elections:
+
+- Scheduling: $A,B,C$ as users or packages to schedule and the preferences as ways to schedule them.
+- Optimization: $A,B,C$ as possible solutions to an optimization problem and voters as possible goal functions.
+
+Let’s see some possible variations of electoral systems to solve the problems:
+
+- Plurality voting: Everyone ranks the candidates and the one with most “number one” preferences wins.
+	![[Pasted image 20241016120523.png]]
+	Here $A$ wins, but most people prefer $B$ over it, and $C$ as well.
+- Two Phase Runoff: We first take the two most voted and the only vote between those two.
+	![[Pasted image 20241016120704.png]]
+	$A$ and $B$ go to the ballot and $B$ wins, however $C$ is the Condercet winner but does’t even make it to the ballot.
+- Borda count: Everyone gives $M$ points to the best candidate, $M-1$ to the second best and so on. Then the one with most points wins. There are problems in this as well. Plus in the case where one candidate retires the order might be completely reversed.
+- Approval voting: The voter can give multiple preferences.
+- Instant Run-off: We ask each voter for its order of preference, we run subsequient round eliminating every time the one with the least top preferences. This can lead to an increasing consensus resulting in a worse performance.
+
+More problems arise in some cases where, to get a suboptimal solution someone is encouraged to vote differently or against its preference.
+
+>[!definition] Strategy-proof constitutions 
+>A constitution is strategy proof if for any profile $\geq_{(i)}$ and a certain preference $\geq_{j}'$:
+>$f(\geq_{(i)})\geq_{j}f(\geq_{j}',\geq_{-j})$
+>Which means that no one has any incentive on cheating.
+
+>[!theorem] Gibberard-Satterthwaite theorem
+>Any strategy-proof constitution that doesn’t forbid anyone to win is a dictatorship.
+
+The best proposed system is Majority Rule, which is defined as:
+
+$a \geq b \iff |\{i: a \geq_{i}b\}|\geq|i:b \geq_{i}a|$
+
+It is Pareto efficient, satisfies IIA and is not a dictatorship. It is not a constitution, because of the existance of Condorcet cycles.
 
 
 

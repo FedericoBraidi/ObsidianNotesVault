@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "08301ccc3177d8e2",
+        "id": "eaa7277639fb42cc",
         "type": "tabs",
         "children": [
           {
-            "id": "9106a9536844a218",
+            "id": "b71e0b8daf24ab88",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -148,13 +148,15 @@
       "webpage-html-export:Export Vault to HTML": false
     }
   },
-  "active": "9106a9536844a218",
+  "active": "b71e0b8daf24ab88",
   "lastOpenFiles": [
-    "Second Year/First Semester/Information Theory and Inference.md",
     "Second Year/First Semester/Game theory.md",
+    "zz. Attachments/Pasted image 20241016120704.png",
+    "zz. Attachments/Pasted image 20241016120523.png",
+    "Second Year/First Semester/Adversarial Machine Learning.md",
+    "Second Year/First Semester/Information Theory and Inference.md",
     "Second Year/First Semester/Vision and Cognitive Systems.md",
     "Second Year/First Semester/IoT and Smart Cities.md",
-    "Second Year/First Semester/Adversarial Machine Learning.md",
     "zz. Attachments/Pasted image 20241014193423.png",
     "Second Year/First Semester/Ethical Hacking.md",
     "zz. Attachments/Pasted image 20241014144541.png",
@@ -164,8 +166,6 @@
     "zz. Attachments/Pasted image 20241011125753.png",
     "zz. Attachments/Pasted image 20241011105736.png",
     "zz. Attachments/Pasted image 20241011103757.png",
-    "zz. Attachments/Pasted image 20241011103606.png",
-    "zz. Attachments/Pasted image 20241011103403.png",
     "Personal Notes/Introduction to Algorithms.md",
     "Personal Notes",
     "First Year/Second Semester/Data Management.md",
