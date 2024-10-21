@@ -122,4 +122,42 @@ Poisoning attacks of this kind can be carried out in different manners:
 - Outsourcing attack: The user outsources the training of the model to a external company because of lack of computational resources, expertise, etc. This external company is malicious and tampers with the data to give itself a backdoor into the model.
 - Pretrained attack: The attacker releases a model that has a backdoor in it, someone else uses it to re-train it on his dataset (Transfer Learning).
 - Data collection attacks: The attacker inserts targets into input data in order to make the model classify every future input with the trigger in a certain way. One example exploits the resize function in python, since the images are usually resized as 224x224x3, one can hide another image into the only columns that will remain once resized. Some of these types of attacks are also Trojan attacks (you need access to the model for this), here you make certain neurons very sensitive to watermarks (trojan marks) so that when an input has them it is classified according to what the attacker wants.
+##### Defenses against poisoning attacks
+Techniques to avoid poisoning of a ML model can be divided into two groups:
+
+- Offline inspection: The system is analyzed and cleaned before the deployment, either by cleaning the input data and retraining (if we have access to it) or by just cleaning the model (if we don’t have access to the data).
+- Online inspection: After deployment the model is tested for performance.
+###### NeuronInspect
+For each class we create a heatmap that shows which pixels the model looks at when it ends up classificating an input into that category.
+The heamaps produced for tagged input for the target class are less sparse, most smooth and persistend across different input images.
+###### STRIP defense
+Superimpose other images onto inputs during runtime. A low entropy of a specific class is suspicious because it means the model doesn’t care about the actual image.
+###### ABS defense
+Entails scanning the enire model and controlling abnormalities such as strangely high activations of a specific neuron for a target label.
+###### NIC defense
+Inspect the distribution of the activations at different layers of the DNN to detect abnormalities. You might do this by clustering vectors of weights at a specific layer across inputs.
+###### Neural cleanse
+This method aims at identifying the trigger and then proceeds with various approaches.
+The idea to identify triggers is that there are specific directions in the feature space that, when moving along with them, make input jump classes.
+
+![[Pasted image 20241021091027.png]]
+
+We do this in 3 steps:
+
+- Take a given label to be the target label and apply an optimization algorithm to get the smallest perturbation needed to make the model classify any input to the target class.
+- Repeat point 1 for every output label in the model.
+- Take the smallest of the potential triggers found in the previous steps.
+
+Once we have found that a model has been backdoored we can proceed in 3 ways:
+
+- Apply a filter that identifies adversarial inputs and eliminates them. We cannot check if the image contains the reversed trigger we got, because it is usually pretty different than the real trigger. Although we don’t have the same trigger, we have one that performs in the same way so that we can check the path an input takes with respect to what a triggered input does (we can create one with our reversed trigger).
+- Model patching algorithm based on neuron pruning. Look for neurons that are very disruptive and have high output values to triggered inputs and set their output to 0 during inference.
+- Model patching algorithm based on unlearning. Fine tune the model by taking a normal input, adding the reversed trigger but leaving the correct label. This way the model learns it should not missclassify inputs just because of the trigger.
+###### SentiNet
+This approach works particularly well on small triggers. We take an image and classify it, then we segment it and classify the subimages. If the image was triggered then we should be able to get the real label by classifying the subimage that cuts out the trigger. Then we can isolate the trigger by getting the saliency map (heatmap as in NeuronInspect) of the whole image and subtracting the saliency map for the image classified in the secondary class.
+Now we have a potential trigger and we can apply it to other images to see if they get missclassified to the target class as well. Analyze the decision boundary when applying the trigger and when applying a random gaussian noise to the same portion of the image.
+
+
+
+
 

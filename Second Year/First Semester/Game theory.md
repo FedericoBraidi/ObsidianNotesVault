@@ -255,7 +255,23 @@ The best proposed system is Majority Rule, which is defined as:
 $a \geq b \iff |\{i: a \geq_{i}b\}|\geq|i:b \geq_{i}a|$
 
 It is Pareto efficient, satisfies IIA and is not a dictatorship. It is not a constitution, because of the existance of Condorcet cycles.
+##### Cournot duopoly
+Cournot, in 1838, anticipated the concept of Nash Equilibrium for a special case of a duopoly.
+Take a certain product that has a duopoly, two firms 1 and 2 produce quantities $q_{1}$ and $q_{2}$ ($Q=q_{1}+q_{2}$) of it, respectively. The cost to produce it is $C(q)=cq$ and the price it is sold at is $P(q)=(a-Q)h[a-Q]$ with $a>q$.
+If $1$ and $2$ choose the prices independently can we predict the optimal production? Is there a Nash Equilibrium?
 
+Both firms just need to choose $q_{1,2}$ once and have a space of possibilities that is capped by $a$ since any value higher than it doesn’t make sense, $S_{i}=[0,a[$.
+The payoff is just the profit: $u_{i}(q_{i},q_{j})=q_{i}[P(q_{i}+q_{j})-c]=q_{i}(a-q_{i}-q_{j}-c)$
+
+Is there a Nash Equilibrium? This would mean that:
+$q_{i}^{*}=argmax_{q_{i}}u_{i}(q_{i},q_{j}^{*})$    and also   $q_{i}^{*}=argmax_{q_{i}} q_{i}(a-q_{i}-q_{j}^{*}-c)$ for $i=1,2$.
+The solutions for these are:
+$q_{1}^{*}=q_{2}^{*}=\frac{a-c}{3}$     as well as    $u_{1}^{*}=u_{2}^{*}=\frac{(a-c)^{2}}{9}$.
+
+In the case of a monopoly, the only company would produce $\frac{a-c}{2}$ and profit $\frac{(a-c)^{2}}{4}$. In the case of a duopoly they could just divide this production and split the profits, gaining more than in the duopoly case, but this is not a Nash Equilibrium as any of the two is incentivized to produce more.
+##### Bertrand duopoly
+Bertran argued Cournot’s model saying that companies choose the prices and not the quantities. In this new formulation, strategies are prices.
+We can assume that people buy quantity $q_{i}=a-p_{i}$ from the firm with the lower price and $0$ from the other. The NE of this game is $p_{1}^{*}=p_{2}^{*}=c$.
 
 
 
