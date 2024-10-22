@@ -272,6 +272,37 @@ In the case of a monopoly, the only company would produce $\frac{a-c}{2}$ and pr
 ##### Bertrand duopoly
 Bertran argued Cournot’s model saying that companies choose the prices and not the quantities. In this new formulation, strategies are prices.
 We can assume that people buy quantity $q_{i}=a-p_{i}$ from the firm with the lower price and $0$ from the other. The NE of this game is $p_{1}^{*}=p_{2}^{*}=c$.
+This is not the best outcome either, because the two firms could chose to up the price up to $\frac{a+c}{2}$ and share the market. However this is not a NE either, since they have the incentive to lower the price and get all the market.
+
+We should note that the solution of price = cost is not good since it brings 0 profit.
+##### Hotelling model
+Take two vendors of the same ice-creams on a $1 \,km$ road. People distribution is uniform and each person buys from the closes vendor. Think of 101 positions $0,1,\dots,100$ .
+Suppose one vendor is at 22 and the other at 35, the one at 22 has incentive to move at 36. The only NE is if both are at 50 (political tendency towards middle).
+##### The tragedy of commons
+This is a way to showcase why when people have access to a common good, they tend to misuse it. The original example is with a set of farmers who have goats that all eat the same green land in the village. The land has a value per goat that goes down with the number of goats total and the NE is an equipartition of the goats.
+A single farmer, however, is incentivized to get more goats because the loss in the value per goat of the land is mitigated by the fact that also all other farmers tank it.
+This leads each person to have a optimal solution by pushing more than society’s best solution and making everyone else worse by doing so.
+##### Selfish routing
+Let’s say there are two paths to go from $A$ to $B$. One path has a cost that is linear in the amount of the packet that goes through it $cost = x$ and the other one has fixed cost 1.
+The optimal solution (Pareto Efficient) is sending $\frac{1}{2}$ of the packet top ($cost=\frac{1}{2}$) and $\frac{1}{2}$ of the packet down ($cost=1$) with an average cost of $cost=\frac{3}{4}$.
+This solution is not a NE though, everyone in bottom lane is incentivized to deviate and go to the top lane. The price of Anarchy is $\frac{4}{3}$.
+In other cases where the cost of the top path is exponential we could get an even better performance (for high exponents cost goes to 0) but the cost of Anarchy goes infinite.
+##### Mixed strategies
+Mixed strategies come into play when a game seems not to have a Nash Equilibrium.
+Imagine the Even&Odds game explained with this table:
+
+![[Pasted image 20241022170842.png]]
+
+In this case there is no NE. Let’s try to expand the game with another option:
+
+![[Pasted image 20241022170822.png]]
+
+Here the $(\frac{1}{2},\frac{1}{2})$ strategy looks like a Nash Equilibrium.
+To formalize this we define a probability distribution $p$ over a non-empy discrete set $A$ as $p:A\rightarrow[0,1]$ such that $\sum_{x \in A}p(x)=1$.
+A mixed strategy is then defined as one where strategies $S_{i}$ are chosen with probability $m_{i}$.
+In this case the payoff is just calculated by weighting the payoffs of the strategies with the same coefficients.
+So in general the Even&Odds game can be extended by introducing the possibility of choosing a number $q \in [0,1]$ (for player Odd) and a number $r \in [0,1]$ (for player Even) which are the respective probabilities of said players choosing 0
+
 
 
 
