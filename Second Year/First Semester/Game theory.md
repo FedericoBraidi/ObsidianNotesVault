@@ -301,8 +301,22 @@ Here the $(\frac{1}{2},\frac{1}{2})$ strategy looks like a Nash Equilibrium.
 To formalize this we define a probability distribution $p$ over a non-empy discrete set $A$ as $p:A\rightarrow[0,1]$ such that $\sum_{x \in A}p(x)=1$.
 A mixed strategy is then defined as one where strategies $S_{i}$ are chosen with probability $m_{i}$.
 In this case the payoff is just calculated by weighting the payoffs of the strategies with the same coefficients.
-So in general the Even&Odds game can be extended by introducing the possibility of choosing a number $q \in [0,1]$ (for player Odd) and a number $r \in [0,1]$ (for player Even) which are the respective probabilities of said players choosing 0
+So in general the Even&Odds game can be extended by introducing the possibility of choosing a number $q \in [0,1]$ (for player Odd) and a number $r \in [0,1]$ (for player Even) which are the respective probabilities of said players choosing 0.
+We can extend the concept of strong or weak domination to $m_{i}$ in an analogous way to before.
+It is then possible to prove that if $m_{i}'$ strictly dominates $m_{i}$ we can limit our search to pure strategies of the opponents, indipendently to ours.
+To expand the concept of Nash Equilibrium in the case of mixed strategies we can define it as a situation in which: $u_{i}(m)\geq u_{i}(m_{i}',m_{-i}) \quad\forall\,m_{i}'$
+Now the IESDS technique can be expanded to using a strictly dominant mixed strategies.
 
+>[!theorem] NE and mixed strategies
+>Given a game $G$ and a joint mixed strategy $m$, the following are equivalent:
+>- $m$ is a Nash Equilibrium
+>- For each $i$:
+>	$u_{i}(m)=u_{i}(s_{i},m_{-i})$ for every $s_{i} \in support(m_{i})$
+>	$u_{i}(m)\geq u_{i}(s_{i},m_{-i})$ for every $s_{i} \notin support(m_{i})$
+
+##### Nash Theorem
+>[!theorem] Nash Theorem
+>Every game with finite strategies $S_{i}$ has at least one Nash Equilibrium, possibly involving mixed strategies.
 
 
 
