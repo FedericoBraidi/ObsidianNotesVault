@@ -299,6 +299,55 @@ ZDO also has many functionalities:
 AF helps developement by giving a sort of API.
 ###### 6LowPAN
 6LowPAN is a standard aimed at implementing IPv6 onto a IEEE 802.15.4 network.
+The fact of being able to address IoT devices with IP addresses brings many benefits:
+
+- Connect directly to the device through the internet.
+- Easily interface with other IP networks.
+- Use well-known socket APIs.
+- Possibilty to connect nearly infinite devices.
+
+Obviously we also have some disadvantages:
+
+- IPv6 assumes that a link is a single broadcast domain, but this is not always true.
+- IPv6 includes security protocols that might be too complex for IoT devices.
+- IPv6 and 802.15.4 networks are not a perfect fit, for example the maximum size of a frame in the 802.15.4 is 127 bytes but the minimum in IPv6 is 1280 bytes (we need header compression or fragmentation).
+
+In regards to routing, the topology may change rapidly and the classical IPv6 routing is resource intensive (not good for IoT). We need to develop a new routing scheme: Routing Protocol for Low Power and Lossy Networks (RPL).
+This protocol works by creating proactively (not on demand) a routing topology by creating Destination-Oriented Directed Acyclic Graphs (DODAGs) that show the best path to go the the edge router from any specific node. In case of multiple routers, multiple DODAGs are calculated and the traffic is split.
+
+In order to create and maintain the DODAG, the RPL protocol requires each node to
+send the following control packets, together with their own IPv6 address:
+
+- DAO (Destination Advertisment Object): establish the downlink path (towards leafs).
+- DIO (DODAG Informaton Object): establish the upward path (towards roots).
+- DIS (DODAG Information Solicitation): solicitate the transmission of DIO messages.
+- DAO-ACK (Destination Advertisement Object Acknowledgement).
+
+There are two modes of operation:
+
+- Storing: each node stores the info of the destinations reachable via the sub-DODAG.
+- Non storing: only the root stores information.
+#### Long Range IoT technologies
+With long range IoT technologies we mean those technologies that make use of networks that span several kilometers.
+Usually in these cases a cellular network is used which has high complexity and infrastructure cost and is not designed for energy efficiency.
+For certain IoT applications, Low-Power Wide Area Networks have been developed that jointly optimize the combination of energy efficiency, data transfer potential, range, etc.
+Usually the optimization tradeoff leads to systems which have:
+
+- Large coverage (up to 10 km)
+- Low communication
+- Very high energy efficiency (up to 10 years)
+- Low data rate per device, but high amount of devices
+- Support mostly for static networks
+- Easy implementation and deployment
+##### Sigfox
+First example of LPWAN developed by omonimous french company.
+The idea was to make local operators manage the communication between the nodes and provide a subscription-based service called Sigfox cloud platform for data storage and processing.
+For the PHY layer, Sigfox defines a proprietary Ultra-Narrow Band (UNB) technology where the energy is concentrated into a very small portion of the bandwidth. This leads to limited data rate but makes the system interference immune and less affected by noise.
+The signal is trasmitted using Differential Binary Phase Shift Keying (DBPSK) which means that the signal flips phase if the bit is a 1 and doesn’t if the bit is a 0.
+
+The size of information that can be transmitted is very small, only 72 bytes/h.
+
+The transmission is initiated by end devices which wake up, send data, wait for possible ACK or ERR messages and go to sleep.
 
 
 
