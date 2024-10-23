@@ -240,7 +240,67 @@ Differently from the BR/EDR case, where nodes can only be either master or slave
 Low Rate Wireless Personal Area Networks are a standard defined by ISO and IEC under the code 802.x
 It defines the PHY and MAC layers of the protocol and it has:
 
-- 
+- Easy installation
+- Reliability
+- Extremely low cost
+- Support for a large number of nodes
+- Support for asynchronous communication
+
+It supports two types of nodes:
+
+- Full Function Device (FFD): has full capabilities, can relay messages and act as PAN coordinator. Can be distributed in any topology.
+- Reduced Function Device (RFD): can only talk to FFD and can’t become PAN coordinator, cannot relay data (only end node) and can only be in star topology.
+
+Networks that employ this protocol can operate in two modes: 
+
+- Beacon-enabled mode: The PAN coordinator sends out beacon signals periodically to inform the nodes on when to send communications and when to ibernate. This messages define two different periods, one active and one inactive. During the former, there are 16 time slots, 1 for synchronization, 10 for Contention Access Period (CAP) that allow data transmission using CSMA/CA and 5 for Contention Free Protocol (CFP) which are assigned by the PAN coordinator to nodes with specific requirements of guaranteed time slots. During the inactive part, on the other hand, all nodes should stay asleep.
+- Non-Beacon enabled mode: No beacon frames are automatically transmitted, a node should ask for them to be transmitted if needed and wait for the response of the coordinator.
+
+802.15.4 can operate in three modes of security:
+
+- Unsecured
+- Access Control List
+- Secured
+###### ZigBee
+ZigBee is an industrial standard built on top of 802.15.4 that adds two new layers:
+
+- Network
+- Application Layers
+
+The network layer defines how the behaviour should be depending on the topology.
+For example in star topology an FDD (coordinator) ititiates and mantains communications with the other FDDs and RFDs.
+In mesh topology, other nodes that never sleep, called routers, are used to relay and forward the data from the coordinator to all other nodes.
+
+The network layer also has to do with addressing. Each node has a Personal Area Network IDentifier (PAN ID), which is a 16 bit address decided by the coordinator during setup, and a Extended PAN ID (EPID) which is the MAC address given during  production.
+
+Finally the network layer is tasked with routing. In this realm there are two possible behaviours, hierarchical (which follows the structure defined during network creation) and dynamic (which searches each time for the best possible path).
+
+The application layer is further divided into 3 sub-layers:
+
+- Application Support (APS)
+- ZigBee device objects (ZDO)
+- Application Framework (AF)
+
+APS has many functionalities:
+
+- Binding: matches together two devices based on their services and needs.
+- Address mapping: manages the mapping between MAC addresses and network addresses.
+- Security
+- Service discovery: helps communication to devices that offer services that are needed.
+- Group addressing: Enables broadcasting
+
+ZDO also has many functionalities:
+
+- Role definition: defines roles of nodes
+- Network and security management
+- Device discovery and network formation
+- Network address management
+
+AF helps developement by giving a sort of API.
+###### 6LowPAN
+6LowPAN is a standard aimed at implementing IPv6 onto a IEEE 802.15.4 network.
+
+
 
 
 
