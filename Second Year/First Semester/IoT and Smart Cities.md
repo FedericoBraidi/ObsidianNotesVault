@@ -236,6 +236,11 @@ Differently from the BR/EDR case, where nodes can only be either master or slave
 - Observer: Only listens to advertisement, doesn’t try to establis connections.
 - Peripheral: A node that publishes advertisement and may accept connection requests, equivalent to the Slave.
 - Central: A node that listens to advertisement and decides wether to open a connection or not, acting as a Master.
+##### LR-WPANs
+Low Rate Wireless Personal Area Networks are a standard defined by ISO and IEC under the code 802.x
+It defines the PHY and MAC layers of the protocol and it has:
+
+- 
 
 
 
