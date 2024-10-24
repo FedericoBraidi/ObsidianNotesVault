@@ -347,3 +347,18 @@ These kinds of games have many properties:
 
 This follows from the property above since each player plays to increase its $u$ function but at the same time also increases $\Omega$.
 
+There are particular subsets of potential games, such as:
+
+- Congestion games: games which involve the choice of the least congested resource. For each potential game, there is one congestion game with same potential function.
+- Coordination games: games where players are required to act together. They give higher payoff to players when they make same (coordination) or opposite (anti-coordination) moves. Coordination games are not exactly potential games, but every potential game can be written as the sum of a coordination game and a Dummy game (a game where the payoff of player $i$ only depends on the moves of other players $u_{i}(s_{i}',s_{-i})=u_{i}(s_{i},s_{-i})$. 
+##### NE complexity
+Unfortunately, even if we know that a NE always exists, it is generally complex to find.
+It has been demonstrated that the problem of finding the NE is PPAD-complete (Polynomial Parity Arguments on Directed graphs). The class of PPAD problems is computationally between P and NP, so the fact that the NE problem is in this category means that it is computationally hard, unless P=NP.
+
+The PPAD class contains problems that are equivalent to the End-of-Line problem: Take a directed graph with one unbalanced node. There must be another unbalanced node. Find it.
+This has a solution but finding it without traversing all the graph is not easy.
+
+![[Pasted image 20241024161316.png]]
+
+The NE problem is the same as finding a specific point of the BestResponse function which can be demonstrated to be equivalent to finding the End-of-Line in a directed graph.
+In case we can’t find a good way to find a NE we can also relax the requirements by allowing arbitrarily small improvements.

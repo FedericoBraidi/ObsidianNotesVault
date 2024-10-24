@@ -348,6 +348,13 @@ The signal is trasmitted using Differential Binary Phase Shift Keying (DBPSK) wh
 The size of information that can be transmitted is very small, only 72 bytes/h.
 
 The transmission is initiated by end devices which wake up, send data, wait for possible ACK or ERR messages and go to sleep.
+##### LoRa
+LoRa stands for LOngRAnge, it was developed in france in 2009.
+LoRa only implements the PHY layer, the MAC and higher layers are implemented by LoRaWAN.
+
+Supports from 24 to 80 channels of 125 KHz each. The network operator can decide how many to implement, but needs at least 3 (868.10,868.30,868.50) for join requests.
+The maximum payload is 230 bytes.
+
 
 
 
