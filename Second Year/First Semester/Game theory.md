@@ -318,6 +318,32 @@ Now the IESDS technique can be expanded to using a strictly dominant mixed strat
 >[!theorem] Nash Theorem
 >Every game with finite strategies $S_{i}$ has at least one Nash Equilibrium, possibly involving mixed strategies.
 
+This results from the fact that we can write player moves as mixed strategies. In the case of a 2 strategy game for 2 players we have a function for player $A$ with parameter $q$ and a function for player $B$ with parameter $r$. This creates two “Best Response” functions, one for each player, that both depend on $q$ and $r$ together, because they incorporate the beleifs. Since they are two functions in the $q,r$ space on two closed intervals ($[0,1]$) we have, by Weierstrass, that they meet in at least one point.
+##### Fictitious play
+In these kinds of games, regrets play a role into next decisions. 
+Such behaviour arises because player $i$ thinks the strategy of $-i$ is fixed and answers to that fixed play (what he has already seen). This is good if the strategy of the opponents is indeed fixed but bad otherwise.
+With this type of strategy we are not guaranteed to finish in a Nash Equilibrium. However this happens for some relevant cases such as Potential Games, Games that are solved by IESDS and others.
+##### Potential Games
+In the context of these games we define Potentials:
 
+>[!definition] Exact Potential
+>Given a game $G$ with joint strategies $S$, function $\Omega:S\rightarrow \mathbb{R}$ is an exact potential if:
+>$\Omega(s_{i}',s_{-i})-\Omega(s_{i},s_{-i})=u_{i}(s_{i}',s_{-i})-u_{i}(s_{i},s_{-i})=\Delta u_{i}$
 
+>[!definition] Weighted Potential
+> $\Omega:S\rightarrow \mathbb{R}$ is an weighted potential with weight vector $w=\{w_{i}>0\}$ if:
+> $\Omega(s_{i}',s_{-i})-\Omega(s_{i},s_{-i})=w_{i}\Delta u_{i}$
+
+>[!definition] Ordinal Potential
+>  $\Omega:S\rightarrow \mathbb{R}$ is an ordinal potential if:
+>  $\Omega(s_{i}',s_{-i})>\Omega(s_{i},s_{-i})\iff u_{i}(s_{i}',s_{-i})>u_{i}(s_{i},s_{-i})$
+
+These kinds of games have many properties:
+
+- If a game has an ordinal potential $\Omega$ then the game $G=\{S_{1},\dots,S_{n};u_{1},\dots,u_{n}\}$ has the same NE as the game $G'=\{S_{1},\dots,S_{n};\Omega,\dots,\Omega\}$. This means that all players want to maximize the potential and a multiplayer game transforms into a single goal optimization.
+
+>[!theorem] Potential Games Theorem
+>Every finite ordinal potential game has a Nash Equilibrium and it can be found deterministically.
+
+This follows from the property above since each player plays to increase its $u$ function but at the same time also increases $\Omega$.
 
