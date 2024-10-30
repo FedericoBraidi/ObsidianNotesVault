@@ -156,6 +156,8 @@ Once we have found that a model has been backdoored we can proceed in 3 ways:
 ###### SentiNet
 This approach works particularly well on small triggers. We take an image and classify it, then we segment it and classify the subimages. If the image was triggered then we should be able to get the real label by classifying the subimage that cuts out the trigger. Then we can isolate the trigger by getting the saliency map (heatmap as in NeuronInspect) of the whole image and subtracting the saliency map for the image classified in the secondary class.
 Now we have a potential trigger and we can apply it to other images to see if they get missclassified to the target class as well. Analyze the decision boundary when applying the trigger and when applying a random gaussian noise to the same portion of the image.
+###### Spam Bayes Filter
+This defense works well on specific causative availability attacks. The aim of these attacks is to make the false positive of the model so high it is unacceptable in the number of good interactions it blocks.
 
 
 
