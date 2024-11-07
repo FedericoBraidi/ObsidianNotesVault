@@ -362,3 +362,42 @@ This has a solution but finding it without traversing all the graph is not easy.
 
 The NE problem is the same as finding a specific point of the BestResponse function which can be demonstrated to be equivalent to finding the End-of-Line in a directed graph.
 In case we can’t find a good way to find a NE we can also relax the requirements by allowing arbitrarily small improvements.
+##### Dynamic games
+Contrarily to how static games work, dynamic games imply that the players move one after the other. Complete information still means that every player knows the payoff function and knows that everybody else knows. The concept of information can now be expressed in two ways: 
+
+- Perfect Information: Every player can make a decision with full awereness. 
+- Imperfect Information: Some of the decisions are simultaneous.
+
+Instead of representing these games with a table of the payoffs, we know use trees bacause we need to unfold the time dimension. We number the nodes in the tree following BFS.
+
+![[Pasted image 20241107144341.png]]
+
+In this example of a battle of sexes-like game, B being at $x_{1}$ or $x_{2}$ shows the difference in information it has when having to decide himself. We say the info he has is a singleton $\{x_{1}\}$ if it knows in which node it is. If B has no knowledge of the choice of A, its info is not a singleton, but something like $\{x_{1},x_{2}\}$.
+
+If the game has perfect info, all information sets for all players are singletons and there are no “Nature” moves. With imperfect information there are either (or both) information sets with multiple nodes, or choices of Nature. In the second setting, players need to form beliefs.
+
+Strategies are now updated to be a list of responses to all possible plays of the game, like in an algorithm.
+What happens if the strategy of a person is a mixed strategy and not a deterministic one? We should decide the random part at the beginning and then move deterministically. To try  to avoid this we use Behavioral strategies which specify, for each information set, a different probability distribution over the actions.
+
+It can be proven that Behavioural strategies are analogous to Mixed strategies if there is Perfect recall. I.e. every player never forgets the info it has learned.
+
+Actually we can always represent the trees as tables, like we used to do. This is done by defining the strategies of the second player as behaviourla strategies and checking all possible cases:
+
+![[Pasted image 20241107164024.png]]
+##### Dynamic Nash Equilibrium
+The above representation of dynamic games is useful in trying to find Nash equilibriums, which are inherently static. We can identify 3 in the above example:
+
+- (R,rr)
+- (R,rs)
+- (S,ss)
+
+Given a joint profile of behavioural strategies, an equilibrium path contains the nodes that are traversed by the profile.
+##### Solution of dynamic games with perfect/imperfect information
+It can be demonstrated that any such game has a backwards induction method to solving it, which is unique if all end payoffs are different. This is true because the last choice is deterministic, so the second to last is as well, and so on.
+
+The same can be said with imperfect information by imagining a game where two players play, then two other players play knowing the first two moves but not each other’s.
+##### Subgames
+We define a subgame as a game that contains a certain node of the tree of the original game, together with all of its successors.
+##### Subgame-perfect Nash Equilibrium (SPE)
+A Nash Equilibrium is Subgam-perfect if the strategies chosen give a NE in every subgame. It is provable that every finite extensive form game has a Subgame-perfect NE.
+For finite horizon games with perfect information, SPE is found with backwards induction. This can be extended to other types of games if we account for Credibility of Threats.

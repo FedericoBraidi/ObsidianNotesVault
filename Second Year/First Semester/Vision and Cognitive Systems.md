@@ -40,3 +40,17 @@ Many other such filters exist, with different weighting in the other direction.
 So the idea is to first calculate a gradient version of the image and then isolate edges by checking if the gradients are above a certain threshold. To work with bigger dividing lines we need to check if a certain pixel is the local maximum along the gradient direction, then select the single maximum along the width of the edge.
 
 Another problem that can arise is the fact that, depending on the magnitude of the threshold, certain softer boundaries might be disregarded. On the other hand, if the threshold is too low we introduce unwanted boundaries. The solution to this is starting an edge with a high threshold and continuing it with a low one. 
+
+By using these Edge detection algorithms we can identify keypoints, also known as interest points.
+Generally, Interest points have certain properties:
+
+- Repeatability: Is found despite geometric transformations of the image.
+- Salience: It is distinctive.
+- Compactness: There are many fewer points than image dimension.
+- Locality: Concentrated in a small area.
+
+Now, how do we find two circular regions that are identical across the original image and the zoomed one. The idea comes from Laplacian of Gaussian filters, used in the detection of circular blob features. Using these filters, the max of the characteristic scale is found for the best value of the region size. Knowing this we can look for a maximum of a corner detector in space and simulatneously a maximum of the Laplacian in scale.
+
+Another function that can be used instead of the laplacian, and which is much easier to compute, is the DoG (Difference of Gaussians). This function appoximates well the behaviour of the laplacian. Using this we move to the SIFT method where the corresponding regions are found by looking for maximums in the DoG both in space and scale.
+
+To make what we found rotationally invariant we calculate the gradient of the keypoints, then all the gradients across the neighbourhood and align them in the keypoint direction to compare them with other candidates.
