@@ -158,6 +158,89 @@ This approach works particularly well on small triggers. We take an image and cl
 Now we have a potential trigger and we can apply it to other images to see if they get missclassified to the target class as well. Analyze the decision boundary when applying the trigger and when applying a random gaussian noise to the same portion of the image.
 ###### Spam Bayes Filter
 This defense works well on specific causative availability attacks. The aim of these attacks is to make the false positive of the model so high it is unacceptable in the number of good interactions it blocks.
+The idea is to define certain tokens which may appear in a random message and create a column vector of 0-1 values indicating which tokens are present.
+
+The method is called SpamBayes because the probability of a token $i$ being part of a spam message is calculated using the Bayes theorem with uniform prior:
+
+$P^{(s)}_{i}=P(spam|x_{i}=1)=\frac{P(x_{i }|spam)P(spam)}{P(x_{i}=1|spam)P(spam)+P(x_{i}=1|ham)P(ham)}$
+
+Which come out to be
+
+$P_{i}^{(s)}=\frac{\frac{n_{i}^{(s)}}{N^{(s)}}}{\frac{n_{i}^{(s)}}{N^{(s)}}+\frac{n_{i}^{(h)}}{N^{(h)}}}=\frac{n_{i}^{(s)}N^{(h)}}{n_{i}^{(s)}N^{(h)}+n_{i}^{(h)}N^{(s)}}$
+
+To avoid extreme values we use smoothing with:
+
+$q_{i}=\frac{s}{s+n_{i}}x+\frac{n_{i}}{s+n_{i}}P^{(s)}_{i}$
+
+Then, for every incoming message $\hat{X}$, the following are calculated:
+
+$S(\hat{x})=1-\chi^{2}_{2D}[-2(\log q)^{T}\hat{x}]$
+
+and $H(\hat{x})$ analogously ($1-q$ instead of $q$).
+Then, using these, $I$ is calculated as:
+
+$I(\hat{x})=\frac{1}{2}[S(\hat{x})+1-H(\hat{x})]$
+
+Which is confronted with some thresholds and used to categorize the message.
+There are multiple ways to attack these kinds of defenses:
+
+- Indiscriminate attacks: forces the user to disable the filter because of a high false positive rate.
+- Targeted attacks: Sends specific good messages to spam.
+
+In the first type of attack the hacker uses the fact that usually the filter is trained on every incoming message. Thus it sends a message $a$, which the model is trained on, and then a message $x$ of spam which needs to be missclassified. We want to find which tokens to punt in $a$ so that $I(\hat{x})$ is the highest it can be.
+The optimal attack consists in sending $a$ with all tokens, so that it will be classified as spam and all tokens will increase their weight to the spam category. The tokens are many and this attacks is unfeasible, we use a Dictionary attack. This restricts the tokens used to those most often used in the target’s emails (for language, misspelling, colloquialism etc.)
+
+We can instead take the approach of a Targeted attack. In this case we want the model to missclassify a specific message of which we have partial knowledge. We send an attack message with the tokens we know will be in the targeted one and abfuscate with other spam tokens. This increases the score for the legitimate tokens and will lead to missclassification of the target.
+
+Reject on Negative Impact (RONI) is a method to defend against Causative attacks. This measures the empirical effect that every training message has had on the classifier. We clone the classifier and do inference on a set of correctly labelled messages with a model before training on the current message and after. If by training on the current message we get a significantly worse performance then we discard the point.
+###### PCA Detector
+Let’s imagine working with a network of nodes that communicate between one another. Anomalous volumes of flow of communications are related to misconfigurations, hardware problems, DDos attacks, etc. They can also be legitimate, in which case they are called flash crowds.
+
+We want a model capable of detecting unusually high origin-destination flows between nodes.
+
+The number of one-directional flows is $Q=V^{2}$ where $V$ is the number of nodes. We also define the amount of traffic which passed through the $q_{th}$ flow during $t_{th}$ timestep as $Q_{t,q}$ .
+All the $Q_{t,q}$ are summarized in a matrix $\mathbf{Q}$ ($NT\,$x$\,Q$ in dimension).
+
+We don’t directly observe $\mathbf{Q}$ but a link traffic matrix that contains the time series of all the links and is obtained by multiplying $\mathbf{Q}$ with a routing matrix $\mathbf{R}$ which is constructed to point out, for each flow, what are the interested nodes. $\mathbf{X}=\mathbf{Q}\mathbf{R}^{T}$.
+
+If we take a row of this matrix we get, for a specific timestep, the measurements that each link present in the network is experiencing. Generally, even though these are high in dimensionality ($D$, number of existing links), most of the variability is explained by a much lower number of dimensions $K$.
+
+To find these, we use PCA and we get a principal subspace spanned by the first $k$ components, that we call $V$. The other components form $W$.
+$\dot{P}=VV^{T}$ represents the normal traffic, the one explained by the principal components.
+$\ddot{P}=WW^{T}$ represents the anomalous traffic.
+
+The classifier developed in this way checks for high $\ddot{P}$ with a threshold:
+
+$$
+f(x^{(t)})=
+\begin{cases}
+"+"   \quad\quad \quad \quad \quad ||\ddot{P}(x^{(t)}- \hat{c})||^{2}>Q^{-1}(1-\beta) \\
+"-" \quad \quad \quad \quad \quad otherwise
+\end{cases}
+$$
+Where $Q$ is the Q-function and + indicates the presence of an anomaly. $\beta$ is a parameter.
+This model needs to be retrained frequently due to intrinsic drift.
+
+Due to the periodic need to retrain the model, some attack schemes emerge. The idea is to poison the model when it retrains by adding traffic along the OD flow that we want to attack later, so that it won’t be discovered.
+This can be carried out in 3 different ways depending of the amound of information we have about the system:
+
+- Uninformed attack: We don’t know the current network traffic. At each step we decide with a Bernoulli variable wether we attack or not.
+- Locally informed attack: We know the traffic on the flow we want to attack. At each step we inject traffic only if the current traffic is already high enough and we inject a quantity proportional to what is already there.
+- Omnipotent attack: We know info about every flow and can attack every flow. We need to find how much to send on every flow at every timestep to maximize the amount of distance from the previous solutions that is allowed by the PCA. The PCA is calculated on the matrix $X+A$ and then the parameter $\beta$ is the one that is trained to correctly predict the threshold.
+
+The problem in the third case is complex. To relax it let’s just inject into the links of the flow we want to attack. Now the problem is:
+
+$\max_{A}{||(\hat{X}+A)R_{q}||_{2}}$
+
+Such that $||A||_{1}<\theta$, the fixed amount of the attack, and $A_{t,q'}\geq 0 \;\forall\; t,q'$. This problem can instead be solved with the right methods.
+
+A more intelligent version of the attack is to use the fact that the model is retrained periodically, say every week, and poison at every retraining, every time more.
+
+$\theta^{(t)}=k\theta(t-1)$
+
+
+
+
 
 
 
