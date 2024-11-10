@@ -355,8 +355,76 @@ LoRa only implements the PHY layer, the MAC and higher layers are implemented by
 Supports from 24 to 80 channels of 125 KHz each. The network operator can decide how many to implement, but needs at least 3 (868.10,868.30,868.50) for join requests.
 The maximum payload is 230 bytes.
 
+It uses a Chirp Spread Spectrum technology (CSS) to send the data in a way that is resilient to frequency specific noise. This method works by defining a Spreading Factor (SF) that defines the number of different messages you can send as $2^{SF}$ (in LoRa $SF=[7,12]$). Each message spans the entire bandwidth in the allocated time which is based on $SF$ and has a different shift based on which value is sent.
 
+![[Pasted image 20241110121415.png]]
 
+Incresing $SF$, also increases the number of bits per symbol linarly but increases exponentially the time needed to transmit one symbol. All in all, the bit rate decreases when increasing $SF$ but distance travelled increases.
 
+Furthermore, $SF$’s are pseudo-orthogonal and don’t interfere with one another. Also, there is no interference in two communications with a difference in power of $6 dB$ even if they have the same $SF$.
+
+The $SF$ is chosen dynamically based on the distance to the nearest gateway, it should be big enough to reach but not too big to increase consumption.
+
+The structure of the message includes:
+
+- Preamble: 8 symbols, used to notify the gateway that a message is coming.
+- Mandatory preamble: 4.25 symbols, used to sync with gateway.
+- PHY header: 8 symbols.
+- Payload: 255 bytes.
+- CRC: 0-2 bytes.
+
+LoRaWAN implements higher layers such as MAC and Application.
+The architecture defines 4 types of devices:
+
+- End nodes: End devices carrying out sensing and actuating tasks. They have a 64 bits address DevEUI. 
+- Gateway: Wireless base stations used to receive communications from end nodes in a star of stars topology. They have a 32 bit address DevAddr.
+- Network server: Eliminates duplicates and routes data.
+- Application server: Selects the best gateway to reach each end node.
+
+The MAC layer defines 3 different classes of End nodes:
+
+- Class A: Devices that always initiate communications on their own. They send a UL message and open two short received windows for communication (the second is openend only if the first doesn’t get a response). They have very low energy consumption but also high latency in communications.
+- Class B: Devices that have bi-directional communications. They work like Class A but can also receive pings from the gateway to initiate a communication. Lower latency because an UL is not necessary, higher energy consumption.
+- Class C: Devices in continuous receive mode. The RX2 window is open until the next UL or activity is present on RX1. Very low latency but very high energy consumption and can’t work only on battery.
+##### NB-IoT
+Since cellular networks are everywhere and are constantly being updated, trying to use them for IoT as well is a promising path. We can move forward in two ways:
+
+- Adapting existing cellular solutions and protocols, which require lower investment but are also not really suited for IoT because of the protocols in place.
+- Specifically design new ways to use existing infrastructure.
+
+From the second option we obtain Narrow Band-IoT (NB-IoT) which is based on the design principles of 4G-LTE and is standardized by the 3GPP which usually are in charge of cellular mobile standards.
+
+An NB-IoT network can work in different modes:
+
+- Standalone: It operates inside of the frequencies previously used for GSM, which is being less and less used. It occupies 180 kHz which leaves 10 kHz per side in the GSM band.
+- In-band: Occupies one of the 180 kHz slices of the existing LTE band.
+- Guard-band: Occupies 180 kHz in the region where guard bands for LTE exists, not taking away anything from the LTE.
+
+The PHY layer is the same as LTE. The time is divided into fixed slots of 10 ms, each divided into 10 1ms subframes, each divided into 2 0.5ms slots. Frequency-wise the Physical Resource Block (PRB) is formed of 12 subcarries of 15kHz, for a total of 180kHz.
+
+During uplink we can use any combination of slots and subcarriers.
+
+The MAC layer introduces Power-Saving Mode which consists in dropping parts of the protocol stack in the end nodes to decrease power consumption. When doing so, the network retains the information of the end device and keeps it registered.
+This layer also implements Extended Idle mode DRX which allows a device to enter sleep mode while still monitoring the network for incoming data.
+
+Repetition is also implemented dynamically (thanks to the calculation of an Enhaced Coverage Level ECL) based on the needed signal strength. This improves sentitivity because of coherent addition of repeated messages and inchoerent addition of random noise. Repetition also slow the process of transmission.
+##### Industrial Ethernet
+Ethernet can be used in industrial settings, and is useful thanks to its speed. Some modifications are needed in order to use it in industry.
+Generally, Ethernet is not deterministic and doesn’t support Real-Time operations. Under this aspect we can divide Industrial Ethernet into 3 classes:
+
+- Class 1: Ordinary Ethernet + TCP/IP stack. This has full compatibility with standard Ethernet networks but needs looser requirements on Real Time (latency $\geq$ 100 ms).
+- Class 2: Ordinary Ethernet + Custom Apps. This needs a specific protocol stack that allows for Real Time operations (latency $\geq$ 10 ms). It is not compatible with IP network.
+- Class 3: Modified Ethernet + Custom Apps. This has no compatibility with IP and no compatibility with standard Ethernet (needs specific modified Ethernet equipment). However this supports hard Real Time (latency $\geq$ 1 ms).
+
+One application is synchronization. We do this by usisng IEEE 1588 over Ethernet, which works in the following way:
+
+![[Pasted image 20241110144151.png]]
+
+Another problem in applying Ethernet to industry is that classical Ethernet doesn’t take into account the requirements for an industrial scenario, namely: power consumption and limited space.
+Single Pair Ethernet uses only a pair of twisted wires instead of the usual four. It has much lower data rate but higher maximum length and lower cost.
+
+To avoid collisions, the master periodically sends an order of the cycle of transmissions and the slaves communicate or pass when it’s their turn, like in a ring token topology.
+
+A widely used version of Industrial Ethernet is EtherCAT. It is a version that falls into Class 3, which means it has its own specific hardware to support Hard Real Time. It has Distributed Clocks thanks to a variant of IEEE 1588. The architecture employs a Daisy Chain Ring (bidirectional) which has deterministic communication.
 
 
