@@ -1,6 +1,6 @@
-#### Attack to an hypersphere learner
+## Attack to an hypersphere learner
 An hypersphere learner is a machine learning algorithm that tries to classify points as $\textit{normal}$ or $\textit{abnormal}$ based on wether they fall inside or outside a learned hypersphere.
-##### Hypersphere poisoning attack
+### Hypersphere poisoning attack
 This attack consists in modifying the learnt hypersphere by controlling the training set. The vulnerability was discovered when these types of ML algorithms were used to identify abnormal emails or network packets.
 To keep itself up to date, the learner is trained with batches of new points and each batch is first tested under the current model before being used as input to train it one step.
 
@@ -16,7 +16,7 @@ So the attack strategy is to insert points that are still inside the hypersphere
 ![[Pasted image 20241014193423.png]]
 
 To do this the best way is to put training points on the intersection between the hypersphere and the line that connects the center with the point we want to get to.
-###### Single attack per retraining
+#### Single attack per retraining
 This happens when we use $M=1$ modified point per retraining.
 We define $N$ as the size of the original dataset (before retraining).
 At retraining number $t$ a single attack data vector $\textbf{a}$ moves the centroid from $c^{(t)}$ to
@@ -30,7 +30,7 @@ $\rho(t)=\frac{1}{N+t+1}||c^{(t)}-\textbf{a}||$
 Which means that, since we set the point at the maximum distance $R$ , the obtained displacement is:
 
 $\rho_{max}(t)=\frac{R}{N+t+1}$
-###### Double attack per retraining
+#### Double attack per retraining
 We use now two attack points $\textbf{a}_{1}^{(t)}$ and $\textbf{a}_{2}^{(t)}$ at each step, so that our attack is:
 
 $\textbf{a}=\frac{1}{2}\sum_{p=1}^{2} \textbf{a}_{p}^{(t)}$
@@ -38,7 +38,7 @@ $\textbf{a}=\frac{1}{2}\sum_{p=1}^{2} \textbf{a}_{p}^{(t)}$
 With this we can get a maximum displacement of
 
 $\rho_{max}(t)=\frac{MR}{N+tM+M}$
-###### Double attack Vs Double Single Attack
+#### Double attack Vs Double Single Attack
 Indeed doing 2 single attacks yields a maximum displacement of 
 
 $\rho_{max}(t)=\frac{R}{N+1} + \frac{R}{N+2}$ 
@@ -47,7 +47,7 @@ Which is greater than the double attack, this can be proven for any multiple att
 After $T$ steps a single point attack will have produced a displacement of
 
 $\rho_{tot}(T)=R \ln(\frac{T+N}{N})$
-###### Attacks with a number cap
+#### Attacks with a number cap
 We’ve seen that the best way us to only add one malign point at each retraining but this is not always possible. Some systems try to defend against these types of attacks by setting caps on number of retrainings and number of malign points inserted (which might also not be constant across retrainings).
 
 We define:
@@ -82,7 +82,7 @@ N  \quad\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad 
 N(\frac{M'+N}{N})^{\frac{t-1}{T}}((\frac{M'+N}{N})^{\frac{1}{T}}-1) \quad \, \, \, \, t=1,\dots, T
 \end{cases}
 $$
-###### Finite-Horizon Attacks
+#### Finite-Horizon Attacks
 So far we have seen attacks on a hypersphere learner that doesn’t discard any point that is inside of the current hypersphere so that we cannot modify the data it has already seen. There are also Data Dropping learners that substitute each new point with one that has already been seen. The centroid is updated as:
 
 $c^{(t+1)}=c^{(t)}+(x^{(t)}-x_{old})$
@@ -103,7 +103,7 @@ $\textbf{a}=argmin_{x}||c^{(t)}-\frac{x_{old}}{N}+\frac{x}{N}-x^{A}||$
 under the constraints that $||x-x_{j}||<||x-x_{i}|| \quad \forall i \neq j$ and $||x-c^{(t)}||< R$.
 
 All these results can be extended to arbitrarily complex decision boundaries using kernels, however we can only design base points which will then be embedded in the feature space so the problems have additional constraints that make them difficult to solve.
-#### Poinsoning
+### Poinsoning
 Poisoning AML attacks are attacks that tamper with the training process and aim at making the model missclassify trigger inputs. They can be thought of as Targeted attacks. Contrarily to what one might think, they are actually different to conventional data poinsoning attacks. The latter aim at generally degrading the performance of the model and can be seen as availability attacks while the former aim at degrading the performance only for the trigger inputs while mantaining a good performance elsewhere.
 Poisoning attacks can be divided into:
 
@@ -122,21 +122,21 @@ Poisoning attacks of this kind can be carried out in different manners:
 - Outsourcing attack: The user outsources the training of the model to a external company because of lack of computational resources, expertise, etc. This external company is malicious and tampers with the data to give itself a backdoor into the model.
 - Pretrained attack: The attacker releases a model that has a backdoor in it, someone else uses it to re-train it on his dataset (Transfer Learning).
 - Data collection attacks: The attacker inserts targets into input data in order to make the model classify every future input with the trigger in a certain way. One example exploits the resize function in python, since the images are usually resized as 224x224x3, one can hide another image into the only columns that will remain once resized. Some of these types of attacks are also Trojan attacks (you need access to the model for this), here you make certain neurons very sensitive to watermarks (trojan marks) so that when an input has them it is classified according to what the attacker wants.
-##### Defenses against poisoning attacks
+#### Defenses against poisoning attacks
 Techniques to avoid poisoning of a ML model can be divided into two groups:
 
 - Offline inspection: The system is analyzed and cleaned before the deployment, either by cleaning the input data and retraining (if we have access to it) or by just cleaning the model (if we don’t have access to the data).
 - Online inspection: After deployment the model is tested for performance.
-###### NeuronInspect
+##### NeuronInspect
 For each class we create a heatmap that shows which pixels the model looks at when it ends up classificating an input into that category.
 The heamaps produced for tagged input for the target class are less sparse, most smooth and persistend across different input images.
-###### STRIP defense
+##### STRIP defense
 Superimpose other images onto inputs during runtime. A low entropy of a specific class is suspicious because it means the model doesn’t care about the actual image.
-###### ABS defense
+##### ABS defense
 Entails scanning the enire model and controlling abnormalities such as strangely high activations of a specific neuron for a target label.
-###### NIC defense
+##### NIC defense
 Inspect the distribution of the activations at different layers of the DNN to detect abnormalities. You might do this by clustering vectors of weights at a specific layer across inputs.
-###### Neural cleanse
+##### Neural cleanse
 This method aims at identifying the trigger and then proceeds with various approaches.
 The idea to identify triggers is that there are specific directions in the feature space that, when moving along with them, make input jump classes.
 
@@ -153,10 +153,10 @@ Once we have found that a model has been backdoored we can proceed in 3 ways:
 - Apply a filter that identifies adversarial inputs and eliminates them. We cannot check if the image contains the reversed trigger we got, because it is usually pretty different than the real trigger. Although we don’t have the same trigger, we have one that performs in the same way so that we can check the path an input takes with respect to what a triggered input does (we can create one with our reversed trigger).
 - Model patching algorithm based on neuron pruning. Look for neurons that are very disruptive and have high output values to triggered inputs and set their output to 0 during inference.
 - Model patching algorithm based on unlearning. Fine tune the model by taking a normal input, adding the reversed trigger but leaving the correct label. This way the model learns it should not missclassify inputs just because of the trigger.
-###### SentiNet
+##### SentiNet
 This approach works particularly well on small triggers. We take an image and classify it, then we segment it and classify the subimages. If the image was triggered then we should be able to get the real label by classifying the subimage that cuts out the trigger. Then we can isolate the trigger by getting the saliency map (heatmap as in NeuronInspect) of the whole image and subtracting the saliency map for the image classified in the secondary class.
 Now we have a potential trigger and we can apply it to other images to see if they get missclassified to the target class as well. Analyze the decision boundary when applying the trigger and when applying a random gaussian noise to the same portion of the image.
-###### Spam Bayes Filter
+##### Spam Bayes Filter
 This defense works well on specific causative availability attacks. The aim of these attacks is to make the false positive of the model so high it is unacceptable in the number of good interactions it blocks.
 The idea is to define certain tokens which may appear in a random message and create a column vector of 0-1 values indicating which tokens are present.
 
@@ -193,7 +193,7 @@ The optimal attack consists in sending $a$ with all tokens, so that it will be c
 We can instead take the approach of a Targeted attack. In this case we want the model to missclassify a specific message of which we have partial knowledge. We send an attack message with the tokens we know will be in the targeted one and abfuscate with other spam tokens. This increases the score for the legitimate tokens and will lead to missclassification of the target.
 
 Reject on Negative Impact (RONI) is a method to defend against Causative attacks. This measures the empirical effect that every training message has had on the classifier. We clone the classifier and do inference on a set of correctly labelled messages with a model before training on the current message and after. If by training on the current message we get a significantly worse performance then we discard the point.
-###### PCA Detector
+##### PCA Detector
 Let’s imagine working with a network of nodes that communicate between one another. Anomalous volumes of flow of communications are related to misconfigurations, hardware problems, DDos attacks, etc. They can also be legitimate, in which case they are called flash crowds.
 
 We want a model capable of detecting unusually high origin-destination flows between nodes.
@@ -238,6 +238,46 @@ A more intelligent version of the attack is to use the fact that the model is re
 
 $\theta^{(t)}=k\theta(t-1)$
 
+##### White-Box Attacks
+###### FGSM Attacks
+Fast gradient sign method attacks work by inserting an adversarial image which is expecially crafted to maximize the loss and make the model missclassify it. It is a White box attack because a knowledge of the weights, structure and loss function of the model are needed.
+The image is created as:
+
+$x_{adv}=x+\epsilon \,\cdot\,sign(\nabla_{x}\mathcal{L}(C(x,w),y))$
+###### PGD Attacks
+Projected gradient descent attacks are just a step versison of FGSM attacks, in the sense that the perturbation is added a bit at a time:
+
+$x_{adv}^{n}=x^{n-1}+\gamma \,\cdot\,sign(\nabla_{x}\mathcal{L}(C(x,w),y))$
+
+Both FGSM and PGD can be designed to make the model classify the adversarial image to a specific label rather than just to a different label to the right one.
+###### Deep Fool Attacks
+This approach aims at creating an adversarial image that gets missclassified but with the least amount of noise possible, so that the image is indistinguishable from the original.
+The idea is to check the parameter space in which the image gets converted to be classified. In this space, the decision on the label is taken using linear or non linear decision boundaries. This method works by determining the closest decision boundary and pushing the image over it. In the case of non linear DB then the process is iterative and at each step the boundaries are linearized around the point.
+###### JSM Attacks
+Jacobian-based Saliency Map Attacks are aimed at controlling the $L_{0}$ norm by iteratively changing one pixel at a time according to a saliency map for the target label.
+###### Carlini&Wagner Attack
+The idea is to create an adversarial image which is as similar as possible to the original but that gets classified to a different category. We want:
+
+$minimize \,D(x,x+\delta)$
+$such \,that \, C(x+\delta)=t\neq C(x)$
+
+The second line is a strong requirement so C&W relax it like this:
+
+$f(x+\delta)\leq 0$
+
+This is not equivalent but gives a nice approximation.
+The used distance $D$ can be $L_{\infty}$, $L_{2}$ or $L_{0}$ and there are also many versions of $f$, the best is:
+
+$f(x')=(max_{i\neq t}(Z(x')_{i})-Z(x')_{t})^{+}$
+
+This is the difference in logits between the target class and its closest class.
+###### stAdv Attack
+Spatial transformation attacks propose not to modify the intensity of the pixels of the image but rather to just move them spatially inside of it.
+We create a distorsion field $f$ that moves pixels to their new locations to create the adversarial image. The goal is to find the image that achieves the missclassification with the minimum displacement.
+
+$f^{*}=argmin_{f} \;\mathcal{L}_{{adv}}(x,f)+\tau \mathcal{L}_{flow}(f)$
+
+The first term helps with missclassification, the second with the preservation of the image shape.
 
 
 
