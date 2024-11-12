@@ -54,3 +54,23 @@ Now, how do we find two circular regions that are identical across the original 
 Another function that can be used instead of the laplacian, and which is much easier to compute, is the DoG (Difference of Gaussians). This function appoximates well the behaviour of the laplacian. Using this we move to the SIFT method where the corresponding regions are found by looking for maximums in the DoG both in space and scale.
 
 To make what we found rotationally invariant we calculate the gradient of the keypoints, then all the gradients across the neighbourhood and align them in the keypoint direction to compare them with other candidates.
+
+#### Image Classification
+For the task of Image Classification we need two things:
+
+- An Image representation.
+- A comparison method between the representations.
+
+An example of the second is one of the simplest ML algorithms, Nearest Neighbours. In this case we have a representation of the images and we classify an image as the same class of its nearest neighbour, for some distance metric. This i very sensitive to outliers so we can use k-NN, an extension where we take into account the k closest points instead of just the closest.
+As for the Image Representation, the simplest way to obtain one is to resize all the images to the same size and then flatten the pixel values into a 1D array, which is then used as the representation.
+
+This setup is bad, because it is O(n) at test time, which is when we want fast performance.
+
+Another model, that doesn’t require us to remember the whole images, is the Bag of (visual) words representation. We only remember how many of certain visual primitives were present. We basically extract features from all images seen and create a dictionary of local features, then we give a representation to a new image which is an histogram over the dictionary.
+
+First of all the features are extracted, then they are clustered to reduce the size of the vocabulary, with a clustering algorithm such as k-means.
+
+To keep track of which words are more or less important or discriminative we weight each visual word with its Inverse Document Frequency:
+
+$IDF(j)=\log \frac{number \,of\,documents}{number\,of\,documents\,j\,appears\,in}$
+

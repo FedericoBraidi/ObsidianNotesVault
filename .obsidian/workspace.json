@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "698dbfec52773f74",
+        "id": "8c02720465eea099",
         "type": "tabs",
         "children": [
           {
-            "id": "00df6c0cda29d73f",
+            "id": "1b240cf3a12b0acc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Second Year/First Semester/Adversarial Machine Learning.md",
+                "file": "Second Year/First Semester/Game theory.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Adversarial Machine Learning"
+              "title": "Game theory"
             }
           }
         ]
@@ -129,10 +129,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Second Year/First Semester/Adversarial Machine Learning.md"
+                "file": "Second Year/First Semester/Game theory.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Adversarial Machine Learning"
+              "title": "Outline of Game theory"
             }
           },
           {
@@ -174,17 +174,17 @@
       "webpage-html-export:Export Vault to HTML": false
     }
   },
-  "active": "00df6c0cda29d73f",
+  "active": "1b240cf3a12b0acc",
   "lastOpenFiles": [
+    "Second Year/First Semester/Vision and Cognitive Systems.md",
+    "Second Year/First Semester/Adversarial Machine Learning.md",
     "Second Year/First Semester/IoT and Smart Cities.md",
     "zz. Attachments/Pasted image 20241110144151.png",
     "zz. Attachments/Pasted image 20241110121415.png",
-    "Second Year/First Semester/Adversarial Machine Learning.md",
     "Second Year/First Semester/Game theory.md",
     "zz. Attachments/Pasted image 20241107164024.png",
     "zz. Attachments/Pasted image 20241107144341.png",
     "zz. Attachments/Pasted image 20241107144239.png",
-    "Second Year/First Semester/Vision and Cognitive Systems.md",
     "zz. Attachments/Pasted image 20241030144404.png",
     "zz. Attachments/Pasted image 20241030144035.png",
     "zz. Attachments/Pasted image 20241024161316.png",
