@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6080c35dc8ec3016",
+        "id": "f42fd2b2e9b2d191",
         "type": "tabs",
         "children": [
           {
-            "id": "d44fc778dd1c668f",
+            "id": "463b0533d736fb4c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -174,8 +174,11 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "d44fc778dd1c668f",
+  "active": "463b0533d736fb4c",
   "lastOpenFiles": [
+    "zz. Attachments/Pasted image 20241119130940.png",
+    "zz. Attachments/Pasted image 20241119125637.png",
+    "zz. Attachments/Pasted image 20241119112515.png",
     "Second Year/First Semester/Game theory.md",
     "Second Year/First Semester/Vision and Cognitive Systems.md",
     "Second Year/First Semester/Adversarial Machine Learning.md",
@@ -188,8 +191,6 @@
     "zz. Attachments/Pasted image 20241030144404.png",
     "zz. Attachments/Pasted image 20241030144035.png",
     "zz. Attachments/Pasted image 20241024161316.png",
-    "zz. Attachments/Pasted image 20241022170842.png",
-    "zz. Attachments/Pasted image 20241022170822.png",
     "Ethical Hacking.md",
     "Second Year/First Semester/Information Theory and Inference.md",
     "Second Year/First Semester/Ethical Hacking.md",

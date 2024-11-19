@@ -485,3 +485,49 @@ These imply that if the $T$-th stage has more than one NE, then SPEs for the who
 For example, the strategy “I play mum, then if opponent also does, I play loner, otherwise gang” is a SPE if the discount factor is high enough.
 In stage 1 $u_{1}(M,s_{2})=4+0\delta$ and $u_{2}(F,s_{2})=5-3\delta$ so $M$ is the right move (best response to $s_{2}$ if $\delta \geq \frac{1}{3}$)
 For the second player this is $u_{2}(s_{1},m)=-1+0\delta$ and $u_{2}(s_{1},f)=1-3\delta$, so the play is fine for player 2 as well, if $\delta \geq \frac{2}{3}$
+
+Ok, but what happens in the case of games with more than two stages? Because here we could only deviate in the first stage since the second was also the last one. Maybe, in cases with more stages one can deviate in one stage and then get back on track in another.
+
+As we will see, this is not the case, because of the One-stage deviation principle. Let’s define a strategy $s_{i}$ as optimal if it can’t be beaten by changing an arbitrary amount of choices inside of it. Let’s also define a strategy $s_{i}$ as one-stage unimprovable if it can’t be beaten by any strategy that deviates from it by only one stage’s decision.
+
+If we say that our strategy is not optimal for some information set $h_{i}$, we are implying:
+$u_{i}(s_{i}',h_{i})> u_{i}(s_{i},h_{i})$. Denying this, instead, can be the definition of optimal/one-stage unimprovable based on the constraints placed on $s_{i}'$.
+
+Clearly, being optimal also means being one-stage unimprovable, but the inverse is also true.
+This can be proven by contradiction. Assume $s_{i}$ is one-stage unimprovable but not optimal, then $s_{i}'$ exists such that it is better and deviates in 2 or more stages. Let’s take the last of the differentiations and study the subgame that starts at that point. Since the single games are independent, if I deviate there and get an improvement, it means that I would have gotten an improvement anyways by deviating in that way, even if not deviating prior to that. This way, from a better strategy that deviates $N$ times we get a better strategy that deviates only once, which is impossible because the original strategy is one-stage unimprovable.
+##### Repeated Games
+A repeated game is a multi-stage game where the same static game $G$ is played $T$ times and the final payoff is the discounted version of the single payoffs.
+For example a two-stage Prisoner’s Dilemma:
+
+![[Pasted image 20241119112515.png]]
+
+As we can see the right strategy is to play (F,F) twice.
+From this we can see that if game $G$ has only one NE $s^*$ then the SPE for the whole game is to play $s^{*}$ in every game.
+In fact, these types of games are not very interesting. In games with multiple NE one can deviate from playing NE at each stage and get better results. 
+
+![[Pasted image 20241119125637.png]]
+
+In this game, for example the players play (H,H) which is a NE only if at the first round they played (M,M) whichi is not a NE. Otherwise, they play (F,F) which is still a NE. In this setting playing (M,M)$\rightarrow$(H,H) is best, so we deviate from playing always a NE. These type of games encourage a type of cooperation.
+We can see this even better in an extended game such as this:
+
+![[Pasted image 20241119130940.png]]
+
+In the case seen before, one can threaten the other that, if they both play M, then they can both play H and get 7 otherwise if the adversary doesn’t play M, F will be played at the second round and the adversary will be penalized. This threat doesn’t hold because playing F is against the interest of both players. 
+If we add strategies that encourage one play to retaliate, such as P and Q, cooperation is much more stable.
+##### Infinitely repeated games
+Infinitely repeated games are represented as $G(\infty,\delta)$ with $\delta<1$ and can’t be solved through backwards induction because there is no “last stage”.
+In these games, surprisingly, there are SPE where not even one played strategy is a NE of the stage game.
+Let’s take the infinite version of the repeated Prisoner’s Dilemma.
+For example one of these is if both player play M as the first move and then continue playing M if all past games ended in (M,M) and plays F otherwise, this is called the Grim Trigger strategy.
+This strategy is a NE because the Grim Trigger is the best response to itself. This is because, if Bob thinks Al is playing this strategy he knows that whenever the outcome is not (M,M), Al is gonna play F forever, so his best response is also to play F if the outcome is not (M,M).
+We just need to calculate the best first move for Bob which depends on $\delta$. Doing the calculations tells us that M is the best move for $\delta \geq\frac{1}{4}$.
+
+This is a SPE because it is a NE in every subgame, if they play (M,M) all the time every subgame is the same as the total game (so the GrimTrigger is a NE), if they deviate once for every subgame after the deviation they play (F,F) which is a NE for the Prisoner’s Dilemma.
+##### Friedman Theorem
+First of all we defina feasible payoff of a game as any linear combination of the pure payoffs with normalized weights.
+
+>[!theorem] Friedman Theorem
+>Let $G$ be a finite static game of complete info. Let $(e_{1},e_{2},\dots,e_{n})$ be the payoffs from a NE of $G$. Let now $(x_{1},x_{2},\dots,x_{n})$ be feasible payoffs such that $\forall j,x_{j}>e_{j}$.
+>If $\delta$ is close enough to 1, $G(\infty,\delta)$ has a SPE with payoffs $x_{j}$.
+
+The Grim Trigger strategy doesn’t always work for all games and is not always the best. For example another strategy arises from the idea that keeping a grudge forever might not be the best decision. The strategy that employs this idea is called Tit for Tat, in a game where there are two strategies (cooperate or defect) player $i$ at step $t$ plays whatever player $-i$ has played at step $t-1$. This punishes immediately deviations but also forgives fast (has only 1 step memory).
