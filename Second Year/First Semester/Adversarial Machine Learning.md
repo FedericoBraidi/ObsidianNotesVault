@@ -278,11 +278,95 @@ We create a distorsion field $f$ that moves pixels to their new locations to cre
 $f^{*}=argmin_{f} \;\mathcal{L}_{{adv}}(x,f)+\tau \mathcal{L}_{flow}(f)$
 
 The first term helps with missclassification, the second with the preservation of the image shape.
+##### Black-Box Attacks
+Black-box adversarial attacks can be classified into two categories:
 
+- Query-based attacks: The adversary queries the model and creates the adversarial inputs with the information received from the queries. These attacks are further divided based on the type of information that is given by the model to the attacker into:
+	- Score-based attacks: If the queries result in the probability distribution that the model gives to the labels.
+	- Decision-based attacks: If the queries result in the predicted label from the model.
+- Transfer-based attacks: The adversary trains its own substitute model(s) and produces the adversarial inputs for it(them), then transfers them to the original model, these attacks are also called zero queries attacks.
+###### Gradient estimation attack
+It is a score-based attack which achieves performances in line with white-box attacks and also faces well against adversarial defenses.
+This method approximates the gradient using queries and uses the estimated gradient to produce adversarial examples.
+The gradient is estimated with the method of finite differences. The output of the model is a vector of the size of the number of classes, then we can calculate its gradient as:
 
+$\nabla_{x}g(x)$= $\text{FD}_x\big(g(\mathbf{x}), \delta\big) = \begin{bmatrix} \frac{g(\mathbf{x} + \delta \mathbf{e}_1) - g(\mathbf{x} - \delta \mathbf{e}_1)}{2\delta} \\ \vdots \\ \frac{g(\mathbf{x} + \delta \mathbf{e}_d) - g(\mathbf{x} - \delta \mathbf{e}_d)}{2\delta} \end{bmatrix}$
 
+Where $e_{i}$ is a vector of the normal base (i.e. 0 everywhere except for position $i$).
 
+With the gradient estimation method we can simulate a FGSM attack. In particular imagine a cross-entropy loss:
+$l_{f}(x, y) = -\sum_{j=1}^{|\mathcal{Y}|} 1[j = y] \log p_j^f(x) = -\log p_y^f(x)$
 
+The gradient of the loss function $l_{f}(x, y)$ with respect to the input $x$ is:
 
+$\nabla_x \ell_f(x, y) = -\frac{\nabla_x p_y^f(x)}{p_y^f(x)}$
+
+So, from the formulas of the FGSM attack, the untargeted adversarial example generated is:
+
+$x_{adv}=x+\epsilon \,\cdot\,sign(\frac{FD_{x}(p_{y}^{f}(x),\delta)}{p_{y}^{f}(x)})$
+
+While the one targeted to label $T$ is:
+
+$x_{adv}=x-\epsilon \,\cdot\,sign(\frac{FD_{x}(p_{T}^{f}(x),\delta)}{p_{T}^{f}(x)})$
+
+Another attack that we can simulate is the Carlini-Wagner attack. It uses a loss function based on the logits:
+
+$l(x,y)=max(\phi(x+\delta)_{y}-max\{\phi(x+\delta)_{i}: i \neq j\},-k)$
+
+Which means that the adversarial examples for the non targeted attack are:
+
+$x_{adv}=x+\epsilon\,\cdot\,sign(FD_{x}(\phi(x)_{y'}-\phi(x)_{y},\delta))$
+
+With $y'$ being the next closes label. For the targeted attack on label $T$
+
+$x_{adv}=x-\epsilon\,\cdot\,sign(FD_{x}(max(\phi(x)_{i}\,:\,i\neq T)-\phi(x)_{T},\delta))$
+
+Finally, for the PGD attack equivalent the update rule is given by:
+
+$x_{\text{adv}}^{t+1} = x_{\text{adv}}^t + \alpha \cdot \text{sign} \left( \frac{\text{FD} \left( \nabla_{x_{\text{adv}}^t} p_y^f(x_{\text{adv}}^t), \delta \right)}{p_y^f(x_{\text{adv}}^t)} \right)$
+###### Zoo Attack
+Zoo (Zeroth order optimization) attack is somewhat of a score-based black box version of the Carlini Wagner attack. Similarly to that, it solves an optimization problem, in this case:
+
+$minimize ||x-x_{0}||_{2}^{2}+c\,\cdot\,(max_{y'\neq T}\log F(x)_{y'}-\log F(x)_{T})^{+}$
+
+Under the condition that $x \in [0,1]$. The confidence score of one class dominates the one of the other class but the logarithms mitigate this dominance mantaining the order. 
+An Adam optimizer of Newton Method is used to solve the problem and the calculation of the Hessian is needed:
+
+$h=\nabla^{2}_{x}f(x)\approx \frac{f(x+h)+f(x-h)-2f(x)}{h^{2}}$
+###### Boundary attack
+This is a decision-based black box attack. It is more useful as often there is no access to internal logits, however convergence is slow (high number of queries).
+It works by choosing an existing image with its relative label and creating another image with random gaussian noise which is either classified as the target label (targeted attack) or just not as the label of the original (non targeted attack).
+We add noise (actually denoising) to the created image to move it orthogonally along the fixed distance sphere around the original. This step in the feature space is constrained and values of pixels in the range [0,1] are checked. Then a step in the direction of similarity with the original image is made. Finally, the model is queried with the new adversarial image and we check that it is still missclassified in the way we want, otherwise we wipe this iteration and adjust.
+The first step (orthogonal) is of length $\delta$ which is dynamically changed in such a way to always have 50% of the movements be adversarial.
+The second step (towards the original) is of length $\epsilon$ which is kept such that the success rate of both steps together is at least 25%.
+The attack stops when we reach a max of iterations or when $\epsilon$ reaches zero.
+###### Hop Skip Jump attack
+This is an evolution of the boundary attack, it is still a decision-based black box attack but 
+requires much less queries than its predecessor.
+Its success depends on the different way to move closer to the original image:
+
+![[Pasted image 20241119234549.png]]
+
+We start at a random point $\tilde{x}_{t}$, then binary search to the original ($x^{*}$) and find the boundary point $x_{t}$, then we calculate the gradient direction at $x_{t}$ and move $\tilde{x}_{t}\rightarrow\tilde{x}_{t+1}$ on the line given by the gradient. Then we just repeat this process until we get to the closes adversarial image $x^{*}$ to the original.
+###### Substitute model attack
+This is a transfer-based attack which doesn’t require any querying on the target model.
+The results of this attacks are seen when transferring adversarial example intra or inter models.
+For example, this is the intra-transfer for DNNs:
+
+![[Pasted image 20241119235552.png]]
+
+These are the same for SVM, DT and kNN:
+
+![[Pasted image 20241119235622.png]]
+
+And these are the stats for the inter-model transfer:
+
+![[Pasted image 20241119235651.png]]
+###### Ensamble of Local Models attack
+This attack is a transfer based attack. It generates from the notion that non-targeted adversarial images transfer well between models of the same type, but targeted ones rarely transfer with the same target label. 
+The idea is to train a targeted adversarial image that is simultaneously working on various models with the same label. This should ensure that, when transferred, it mantains the same label as well.
+To do this we need to solve the following optimization problem:
+
+$\arg\min_{\mathbf{x}^\star} -\log \left( \left( \sum_{i=1}^k \alpha_i J_i(\mathbf{x}^\star) \right) \cdot \mathbf{1}_{y^\star} \right) + \lambda d(\mathbf{x}, \mathbf{x}^\star)$
 
 

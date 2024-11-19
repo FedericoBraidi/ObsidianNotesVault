@@ -74,3 +74,9 @@ To keep track of which words are more or less important or discriminative we wei
 
 $IDF(j)=\log \frac{number \,of\,documents}{number\,of\,documents\,j\,appears\,in}$
 
+An extension of the BoW representation that also implements spatial information is the Spatial Pyramid:
+
+![[Pasted image 20241119192728.png]]
+
+Spatial Pyramids of level 0 are just the histogram representation of the whole image, level 1s are comprised of 4 histograms, one for each of the $\frac{1}{4}$ images, etc.
+

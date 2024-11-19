@@ -531,3 +531,16 @@ First of all we defina feasible payoff of a game as any linear combination of th
 >If $\delta$ is close enough to 1, $G(\infty,\delta)$ has a SPE with payoffs $x_{j}$.
 
 The Grim Trigger strategy doesn’t always work for all games and is not always the best. For example another strategy arises from the idea that keeping a grudge forever might not be the best decision. The strategy that employs this idea is called Tit for Tat, in a game where there are two strategies (cooperate or defect) player $i$ at step $t$ plays whatever player $-i$ has played at step $t-1$. This punishes immediately deviations but also forgives fast (has only 1 step memory).
+
+Tit for Tat is good but has some evidently bad matchups, such as another Tit for Tat player shifted by 1 move: this triggers a Death Spiral.
+Another possibility is the Tit for two Tats where the first defection is forgiven and only the second is punished. This avoids Death Spiral but is bad against aggressive players.
+##### Reputation
+Let’s imagine a game with two players $A$ and $B$. $A$ can either trust $B$ or not, if it doesn’t, they both get 0, if it does, then $B$ can cooperate to make both get 1 or defect to get 2 and make $A$ get -1. From backwards induction we know that $B$ will defect so $A$ plays NotTrust.
+
+What if the game is repeated? We can build a Grim Trigger by just making $A$ play Trust if all previous outcomes were (T,C) and NotTrust forever otherwise. The best response for $B$ is to always play C as long as $\delta \geq \frac{1}{2}$.
+
+We can extend this with a Guarantor, which (if called) increases the probability that $A$ chooses to Trust $B$. $G$ requests to be given a guarantee of 2, then if $B$ defects, it keeps it, otherwise it only keeps 0.1 of it. Then the game becomes:
+
+![[Pasted image 20241119191921.png]]
+
+In this case if the increase in probability is good enough, $B$ is even more incentivized to Cooperate. But why doesn’t $G$ just keep the 2? If you do a single round there is no incentive not to keep it. If the game is repeated and $\delta \geq 0.95$ cooperation is better in the long run, since $G$ also builds the trust of $B$.
