@@ -399,5 +399,89 @@ The same can be said with imperfect information by imagining a game where two pl
 ##### Subgames
 We define a subgame as a game that contains a certain node of the tree of the original game, together with all of its successors.
 ##### Subgame-perfect Nash Equilibrium (SPE)
-A Nash Equilibrium is Subgam-perfect if the strategies chosen give a NE in every subgame. It is provable that every finite extensive form game has a Subgame-perfect NE.
+A Nash Equilibrium is Subgame-perfect if the strategies chosen give a NE in every subgame. It is provable that every finite extensive form game has a Subgame-perfect NE.
 For finite horizon games with perfect information, SPE is found with backwards induction. This can be extended to other types of games if we account for Credibility of Threats.
+##### Maximin and Minimax
+In a two player game with players $i$ and $-i$ we can define two values:
+
+- Maximin: the maximum of payoff obtainable by player $i$ when player $-i$ does the worst move for $i$ ($i$ moves before $-i$). This can be written as:
+	$w_{i}=max_{s_{i} \in S_{i}} min_{s_{-i} \in S_{-i}} u_{i}(s_{i},s_{-i})$
+- Minimax: the minimum guaranteed payoff of player $i$ in case it moves after player $-i$. This can be written as:
+	$z_{i}=min_{s_{-i}\in S_{-i}}max_{s_{i} \in S_{i}} u_{i}(s_{i},s_{-i})$
+
+Some things to note are:
+
+- For every player $i$ the $maxmin_{i} \leq minmax_{i}$
+- If a joint strategy $s$ is a Nash Equilibrium, then for every player $i$ $minmax_{i} \leq u_{i}(s)$
+##### Zero-sum games
+Zero-sum games are those games that, for each joint strategy $s$, have $u_{i}(s)=-u_{-i}(s)$. These games are a special case of the more general class of Competitive/Adversarial games where the utilities of the two players are in some way inversely correlated.
+
+Zero-sum games are more simple to study and have nicer properties. For example we have the MinMax Theorem which states:
+
+>[!theorem] Minmax Theorem
+>Given a Zero-sum game $G$ with finitely many strategies:
+>- $G$ has Nash Equilibriums if and only if $maxmin_{i}=minmax_{i}$ for every $i$.
+>- All NEs yield the same payoff ($maxmin_{i}$).
+>- NEs have the form $(s_{i}^{*},s_{-i}^{*})$ where $s_{i}^{*}$ is a security strategy ($maxmin$ move)
+
+Additionally, since the game is Zero-sum, it is enough to check $minmax=maxmin$ for one of the players.
+Another cool property of these games is that $minmax_{i}=-maxmin_{-i}$ and viceversa. The amount of $minmax_{i}=maxmin_{i}$ is called the value of the game. A NE is called a saddle point.
+##### Mixed security strategies
+Consider a two player game as before. Also consider that player $-i$ is playing the mixed strategy which is worst for player $i$, then $i$ responds with the mixed strategy that has best return and gets the mixed security payoff, written as: 
+
+$max_{m_{i}\in \Delta S_{i}}min_{m_{-i}\in \Delta S_{-i}}u_{i}(m_{i},m_{-i})$
+
+This is in the case that $i$ moves first. In the other case, we have the minimax which is the lowest payoff obtainable when playing the best move for one-self:
+
+$min_{m_{-i}\in \Delta S_{-i}}max_{m_{i}\in\Delta S_{i}}u_{i}(m_{i},m_{-i})$
+
+In these cases minimax and maximin always exist and are equal.
+The MinMax Theorem can be extended to mixed strategies as well.
+##### Stackelberg games
+Sequential games where one (leader) always moves first and another (follower) always second. The outcome achieved with backwards induction is called Stackelberg Equilibrium.
+
+In this setups the leader always has a payoff which is greater or equal to that of the NE, while the follower has always a payoff greater or equal than the minimax.
+In Zero-sum cases, the leader having first-move advantage means that the follower is worse right at the start. This is true even if the follower has more information.
+##### Time inconsistencies
+Suppose a player has a certain amount of a resource $K=1$. The player has to allocate this resource to $N$ steps. For this example we take $N=3$. We define a term $\delta$ called discount, such that the total payoff is calculated as:
+
+$v(x_{1},x_{2},x_{3})=u(x_{1})+\delta u(x_{2})+\delta^{2}u(x_{3})$
+
+The the problem is:
+
+$max \, v, \,\,\, such \,\,that \,\,x_{1}+x_{2}+x_{3}=1$
+
+Let’s make an example with $u(x)=\log(1+x)$. By taking the derivative of $v(1-x_{2}-x_{3},x_{2},x_{3})$ and setting it to 0 we get formulas for $x_{i}$. After doing this we can calculate, based on the value of $\delta$, the optimal solution to the problem.
+In this case (exponential discount) it can be verified that the choice is consistent, since after step one, the subproblem that starts from time step 2 and has resource $K-x_{1}$ produces the same values for $x_{2}$ and $x_{3}$. 
+
+It is not always like this, for example in the case of constant discount, at step 2 you don’t have the incentive to still split in the same way as you did in step one because now $x_{2}$ is not discounted anymore. This is a fight between player of step 1 and the same player at step 2. 
+A fully rational player of step 1 will know that himself at step 2 will not want to split the remaining resource with step 3 and keep it to himself. Knowing this (with backwards induction), player 1 uses up all the resource himself.
+
+All this is to motivate the use of only exponential discounts because other versions lead to time inconsistencies.
+##### Multi stage games
+Normal form games describe situations where players play simultaneously, extensive form games add the time dimension and payoffs are only given at the end nodes. 
+Many real life cases have intermediate steps with partial payoffs.
+
+We define multi stage games as a finite sequence of normal form stage games (complete but imperfect information games, simultaneous). The final payoff of a multi stage is determined by the results of the stage games that compose it.
+
+For example we can model a simple multistage game as being composed of two stage games with same players but different action sets. Each game gives a partial payoff and the total payoff is the discounted sum of the partials.
+An example of this is the Prisoner-Revenge game, where the first round is a Prisoner Dilemma. Then, when they’re out of jail they can choose to either join a Gang or remain a Loner. If they both join a gang they fight and have negative payoff each, if they both are loners, they never meet again, 0 payoff each, lastly if one joins and the other doesn’t, the one who joins has slightly negative payoff and the other highly negative.
+
+A specific strategy specifies a move for the first game and a set of moves for the second, each conditional on the first move of the enemy.
+As we have seen, a SPE is a joint strategy that ensures that a NE is played in every subgame. If we define $s_{j}^{*}$ a NE for the j-th stage, then there exists a SPE whose equilibrium path is $s_{1}^{*},s_{2}^{*},s_{3}^{*},\dots,s_{T}^{*}$ .
+
+So two SPE in the Prisoner-Revernge game are:
+
+- Playing F in the first game and then Gang no matter what
+- Playing F in the first game and then Loner no matter what
+
+As we can see we’re just playing the stages independently with no strategic connection, is there an alternative with strategic connection? We need to do backwards induction and start from the end of the game.
+
+Note that any NE $s^{*}$ of a multistage game $G_{1},G_{2},\dots,G_{T}$ requires that a NE is played in game $G_{T}$.
+Furthermore note that if all stage games $G_{i}$ have unique NEs, then the multistage game has a unique SPE.
+
+These imply that if the $T$-th stage has more than one NE, then SPEs for the whole game exist where a NE is not played at every game. This is possible thanks to the discounted nature of total payoff.
+
+For example, the strategy “I play mum, then if opponent also does, I play loner, otherwise gang” is a SPE if the discount factor is high enough.
+In stage 1 $u_{1}(M,s_{2})=4+0\delta$ and $u_{2}(F,s_{2})=5-3\delta$ so $M$ is the right move (best response to $s_{2}$ if $\delta \geq \frac{1}{3}$)
+For the second player this is $u_{2}(s_{1},m)=-1+0\delta$ and $u_{2}(s_{1},f)=1-3\delta$, so the play is fine for player 2 as well, if $\delta \geq \frac{2}{3}$
