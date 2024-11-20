@@ -11,10 +11,14 @@
             "id": "66dd929a5e4e9df4",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Second Year/First Semester/Adversarial Machine Learning/Paper AML.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Paper AML"
             }
           }
         ]
@@ -124,9 +128,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "Second Year/First Semester/Adversarial Machine Learning/Paper AML.md"
+              },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Paper AML"
             }
           },
           {
@@ -170,7 +176,9 @@
   },
   "active": "66dd929a5e4e9df4",
   "lastOpenFiles": [
-    "Second Year/First Semester/Adversarial Machine Learning.md",
+    "Second Year/First Semester/Adversarial Machine Learning/Paper AML.md",
+    "Second Year/First Semester/Adversarial Machine Learning",
+    "Second Year/First Semester/Adversarial Machine Learning/Adversarial Machine Learning.md",
     "zz. Attachments/Pasted image 20241119235651.png",
     "zz. Attachments/Pasted image 20241119235622.png",
     "zz. Attachments/Pasted image 20241119235552.png",
@@ -209,7 +217,6 @@
     "ASP/Slides/Lecture 5.pdf",
     "ASP/Slides/Lecture 6.pdf",
     "ASP/Slides/Lecture 9.pdf",
-    "ASP/Slides/Lecture 10.pdf",
     "DLCN/Domande.md",
     "DLCN/Domande Check.md",
     "T03.md",
