@@ -237,25 +237,26 @@ Such that $||A||_{1}<\theta$, the fixed amount of the attack, and $A_{t,q'}\geq 
 A more intelligent version of the attack is to use the fact that the model is retrained periodically, say every week, and poison at every retraining, every time more.
 
 $\theta^{(t)}=k\theta(t-1)$
-
-##### White-Box Attacks
-###### FGSM Attacks
+### Evasion
+Evasion attacks are those that work by engineering a special input expressely for it to be missclassified by the model, either to a specific (targeted attack) or random (untargeted attack) label. 
+#### White-Box Attacks
+##### FGSM Attacks
 Fast gradient sign method attacks work by inserting an adversarial image which is expecially crafted to maximize the loss and make the model missclassify it. It is a White box attack because a knowledge of the weights, structure and loss function of the model are needed.
 The image is created as:
 
 $x_{adv}=x+\epsilon \,\cdot\,sign(\nabla_{x}\mathcal{L}(C(x,w),y))$
-###### PGD Attacks
+##### PGD Attacks
 Projected gradient descent attacks are just a step versison of FGSM attacks, in the sense that the perturbation is added a bit at a time:
 
 $x_{adv}^{n}=x^{n-1}+\gamma \,\cdot\,sign(\nabla_{x}\mathcal{L}(C(x,w),y))$
 
 Both FGSM and PGD can be designed to make the model classify the adversarial image to a specific label rather than just to a different label to the right one.
-###### Deep Fool Attacks
+##### Deep Fool Attacks
 This approach aims at creating an adversarial image that gets missclassified but with the least amount of noise possible, so that the image is indistinguishable from the original.
 The idea is to check the parameter space in which the image gets converted to be classified. In this space, the decision on the label is taken using linear or non linear decision boundaries. This method works by determining the closest decision boundary and pushing the image over it. In the case of non linear DB then the process is iterative and at each step the boundaries are linearized around the point.
-###### JSM Attacks
+##### JSM Attacks
 Jacobian-based Saliency Map Attacks are aimed at controlling the $L_{0}$ norm by iteratively changing one pixel at a time according to a saliency map for the target label.
-###### Carlini&Wagner Attack
+##### Carlini&Wagner Attack
 The idea is to create an adversarial image which is as similar as possible to the original but that gets classified to a different category. We want:
 
 $minimize \,D(x,x+\delta)$
@@ -271,21 +272,21 @@ The used distance $D$ can be $L_{\infty}$, $L_{2}$ or $L_{0}$ and there are also
 $f(x')=(max_{i\neq t}(Z(x')_{i})-Z(x')_{t})^{+}$
 
 This is the difference in logits between the target class and its closest class.
-###### stAdv Attack
+##### stAdv Attack
 Spatial transformation attacks propose not to modify the intensity of the pixels of the image but rather to just move them spatially inside of it.
 We create a distorsion field $f$ that moves pixels to their new locations to create the adversarial image. The goal is to find the image that achieves the missclassification with the minimum displacement.
 
 $f^{*}=argmin_{f} \;\mathcal{L}_{{adv}}(x,f)+\tau \mathcal{L}_{flow}(f)$
 
 The first term helps with missclassification, the second with the preservation of the image shape.
-##### Black-Box Attacks
+#### Black-Box Attacks
 Black-box adversarial attacks can be classified into two categories:
 
 - Query-based attacks: The adversary queries the model and creates the adversarial inputs with the information received from the queries. These attacks are further divided based on the type of information that is given by the model to the attacker into:
 	- Score-based attacks: If the queries result in the probability distribution that the model gives to the labels.
 	- Decision-based attacks: If the queries result in the predicted label from the model.
 - Transfer-based attacks: The adversary trains its own substitute model(s) and produces the adversarial inputs for it(them), then transfers them to the original model, these attacks are also called zero queries attacks.
-###### Gradient estimation attack
+##### Gradient estimation attack
 It is a score-based attack which achieves performances in line with white-box attacks and also faces well against adversarial defenses.
 This method approximates the gradient using queries and uses the estimated gradient to produce adversarial examples.
 The gradient is estimated with the method of finite differences. The output of the model is a vector of the size of the number of classes, then we can calculate its gradient as:
@@ -324,7 +325,7 @@ $x_{adv}=x-\epsilon\,\cdot\,sign(FD_{x}(max(\phi(x)_{i}\,:\,i\neq T)-\phi(x)_{T}
 Finally, for the PGD attack equivalent the update rule is given by:
 
 $x_{\text{adv}}^{t+1} = x_{\text{adv}}^t + \alpha \cdot \text{sign} \left( \frac{\text{FD} \left( \nabla_{x_{\text{adv}}^t} p_y^f(x_{\text{adv}}^t), \delta \right)}{p_y^f(x_{\text{adv}}^t)} \right)$
-###### Zoo Attack
+##### Zoo Attack
 Zoo (Zeroth order optimization) attack is somewhat of a score-based black box version of the Carlini Wagner attack. Similarly to that, it solves an optimization problem, in this case:
 
 $minimize ||x-x_{0}||_{2}^{2}+c\,\cdot\,(max_{y'\neq T}\log F(x)_{y'}-\log F(x)_{T})^{+}$
@@ -333,14 +334,14 @@ Under the condition that $x \in [0,1]$. The confidence score of one class domina
 An Adam optimizer of Newton Method is used to solve the problem and the calculation of the Hessian is needed:
 
 $h=\nabla^{2}_{x}f(x)\approx \frac{f(x+h)+f(x-h)-2f(x)}{h^{2}}$
-###### Boundary attack
+##### Boundary attack
 This is a decision-based black box attack. It is more useful as often there is no access to internal logits, however convergence is slow (high number of queries).
 It works by choosing an existing image with its relative label and creating another image with random gaussian noise which is either classified as the target label (targeted attack) or just not as the label of the original (non targeted attack).
 We add noise (actually denoising) to the created image to move it orthogonally along the fixed distance sphere around the original. This step in the feature space is constrained and values of pixels in the range [0,1] are checked. Then a step in the direction of similarity with the original image is made. Finally, the model is queried with the new adversarial image and we check that it is still missclassified in the way we want, otherwise we wipe this iteration and adjust.
 The first step (orthogonal) is of length $\delta$ which is dynamically changed in such a way to always have 50% of the movements be adversarial.
 The second step (towards the original) is of length $\epsilon$ which is kept such that the success rate of both steps together is at least 25%.
 The attack stops when we reach a max of iterations or when $\epsilon$ reaches zero.
-###### Hop Skip Jump attack
+##### Hop Skip Jump attack
 This is an evolution of the boundary attack, it is still a decision-based black box attack but 
 requires much less queries than its predecessor.
 Its success depends on the different way to move closer to the original image:
@@ -348,7 +349,7 @@ Its success depends on the different way to move closer to the original image:
 ![[Pasted image 20241119234549.png]]
 
 We start at a random point $\tilde{x}_{t}$, then binary search to the original ($x^{*}$) and find the boundary point $x_{t}$, then we calculate the gradient direction at $x_{t}$ and move $\tilde{x}_{t}\rightarrow\tilde{x}_{t+1}$ on the line given by the gradient. Then we just repeat this process until we get to the closes adversarial image $x^{*}$ to the original.
-###### Substitute model attack
+##### Substitute model attack
 This is a transfer-based attack which doesn’t require any querying on the target model.
 The results of this attacks are seen when transferring adversarial example intra or inter models.
 For example, this is the intra-transfer for DNNs:
@@ -362,11 +363,63 @@ These are the same for SVM, DT and kNN:
 And these are the stats for the inter-model transfer:
 
 ![[Pasted image 20241119235651.png]]
-###### Ensamble of Local Models attack
+##### Ensamble of Local Models attack
 This attack is a transfer based attack. It generates from the notion that non-targeted adversarial images transfer well between models of the same type, but targeted ones rarely transfer with the same target label. 
 The idea is to train a targeted adversarial image that is simultaneously working on various models with the same label. This should ensure that, when transferred, it mantains the same label as well.
 To do this we need to solve the following optimization problem:
 
 $\arg\min_{\mathbf{x}^\star} -\log \left( \left( \sum_{i=1}^k \alpha_i J_i(\mathbf{x}^\star) \right) \cdot \mathbf{1}_{y^\star} \right) + \lambda d(\mathbf{x}, \mathbf{x}^\star)$
+#### Defense against Evasion attacks
+Defense techniques agains evasion attacks can be divided into three categories:
 
+- Adversarial example detection: Design a way to distinguish clean from adversarial examples.
+- Gradient masking/obfuscation: Design a way to hide the gradient, this works on black box score-based attacks for example.
+- Robust optimization: Design a way to make the model robust against adversarial examples.
+##### Adversarial Example Detection
+Defense mechanisms of this category work as a wall between the user and the model. If they see an adversarial example they don’t send it to the model altogether.
+Based on the information at play, the threats can be modeled in three ways:
 
+- Zero-knowledge adversary: The adversary has access to the classifier F but doesn’t know that the detection model D is being used.
+- Perfect-knowledge adversary: The adversary has access to the classifier F, knows that the detection model D is being used, and has full access to it.
+- Limited-knowledge adversaty: The adversary has access to the classifier F, knows that the detection model D is being used but has no access to its parameters and/or training set.
+
+These methods can be further divided into:
+
+- Auxiliary detection model
+- Statistical methods
+- Prediction consistency methods
+
+Their limitation is that they don’t necessarily work well on samples created by unknown adversarial attacks.
+###### Auxiliary detection model
+An auxiliary detection model is trained on normal and adversarial attack with a binary classification task. The adversarial examples are crafted from a large variety of attacks to make it robust against many of them. This model needs to have low false-negative and false-positive probabilities.
+
+Some examples being used are:
+
+- Training a NN on binary classification of inputs (achieved 99%)
+- Training a CNN using the hidden representations of the model’s CNN (over 80% for mosta attacks)
+- Training a model with k+1 labels, the last being reserved for adversarial examples (performed well against JSMA but not against FGSM)
+- Training one or more AEs (Detectors) on clean samples and another DAE (Denoising AE, Reformer) on clean samples with added gaussian noise. Then when working, the Detectors check for abnormally high reconstruction error and reject those samples as adversarial. The others are passed through a DAE so that even lightly modified adversarial examples are cleaned (worked well agains all attacks)
+###### Statistical detection methods
+One employed application is using PCA on input images. It was found that clean images place uniform coefficients on the eigenvalues, while adversarial place higher coefficients on later PCs. This is used to identify them.
+###### Prediction Consistency methods
+One famous such technique is Feature squeezing, it employs various tactics, such as:
+
+- Color depth reduction: Grey scale images have $2^{8}=256$ intensity values for each pixel, while RGB $2^{24}=16mil$. Only allowing $2$ values of intensity per pixel invalidates all grey pixels and only keeps white and black, getting rid of added grey noise.
+- Spatial smoothing: It is a family of techniques where each pixel of the image is modified based on its neighbours (local smoothing) or the whole set of other pixels (non-local smoothing).
+
+After producing these images for each input, the model compares them and rejects the sample if their classification difference is higher than a Threshold.
+
+Another method of this category is to randomize the classifier with Dropout during inference dropping 50% of the neurons. If the prediction of this modified model on samples is significantly different to that of the unmodified model, we flag the input at adversarial.
+
+Unfortunately (or fortunately), C&W showed how to bypass all working Adversarial example detection methods.
+##### Gradient masking/obfuscation
+These methods aim at hiding the real gradient from the attacker so that it is more difficult form him/her to create adversarial example. However, they don’t avoid that adversarial inputs are created altogether.
+They can be grouped into:
+
+- Exploding/Vanishing gradients 
+- Shattered gradients 
+- Stochastic/randomized gradients 
+###### Exploding/Vanishing Gradients
+One such example is Defensive Distillation. This approach applies knowledge distillation ins NNs. It worked well at first but the C&W showed that adversarial examples can be resilient to this defense.
+Knowledge distillation is the process of transferring knowledge from a pretrained big NN to a smaller one, while retaining roughly the same accuracy.
+One way to do this is training, as usual, the big model with hard ground truths (one-hot encoded labels) and take the softmax output to use as label when training the small model. The probability distribution contains much more information about the classification of the image with respect to the one-hot encoding.
