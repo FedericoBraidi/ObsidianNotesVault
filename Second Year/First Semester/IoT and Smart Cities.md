@@ -426,5 +426,50 @@ Single Pair Ethernet uses only a pair of twisted wires instead of the usual four
 To avoid collisions, the master periodically sends an order of the cycle of transmissions and the slaves communicate or pass when it’s their turn, like in a ring token topology.
 
 A widely used version of Industrial Ethernet is EtherCAT. It is a version that falls into Class 3, which means it has its own specific hardware to support Hard Real Time. It has Distributed Clocks thanks to a variant of IEEE 1588. The architecture employs a Daisy Chain Ring (bidirectional) which has deterministic communication.
+#### IoT Applications
+Applications that complement TCP and UDP to support more complex scenarios.
+There are various reasons to implement middleware into these techonologies: heterogeneous types of data, different communication models, complexity of storage, real time requirements, etc.
+##### HTTP
+The World Wide Web is a distributed client-server service in which a client can use a browser to access pages through a server.
+A browser is usually composed of three parts: a controller, client protocols and interpreters.
+Documents and files are stored in servers which provide them when requested by a client.
 
+Each page is identified by a Uniform Resource Locator (URL) code which contains information about the protocol to use, the host, the port and the path. Often the port is omitted so that the URL is in the form: protocol://host/path
+
+One of these protocols is the HyperText Transfer Protocol (HTTP) which defines the way client-server programs can be written to request pages from the web. A client sends an HTTP request and a server sends back an HTTP response.
+
+HTTP is built using TCP services so it is reliable. If Transport Layer Security is implemented on top of TCP, then HTTP becomes HTTPS.
+
+HTTP requests can be of various types as seen below:
+
+![[Pasted image 20241123194132.png]]
+
+HTTP, however, is not very suited for IoT applications for a number of reasons:
+
+- Very generic protocol, while IoT has very specific requirements.
+- It is a client-server model, it can’t work as an event-based model.
+- It is very verbose.
+- Too many sophisticated options which are not necessary in IoT.
+
+Light HTTP are proposed, such as HTTP/2 and HTTP/3 but they don’t seem a good solution either.
+##### Websocket
+For IoT, a Websocket is defined as a combination of two parts:
+
+- A method to open a bidirectional TCP connection to be used via HTTP.
+- A minimal set of allowed messages which are just enough for the application.
+
+With Websocket, the client sends a GET request, the server responds and the bidirectional connection is initiated. The connection can support unsolicited events from both sides but the model is still client-server.
+
+Websocket employs a minimal header, for efficiency, that only occupies 2 bytes. One bit for a finish flag (if the message is the last), 3 reserved bits, 4 opcode bits that allow to inidicate the type of message, 1 bit for a flag indicating if the message contains a mask or not and finally 7 bits for payload length. If the payload length is not suited to be into the 7 bits, they indicate 126  or 127 which means that the next 2  bytes or 8 bytes are for the payload length.
+##### MQTT
+Message Queuing Telemetry Transport is an example of an IoT-specific protocol. It was specifically thought of as a protocol for sensor event collection.
+It is usually layered on top of TCP or TLS. It implements the publish-subscribe paradigm, in which a publisher sends a message to the brokers which then forward the message to all subscribers.
+
+![[Pasted image 20241124000559.png]]
+
+The Remaining Length part contains the sum of the dimension of the rest of the message in a data type called Variable Byte Integer. This method uses 1-4 bytes to store the information. In each byte only the last 7 bits are used for a numbe, while the first is used to say wether there are other bytes later or not.
+
+Packet type is about the type of message that is being sent, for example Connect, Connack, Subscribe and Publish. Let’s see them:
+
+- Connect: The variable header contains the protocol name, version, properties, flags and keepalive. Between the flags we have Username, Password and Clean start which are self explanatory. The Will retain flag is used to make the broker remember the message, if it is the last one arrived. This is useful so that new subscribers don’t have to wait for the next message but get one instantly. The Will message flag is to indicate that a message should be sent out to subscribers if the connection terminates ungracefully. The KeepAlive value in the header tells the most amount of time that can pass between two messages, since TCP is  known for having problems in one-sided discconnection.
 

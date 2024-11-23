@@ -544,3 +544,27 @@ We can extend this with a Guarantor, which (if called) increases the probability
 ![[Pasted image 20241119191921.png]]
 
 In this case if the increase in probability is good enough, $B$ is even more incentivized to Cooperate. But why doesn’t $G$ just keep the 2? If you do a single round there is no incentive not to keep it. If the game is repeated and $\delta \geq 0.95$ cooperation is better in the long run, since $G$ also builds the trust of $B$.
+##### Dynamic Bargain
+When two players need to split something, for example 1 unit of a material, player 1 gets x and player 2 gets 1-x.
+To decide on the division we can opt for two approaches, one is Nash bargaining (axiomatic and static), the other one is to model the problem as alternate stages where the players exchange proposals and responses.
+We decide that in the first stage player 1 is the proposer and proposes an arrangement of (x,1-x), player 2 can accept (the game ends) or refuse (we go to the next stage where the roles are reversed). We put a threshold on the number of turns allowes so that, if the game goes past the last stage, noone gets anything.
+To reach an early agreement, every stage we decrease the amount to divide by a constant $1-\delta$, so only a cut $\delta$ of the previous value remains to be divided ($\delta<1$).
+This way, if the game ends at stage 1 $u_{1}=\delta^{t-1}x,\,\, u_{2}=\delta^{t-1}(1-x)$.
+
+At the last stage, the proposer can propose anything, and it will be accepted. The SPE is x=1 at the last stage. If the last round $T$ is odd, then player 1 is the proposer and proposes x=1 ($u_{1}=\delta^{T-1},\,\, u_{2}=0$), at stage $T-1$, player 2 wants to avoid going to stage $T$ so he proposes more than the loss that happens after stage $T-1$, which is $x \geq \delta$. In this case the payoffs are $u_{1}\geq \delta \cdot \delta^{T-2}$ and $u_{2}\geq 0$.
+
+If we iterate backwards from the end we find that at the first stage,1 can offer $u_{1}=\frac{1+\delta^{T}}{1+\delta}$ $u_{2}=\frac{\delta-\delta^{T}}{1+\delta}$ and player 2 accepts. This is intuitive because it doesn’t make sense to go into another equivalent round with reduced value. For the same reasoning, this works even without an horizon $T$, so that  we get payoffs $u_{1}=\frac{1}{1+\delta}$ $u_{2}=\frac{\delta}{1+\delta}$.
+##### Dynamic duopolies
+These are called Stackerlberg duopolies and have starting points which are close to the Cournot duopoly case. The cost to produce q is $C(q)=c\cdot q$ and the market price is $P(Q)=a-Q$. In this case there is a player that moves first, let’s say it is number 1.
+
+The profit of player 2 is $u_{2}(q_{1},q_{2})=q_{2}\cdot(a-q_{1}-q_{2}-c)$ so his best response to a specific $q_{1}$ is $R_{2}(q_{1})=\frac{a-q_{1}-c}{2}$. However, knowing this, player 1 can choose a $q_{1}$ such that $max \,\,u_{1}(q_{1},R_{2}(q_{1}))=q_{1}\cdot(a-q_{1}-R_{2}(q_{1})-c)=q_{1}\cdot \frac{a-q_{1}-c}{2}$.
+
+So the fact that player one moves first, is reflected in an advantage $q_{1}^{*}=\frac{a-c}{2}$ and $q_{2}^{*}=\frac{a-c}{4}$.
+
+The follower can’t even pose a threat because it is not beneficial for himself and therefore not a credible threat.
+
+As we have seen using the Grim Trigger, in repeated discounted games, there are strategies that encourage colalboration. At step 1 produce half of the monopoly quantity $\frac{q_{m}}{2}=\frac{a-c}{4}$, at successive stages, continue with this production if it was the production for both players in all previous stages, play the Cournot duopoly quantity $q_{C}=\frac{a-c}{3}$ otherwise.
+
+Supposing player 1 plays $\frac{q_{m}}{2}$ at stage 1, then the best myopic stategy is to choose $q_{2}=\frac{3(a-c)}{8}$ but this triggers the $q_{C}$ response forever. Comparing the two possible returns we see that cooperation is encouraged if $\delta \geq \frac{9}{17}$
+
+There’s a way to establish a GrT tactic even at higher values than $q_{C}$ which are stable for $\delta < \frac{9}{17}$ but I haven’t understood much.
