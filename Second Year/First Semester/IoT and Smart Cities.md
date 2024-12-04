@@ -472,4 +472,93 @@ The Remaining Length part contains the sum of the dimension of the rest of the m
 Packet type is about the type of message that is being sent, for example Connect, Connack, Subscribe and Publish. Let’s see them:
 
 - Connect: The variable header contains the protocol name, version, properties, flags and keepalive. Between the flags we have Username, Password and Clean start which are self explanatory. The Will retain flag is used to make the broker remember the message, if it is the last one arrived. This is useful so that new subscribers don’t have to wait for the next message but get one instantly. The Will message flag is to indicate that a message should be sent out to subscribers if the connection terminates ungracefully. The KeepAlive value in the header tells the most amount of time that can pass between two messages, since TCP is  known for having problems in one-sided discconnection.
+- Connack: It is sent by the server after a conncetion attempt to inform about the status of the connection. It has no payload. There is a Reason Code part where the code relative to the status of the connection is written.
+- Subscribe: It is a request of a client to be subscribed to a certain topic. It is followed by Suback, same with Unsubsrcibe and Unsuback. There is a part that signals whether or not to send Retained messages to the new device. There is also a QoS value which determines the maximum QoS that the server can use when forwarding messages to this device. It can be used to subscribe to multiple topics at the same time.
+- Publish: It is used when a client is puclishing data to a topic and also when the server is forwarding the data to subscribed clients. It is followed by Puback, Pubrec, Pubrel and Pubcomp. It contains a DUP flag that signals whether the message is a resent duplicate or not. A QoS value which determines the QoS value of the message. Also contains a retain flag and the topic name.
 
+We talked about a certain QoS level. If the subscription is initiated with level 0, then when sending messages from the topic, the messages are sent only once by the serve, not stored and retransmitted (sender doesn’t wait for acknowledgement).
+If QoS level is 1, a message is stored after being sent until an acknowledge message is received by the server, otherwise it is retransmitted.
+In QoS 2 the package is stored until a PUBREC is sent back, then the copy of the packet is cacelled and the server sends a PUBREL to release the index of the message, if the receiver sends back a PUBCOMP then the server frees the ID. 
+##### CoAp
+Another example of an IoT-specific protocol is the Constrained Application Protocol.
+It is usually built on top of UDP and allows scarce resource devices to interact with the wider internet. It mixes concepts of client server paradigm and subscribe publish.
+It allows clients to contact CoAp or HTTP servers and also allows peer to peer communications.
+Since it is built on top of UDP it requires error handling. The messages are more compact than HTTP but not than MQTT.
+
+The structure includes a Version value, a Type value which can indicate if and ACK is needed for this Request or if the message is an ACK or an error if it is a Response. It also has a code relative to the type of request or response, a message ID and a token needed to match requests to their responses.
+
+The thing that is particular about this protocol is that a client can observe the status of a resource. This can be done with a GET message with the observer flag set to 0, which gives back a series of messages containing the measurements of the resource.
+### Cloud
+In IoT systems, the cloud is the point of aggregation and processing of data. It generally is composed of different parta:
+
+- Storage
+- Computing
+- Analytics
+#### Cloud Computing
+Cloud computing allows users to access remote resources such as storage, networks and services. These resources are virtualized and can be adjusted dynamically to adapt to changes in load/demand. External access points are provided.
+
+Cloud services can either be:
+
+- Public: Everyone can access to subscription
+- Private: They are dedicated to a specific company and tailored to them. More privacy but generally less resources.
+- Hybrid: Both paradigms exist.
+
+Virtualization is an important concept that allows for decoupling of hardware and software making it possible to run different virtual machines on a single physical machine. These virtual machines can also be created dynamically and scaled at will.
+
+Clouds are usually spread on different data centers in different places/countrie. This is good for latency, redundancy and privacy regulations.
+Some negative characteristics are lower availability wrt local computing, higher latency, no propriety.
+
+There are different paradigms of cloud computing, namely Infrastructure as a Service (IaaS), Platform as a Service (PaaS) and Software as a Service (SaaS).
+##### Infrastructure as a Service
+In this case the company only provides the physical resources (networking, storage) and the client is responsible of everything else, namely OS, applications and monitoring/patching.
+The benefits are that it is less expensive, more flexible and allows for more control, the drawbacks are that it needs internal training and security.
+
+Some such providers are AWS, IBM cloud, Azure, etc.
+##### Platform as a Service
+The platform is accessible through the internet and provides tools to create applications specific to the client organization’s needs. The provider takes care of updating and monitoring the system. Benefits include less costs, scalability and freedom. Drawbacks include security, intergrations.
+
+Some such providers are Google App Engine, OpenShift.
+##### Software as a Service
+The provider provides the entire application for it to be used by clients as is. Benefits include less code, cost reduction, ease of use, automatic upgrades and scalability. Drawbacks inclued no control, security.
+
+Some such providers are Salesforce, Dropbox, Slack, etc.
+#### Cloud Components
+An IoT cloud system usually contains:
+
+- Edge interface for data injection.
+- Time-series data stream processing.
+- Data aggregation and storage.
+- Security and management.
+##### Cloud edge gateway
+It is the boundary of the cloud, the part closest to the edges.
+Incoming data can be sensor readings, Notifications or timestamps and metadata.
+Since it is the entry point to the cloud it carries out authentication, access control and filtering.
+
+After being received, data is directed to the correct place in the cloud following either a warm path (through stream processing) or a cold path (through storage).
+
+The outgoing data can be actuations or configurational info.
+##### Stream processing
+It is applied to data when some kind of operation needs to be carried out as soon as the data is received. It can detect anomalous events or perform transformations and aggregations.
+##### Storage
+Incoming data can also be stored in batches for a variety of applications, such as ML training, or for long term comparisons or auditing.
+
+Storage can be short-term (hours or days) to get fast access to recent history or long-term in which data is aggregated and downsampled for trend analysis or archieval purposes.
+
+IoT data is fast, huge, heterogeneous, and possibly wrong or missing some parts.
+
+Data is usually stored in a Database and an API queries the database to retrieve results.
+
+Initially RDBMS were used but due to the missing structure of the IoT data, NoSQL databases work better.
+
+One of these types of databases is key-value store where data is saved as pairs of a unique key and a value which can be whatever we want.
+Key-value pair databases are easier to define and adapt in case of structure modification, faster and scalable. However, they don’t have a querying language like SQL, they might be too simple for some applications and don’t allow for filters since the data is stored as a block.
+
+Another NoSQL database is Document-oriented database. This is the same as a key-value but the value is a document which is written in metadata (i.e. json) so that a structure can be inferred. They have a querying language and allow for different types of document contents. These databases are very flexible but trying to create connections between documents hinders the performance.
+
+Yet another NoSQL is column databases. These look like normal databases but have a dynamic schema and data is stored in columns and they are optimized for petabytes of information spread across different servers. They are scalable and responsive but the update of columns is slow and so are row-specific queries.
+
+There are also Graph-based databases. They represent well network structures and allow for spotting trends, but are bad for scalability.
+### Cloud Analytics
+Data can be analyzed for a variety of reasons, namely gaining insight on the system, predicting future behaviour, understanding what is happening at the present time or define a course of action to get to a desired result.
+
+A big part of analysis is showing the results to humans for them to take action. This is done in data visualization and usually shown in a dashboard.

@@ -420,6 +420,167 @@ They can be grouped into:
 - Shattered gradients 
 - Stochastic/randomized gradients 
 ###### Exploding/Vanishing Gradients
-One such example is Defensive Distillation. This approach applies knowledge distillation ins NNs. It worked well at first but the C&W showed that adversarial examples can be resilient to this defense.
+One such example is Defensive Distillation. This approach applies knowledge distillation in NNs. It worked well at first but then C&W showed that adversarial examples can be resilient to this defense.
 Knowledge distillation is the process of transferring knowledge from a pretrained big NN to a smaller one, while retaining roughly the same accuracy.
 One way to do this is training, as usual, the big model with hard ground truths (one-hot encoded labels) and take the softmax output to use as label when training the small model. The probability distribution contains much more information about the classification of the image with respect to the one-hot encoding.
+
+It has been shown that a good way is to train both the big model and the distilled one with high temperature (softmax spreads out the probability) and then at test time, lower the temperature to 1. This way the logits are multiplied by T during inference and the probability is closer to 1 for the true label. This method makes the distilled model less sensitive to small variations and therefore more resilient to adversarial inputs.
+
+We define robustness as the expected value of $\Delta_{adv}(X,F)$:
+
+$\rho_{adv}(F)=\mathbb{E}_{X \sim P}[\Delta_{adv}(X,F)]$
+
+Where $\Delta_{adv}(X,F)$ is defined as:
+
+$\Delta_{adv}(X,F)=min\{||\delta||:F(X+\delta)\neq F(X)\}$
+
+So the minimum displacement needed to missclassify an input. Empirically it is calculated as:
+
+$\rho_{adv}(F)\approx \frac{1}{M}\sum_{i=1}^{M}min||\delta_{i}||$
+
+Up to some point, the robustness of the distilled model is demonstrated to be increasing with training temperature.
+
+Another way to implement exploding or vanishing gradients is via a Defense-GAN.
+A GAN is trained to model the clean input distribution, then during inference it is used to eliminate adversarial noise and reconstruct the original image. The fact that we add a GAN before classification makes the whole model a very Deep NN, so that we get vanishing gradient.
+###### Shattered Gradients
+One method is the shattered gradients method which disrupts the flow of information from the inputs to the outputs so that the adversary can’t reconstruct the gradients to craft adversarial examples.
+For instance we can preprocess the inputs with a non-differentiable preprocessor $g$, then the target for the classification is $f(g(x))$ which is not differentiable in terms of $x$, making the attacks fail.
+
+Another approach is Thermometer encoding which discretizes the intensity of the input pixels and transforms them into vectors, breaking the calculations of the gradients.
+
+You can also apply image transformations to break the calculation of the gradients and/or detect adversarial examples.
+###### Stochastic Randomized Gradients
+These methods introduce randomization to reduce the effect of attacks.
+
+For example, one approach is to apply random resizing of the inputs and random padding. For every input the prediction is obtained as the average of the predictions for 30 randomized versions of it.
+
+Another of these defenses is Stochastic Activation Pruning. It works similarly to Dropout but removes the activations of neurons with high activations and normalizes the outputs for the next layer.
+
+The Random Self-Ensemble method uses random noise layers that make the calculation of the gradients much more difficult and also trains a group of models and chooses a random one at each inference request.
+
+The last method is called Fortified Networks. It applies denoising autoencoders to hidden layers in a DNN. This has proven more beneficial than denoising the input.
+
+Unfortunately, C&W demonstrated that even Gradient Masking and Obfuscation approaches don’t work and give a false sense of security.
+##### Robust Optimization
+Robust optimization methods aim to evaluate and improve the robustness of the target classifier to adversarial attacks, they change the way the parameters are learned in order to minimize the missclassification of adversarial examples.
+
+They can be divided into three categories:
+
+- Adversarial training
+- Regularization methods
+- Certified defense
+###### Adversarial training
+The idea here is to augment the training dataset with a new input for each of the real ones, constructed with an adversarial method known. Then we train the model with the correctly classified adversarial examples so that the model learns what to do with them.
+
+You can either train from the beginning with the clean and adversarial examples or train on the clean inputs and fine-tune on the adversarial ones. Finally, you can even train using only adversarial examples.
+
+One more advanced method is Ensamble adversarial training where you feed create FGSM adversarial examples of an input for $N$ models. Then you train the final model with the clean example and the $N$ adversarial ones. This is much more efficient and scalable, however we have an accuracy-robustness tradeoff for which robustness decreases accuracy on clean samples.
+
+Another method is TRADES (TRade-off inspired Adversarial DEfense via Surrogate loss minimization). In this, we train a model with the loss:
+
+$min_{x}\mathbb{E}\{\mathcal{L}(F(x),y)+ max_{||x-x^{'}||\leq \epsilon}\frac{\mathcal{L}(F(x),F'(x))}{\lambda}\}$
+
+The first term is the classic loss, the second term minimizes the prediction difference between clean and adversarial samples. The term $\lambda$ is used to balance the importance of the two.
+###### Regularization methods
+Usually regularization is used to make the model generalize better, these methods employ this idea.
+
+One such method is Deep Contractive Network, where at each layer a penalty to the gradients is applied, that makes the last layers less susceptible to small variations in the input.
+
+Another method is Parseval Networks, where at each layer, we want the output to be Lipschitz continuous, with a constrained Lipschitz constant.
+
+$||f_{k}(x,\theta_{k})-f_{k}(x+\delta,\theta_{k})||\leq L_{k}||\delta||$
+###### Certified Defense
+Certified models verify the robustness of a trained model with respect to a metric/criterion.
+
+Two commonly used metrics for verifying model robustness are:
+- Lower bound of the minimal perturbation.
+- Upper bound of the adversarial loss.
+
+In the Lower Bound of the Minimal Perturbation we mean the radius $r(x,F)$ of the maximum ball around input $x$ that only has correctly classified samples inside. Saying that the model has a trained lower boud certificate $C(x,F)$ means that $C(x,f)\leq r(x,F)$.
+
+With Upper bound of the adversarial loss we mean the highest loss found for a sample in a ball of radius $\epsilon$ from $x$. A trainable certificate $U(x,F)$ ensures that $U(x,F)\geq\mathcal{L}_{adv}(F(x),y)$.
+
+For example, it was demonstrated that for a 1 layer NN on MNIST no attack with $\epsilon \leq 0.1$ could produce more than 35% test error.
+Another application was done on a model trained on ImageNet which applied Gaussian Smoothing to input images to overpower specific adversarial noise with generalized random noise.
+### Network Intrusion Detection
+Network Intrusion Detection Systems (NIDS) are systems deployed in networks to analyze traffic and discover malicious attacks in real time. They should:
+
+- Detect both known and unknown attacks.
+- Suggest if an adaptation is needed.
+- Be fast.
+- Present the results in a comprehensible way.
+- Minimize false negatives and positives.
+
+These systems can be either deployed to scan one host or a whole network.
+They can be divided into:
+
+- Signature-based systems: They compare new traffic with a database of known attacks. The database must be updated continuously and the detection of new attacks is difficult.
+- Anomaly-based systems: They draw a statistic of normal usage of the system and anything deviating too much from it is considered an anomaly. They can detect new attacks but might have high false alarms rates.
+
+There are many datasets containing normal network traffic and adversarial attacks, used to train ML models to perform Network Intrusion Detection.
+They contain connection messages saved in PCAP format.
+
+The most famous of these datasets is NSL-KDD which contains 150000 PCAP files with 40 features each. These files are labelled and attacks are divided into 4 classes:
+
+- DoS
+- Probing: trying to get unauthorized info on the network.
+- U2R: trying to get unauthorized root access.
+- R2L: trying to get unauthorized remote access.
+
+The split is 125k-25k for train-test and in the test set there are attacks not present in the training.
+
+Another dataset is the CSE-CIC-IDS2018. It is much more recent and contains both PCAP files and system logs for the machines. Each PCAP file contains 80 features and there are 7 types of attacks:
+
+- Brute force: submit many times to guess password.
+- Heartbleed attack: scan for vulnerable applications and use the info to get data from the server.
+- Botnet attack: malwares requesting screenshots or keyloggings periodically.
+- DoS
+- DDoS
+- Web attacks: SQL injection, unrestricted file upload etc.
+- Infiltration attack: send applications via email attachment which scan the network.
+
+Anomaly detection models can be trained in supervised, unsupervised and semi-supervised manner.
+#### ML Anomaly Detecion models
+##### One class SVM
+Train only on normal data to learn a decision boundary distribution and at inference time just check whether the input is in the decision boundary or not
+##### Autoencoders
+Train only on normal data an autoencoder. At inference calculate the reconstruction error and compare it to a thershold, if its under the threshold then label as normal, adversarial otherwise.
+##### Variational Autoencoders
+A variational autoencoder is trained on normal data and inference can be carried out in two ways. Either the same way as normal Autoencoders or by calculating the probability of seeing a certain input given the parameters learnt by the encoder part of the autoencoder.
+##### GAN
+A bidirection GAN is trained on normal examples. BiGAN works by giving a Discriminator both real examples as well as examples generated by the Generator. Together it is given the noise used to generate the generated example and the noise which is the result of giving the real sample to an encoder. At inference, given an input, its noise representation is calculated with the encoder, then it is fed to the generator to generate the generated version. The anomaly score is calculated as a weighted sum of the reconstruction error between real and generated and the cross entropy for the predictions given by the Discriminator for the two samples. 
+#### Privacy
+Formalization and study of privacy has advanced with the introduction of the concept of differential privacy.
+
+In the mid-1990s the Massachusetts Group Insurance Commission released private
+health records of state employees, showing data of individual hospital visits, for
+the purpose of fostering health research. They cancelled every information they thought could lead to indentifying the people but left in birthdate, gender and zipcode which allowed a cross reference with voter data to unanonymize the files.
+
+We define a database as having k-anonimity if each identifying information on each individual is indistinguishable from at least other k-1 individuals. To do so Personal Info can be either calcelled or aggregated to higher levels of discretization (i.e. age<30).
+
+Errors of de-anonimization costed companies like AOL and Netflix a lot.
+
+It is not even needed to include account information because connections alone can map to different socials and allow to identify people.
+
+Secret info can be inferred by setting up different ad campaigns targeting specific values for the info and seeing which one is delivered to the target.
+
+We say that a pair of databases are neighbours if they differe by just one entry.
+
+A randomized mechanism is a function that returns aggregated information about a database which is randomized each time.
+
+>[!definition] $\beta$-differential privacy
+>A randomized mechanism $M$ provides $\beta$-differential privacy if, for all neighbouring databases $\mathbb{D}^{1}$ and $\mathbb{D}^{2}$ and all subsets of responses $T$ it satisfies:
+>$Pr(M(\mathbb{D^{1}})\in T)\leq e^{\beta}Pr(M(\mathbb{D^{2}})\in  T)$
+>
+
+Which means that even if the attacker knows the whole database except the target and queries many times to compare the empirical distribution of the responses, the alternative distribution can still differe by $e^{\beta}$.
+
+An attack to this is reconstructing the database using the knoledge of all entries except the target. We create all possibilities and then confront the behaviour of $M$ on them with the empirical behaviour on the original database. The most similar is taken as the real database.
+
+A deterministic mechanism always responds in the same way when applied to a database.
+If we define the sensitivity of it as $\Delta$ if, for every 2 neighbouring databases:
+
+$||M(\mathbb{D}^{1})-M(\mathbb{D}^{2})||_{1}<\Delta$
+
+Then, with $\beta>0$ and $\lambda \sim Laplace(0,\frac{\Delta}{\beta})$ we have that a deterministic mechanism $M(\mathbb{D})+\lambda$ preserved $\beta$-differential privacy.
+

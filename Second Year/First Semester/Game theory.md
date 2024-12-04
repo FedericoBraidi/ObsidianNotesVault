@@ -568,3 +568,68 @@ As we have seen using the Grim Trigger, in repeated discounted games, there are 
 Supposing player 1 plays $\frac{q_{m}}{2}$ at stage 1, then the best myopic stategy is to choose $q_{2}=\frac{3(a-c)}{8}$ but this triggers the $q_{C}$ response forever. Comparing the two possible returns we see that cooperation is encouraged if $\delta \geq \frac{9}{17}$
 
 There’s a way to establish a GrT tactic even at higher values than $q_{C}$ which are stable for $\delta < \frac{9}{17}$ but I haven’t understood much.
+##### Bayesian Games
+Before, we have seen games of complete information, in which players knew for sure the utilities and could infer the optimal strategies of other players because we supposed they were rational. These suppositions can be treated as believes and the range of games can be extended.
+
+In incomplete information games, beliefs about the nature of players are captured in their types.
+
+For example we can model this as having a Nature move first which consist in Nature drawind a series of types, one for each player (to which different payoffs correspond), and showing each one their type. Then players choose the move based on their type and finally the payoffs are computed.
+
+Let’s take as an example a game where there is a newcome and an incumbent. The newcome can Enter (E) or stay Out (O), then the incumbent can either Fight (F) or Accept (A). Now let’s introduce two types for the incumbent: Normal or Crazy. The difference is in the payoff of the play EF, with the normal person both get -1, with the crazy one the newcome gets -1 and the other one gets 2.
+
+They need to form a belief on the type of the adversary. We suppose they know the probability distribution of the types of the oppenent.
+
+We write the strategies of player 2 as (xy) where x is the play of a normal player 2, while y is the play of a crazy player 2. The pure strategies are 2 for player 1 and 4 for player 2.
+
+![[Pasted image 20241203104856.png]]
+
+Where p is the probability of player 2 being normal.
+This can be extended to mixed strategies. For player one it is straight forward since it can just use the probabilities of the types of player 2. For player 2, instead, it is strange because it needs to use conjectures on its own type distribution.
+
+We want to give a formal definition of a Bayesian Game. Before we represented games in normal form using:
+
+- A set of players $\mathcal{N}=1,\dots,n$.
+- Strategy space for each player $S_{i}$.
+- Utilities for each player $u_{i}:(S_{1},\dots,S_{n})\rightarrow \mathbb{R}$.
+
+Now for Bayesian games we need to add:
+
+- A type space $T_{i}$ of types for each player.
+- A type dependance on the utilities.
+- Beliefs about other players’ types.
+
+So we can reformulate the game as every player $i$ playing actions $a_{i}$ from a set $A_{i}$. Each player’s type is decided by Nature as being $t_{i}\in T_{i}$ using a common knowledge prior $\phi(t_{1},\dots,t_{n})$. Furthermore we make the assumption that the types modify the payoffs in a private values manner ($u_{i}=u_{i}(a_{1},\dots,a_{n},t_{i})$) as opposed to a common values way ($u_{i}=u_{i}(a_{1},\dots,a_{n},t_{1},\dots,t_{n})$). This way we can change the available actions to different types by setting the payoffs to $-\infty$.
+
+The players know $\phi$ and their own type $t_{i}$ so they can create beliefs on other players’ types through $\phi(t_{-i}|t_{i})=\frac{\phi(t_{1},\dots,t_{n})}{\phi(t_{i})}$.
+###### Bayesian Nash Equilibrium
+In a Bayesian game a joint strategy $s^{*}=(s^{*}_{1},\dots,s^{*}_{n})$ is a Bayesian Nash Equilibrium if it maximizes the expected payoff for every player and every type.
+
+$max_{s_{i}\in S_{i}}=\sum_{t_{-i}}u_{i}(s^{*}_{1}(t_{1}),\dots,s_{i-1}^{*}(t_{i-1}),s_{i},s^{*}_{i+1}(t_{i+1}),\dots,s_{n}^{*}(t_{n}),t_{i})$
+
+In fact if we go back to the Battle of Sexes:
+
+![[Pasted image 20241203113250.png]]
+
+We can see that the mixed NE ($\frac{2}{3},\frac{1}{3}$) is indeed the BNE of an incomplete information version of the game. Let’s say they don’t know each other well and so we introduce $c$ and $d$, they both fall inside $[0,x]$ but each one only knows their value (it’s their type).
+
+Ann plays R only if $c>C$ and the same goes for Brian with $D$.
+
+Calculating the expected payoffs for Ann as a function of $D$ we get that she plays $R$ if $c \geq\frac{x}{D-3}=C$. Doing the same for Brian and substituting the equivalence we found we get that, for $x \rightarrow 0$, Ann plays R with probability $\frac{2}{3}$. 
+
+Another useful example is the Chicken game. Two drivers are going straigth at one another in two cars. They can choose to Chicken (C) or Drive (D). If they chicken they get 0 utility, if they drive they get respect, 8 utility. If both drive they split respect and crash, so they get 4-P where P is the punishment from their parents. Parents are of two types, Leninent (L) which have P=0 or Hard (H) which have P=16. They types of parents have equal probability. The drivers know the type of their parents but not that of the other.
+
+![[Pasted image 20241204140421.png]]
+
+BNE is (DC,DC).
+
+Another case study is the Committee voting case. We have 2 judges which cast a vote on whether to convict (C) or Acquit (A) a defendant, the defendant is conviceted only if both votes are C. The defendant is Guilty (G) or Innocent (I) but $p_{G}=q>\frac{1}{2}$. The payoffs of the judges are 1 if the right choice was made, 0 otherwise. Normally the dominant play is (C,C).
+
+Let’s say that each judge gets a signal which is an example of its own judgment, it can be treated as a type and can be $t_{I}$ or $t_{G}$. If a judge gets $t_{G}$ then $p_{G}=p>\frac{1}{2}$. These are not proper types relative to the player but world types. The four strategies are AA,AC,CA,CC where the first element is the vote in case of $t_{G}$ and the second in case of $t_{I}$.
+
+For a single judge we can check that by having $q$ prior and $p$ information, if he gets $t_{G}$ he is even more sure, otherwise he is doubtful. In case with $p>q$ then if the judge gets $t_{I}$ he doesn’t want to convict.
+
+We want to check whether for $p>q$ we have a “follow the type“ performance, so playing (CA,CA). We want to see if strategy CA is the best response to itself.
+If player 1 thinks $t_{2}=t_{I}$ then whatever he does is not important and every move is BR.
+What happens if $t_{2}=t_{G}$? If also $t_{1}=t_{G}$ then conviction is even surer. But in the other case the signals cancel each other and are useless.
+
+CA is not a best response to itself, BNE is (CC,CC) which is strage becaus they convict even if both get $t_{I}$. This is because the system allows a judge to be decisive only if the other has played C and tips the game in favour of conviction.
