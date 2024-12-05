@@ -633,3 +633,30 @@ If player 1 thinks $t_{2}=t_{I}$ then whatever he does is not important and ever
 What happens if $t_{2}=t_{G}$? If also $t_{1}=t_{G}$ then conviction is even surer. But in the other case the signals cancel each other and are useless.
 
 CA is not a best response to itself, BNE is (CC,CC) which is strage becaus they convict even if both get $t_{I}$. This is because the system allows a judge to be decisive only if the other has played C and tips the game in favour of conviction.
+###### Dynamic Bayesian Games
+Let’s do a quick recap. In static games of complete information we use normal NE, in dynamic games of complete information we use the SPE. In static games of incomplete information we use an extension of NE where each strategy specifies the play for every type. What do we do in dynamic games of incomplete information?
+
+Let’s reuse the Entry game. (E,A) is a SPE as we have seen. We have already seen what happens if the second player has 2 types, what if it is the first to have two types? The first can be Competitive (C) or Weak (W). This is the case with $p=\frac{1}{2}$:
+
+![[Pasted image 20241205135732.png]]
+
+This time backwards induction cannot be applied because the uncertainty is in the first move (types of player 1).
+By reducing the game into a static normal form calculating the expected payoffs we get:
+
+![[Pasted image 20241205135944.png]]
+
+The two NEs are (OO,F) and (EO,A). That being said, (OO,F) is not very credible because player 2 plays F even when it is more logical to play A.
+
+In dynamic games of imperfect information such as this one the uncertainty about the type of player one merges all subtrees and the definition of SPE doesn’t make sense because there are no subtrees “on” or “off” the path.
+###### Perfect Bayesian Equilibrium (PBE)
+We say that a Bayesian NE is on the equilibrium path if, given the distribution of types, it is reached with  probability >0. This explains the strangeness of case (OO,F) since the play F is never reached.
+
+In the extensive form, a system of belief is a probability distribution over decision model for every information set. This means that it is the probability of being in a specific node when having an information set that spans multiple nodes.
+This can be calculated following Bayes.
+
+A pair $(s^{*},\mu)$ is a Perfect Bayesian Equilibrium if $s^{*}$ is a BNE, $\mu$ is a system of belief such that:
+
+- On the equilibrium path they follow Bayes rule.
+- Off the equilibrium path they move arbitrarily.
+- Given $\mu$ they play best responses.
+
