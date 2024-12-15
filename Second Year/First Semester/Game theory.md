@@ -397,7 +397,7 @@ It can be demonstrated that any such game has a backwards induction method to so
 
 The same can be said with imperfect information by imagining a game where two players play, then two other players play knowing the first two moves but not each other’s.
 ##### Subgames
-We define a subgame as a game that contains a certain node of the tree of the original game, together with all of its successors.
+We define a subgame as a game that contains a certain node of the tree of the original game, together with all of its successors.z
 ##### Subgame-perfect Nash Equilibrium (SPE)
 A Nash Equilibrium is Subgame-perfect if the strategies chosen give a NE in every subgame. It is provable that every finite extensive form game has a Subgame-perfect NE.
 For finite horizon games with perfect information, SPE is found with backwards induction. This can be extended to other types of games if we account for Credibility of Threats.
@@ -518,13 +518,13 @@ If we add strategies that encourage one play to retaliate, such as P and Q, coop
 Infinitely repeated games are represented as $G(\infty,\delta)$ with $\delta<1$ and can’t be solved through backwards induction because there is no “last stage”.
 In these games, surprisingly, there are SPE where not even one played strategy is a NE of the stage game.
 Let’s take the infinite version of the repeated Prisoner’s Dilemma.
-For example one of these is if both player play M as the first move and then continue playing M if all past games ended in (M,M) and plays F otherwise, this is called the Grim Trigger strategy.
+For example one strategy is if both player play M as the first move and then continue playing M if all past games ended in (M,M) and plays F otherwise, this is called the Grim Trigger strategy.
 This strategy is a NE because the Grim Trigger is the best response to itself. This is because, if Bob thinks Al is playing this strategy he knows that whenever the outcome is not (M,M), Al is gonna play F forever, so his best response is also to play F if the outcome is not (M,M).
 We just need to calculate the best first move for Bob which depends on $\delta$. Doing the calculations tells us that M is the best move for $\delta \geq\frac{1}{4}$.
 
 This is a SPE because it is a NE in every subgame, if they play (M,M) all the time every subgame is the same as the total game (so the GrimTrigger is a NE), if they deviate once for every subgame after the deviation they play (F,F) which is a NE for the Prisoner’s Dilemma.
 ##### Friedman Theorem
-First of all we defina feasible payoff of a game as any linear combination of the pure payoffs with normalized weights.
+First of all we define a feasible payoff of a game as any linear combination of the pure payoffs with normalized weights.
 
 >[!theorem] Friedman Theorem
 >Let $G$ be a finite static game of complete info. Let $(e_{1},e_{2},\dots,e_{n})$ be the payoffs from a NE of $G$. Let now $(x_{1},x_{2},\dots,x_{n})$ be feasible payoffs such that $\forall j,x_{j}>e_{j}$.
@@ -659,4 +659,30 @@ A pair $(s^{*},\mu)$ is a Perfect Bayesian Equilibrium if $s^{*}$ is a BNE, $\mu
 - On the equilibrium path they follow Bayes rule.
 - Off the equilibrium path they move arbitrarily.
 - Given $\mu$ they play best responses.
+###### Signaling games
+As we have seen, we transformed the entry game in a bayesian game in two ways:
+
+- Player 1 has no types, but player 2 does. 1 can guess the type of 2 only according to the prior. This is called a screening game and SPE is enough for it.
+- Player 1 has types, and player 2 doesn’t. 2 can guess the type of 1 using the played move as a hint (signal). This is called signaling game and we need PBE for that.
+
+>[!definition] Signaling game
+>A Bayesian game with two players, 1 is the first to move and has types, 2 is the second to move and doesn’t know 1’s type but cares.
+>1 has at least as many actions as types and 2 updates his beliefs after 1’s move.
+
+These types of games are represented usually with a butterfly-like graph.
+
+![[Pasted image 20241210152643.png]]
+
+There are different types of equilibria in signaling games:
+
+- Separating equilibria: All types of 1 choose different actions, 2 can directly infer type from seen action.
+- Pooling equilibria: All types of 1 choose the same action, 2 has no info.
+- Intermediate cases: 2 plays according to the Bayes rule on information sets that are reached with $p>0$.
+
+Let’s make an example:
+
+B is invited for a coffee by Z, A has 2 types, (G)ealous or (E)asy-going on a 80-20 probability. A can send a signal of either staying (S)ilent or (T)rashing Z. Then B can either go get (C)offee or (D)ecline.
+
+![[Pasted image 20241210153206.png]]
+
 
