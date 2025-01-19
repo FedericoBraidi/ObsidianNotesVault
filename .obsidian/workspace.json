@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Second Year/First Semester/Information Theory and Inference.md",
+                "file": "Second Year/First Semester/IoT and Smart Cities.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Information Theory and Inference"
+              "title": "IoT and Smart Cities"
             }
           }
         ]
@@ -129,10 +129,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Second Year/First Semester/Information Theory and Inference.md"
+                "file": "Second Year/First Semester/IoT and Smart Cities.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Information Theory and Inference"
+              "title": "Outline of IoT and Smart Cities"
             }
           },
           {
@@ -176,6 +176,10 @@
   },
   "active": "f04b08cc9dff8d25",
   "lastOpenFiles": [
+    "Second Year/First Semester/Vision and Cognitive Systems.md",
+    "Second Year/First Semester/Adversarial Machine Learning/Adversarial Machine Learning.md",
+    "Second Year/First Semester/Adversarial Machine Learning/Study plan.md",
+    "Second Year/First Semester/Information Theory and Inference.md",
     "zz. Attachments/Pasted image 20241226170310.png",
     "zz. Attachments/Pasted image 20241226115058.png",
     "Second Year/First Semester/Game theory.md",
@@ -183,21 +187,17 @@
     "zz. Attachments/Pasted image 20241210153206.png",
     "zz. Attachments/Pasted image 20241210152643.png",
     "Second Year/First Semester/IoT and Smart Cities.md",
-    "Second Year/First Semester/Vision and Cognitive Systems.md",
     "zz. Attachments/Pasted image 20241205135944.png",
     "zz. Attachments/Pasted image 20241205135732.png",
     "zz. Attachments/Pasted image 20241204140421.png",
-    "Second Year/First Semester/Adversarial Machine Learning/Adversarial Machine Learning.md",
     "zz. Attachments/Pasted image 20241203113250.png",
     "zz. Attachments/Pasted image 20241203104856.png",
-    "Second Year/First Semester/Information Theory and Inference.md",
     "Second Year/First Semester/Ethical Hacking.md",
     "Second Year/Second Semester/Thesis/Untitled",
     "Second Year/Second Semester/Thesis",
     "Second Year/Second Semester",
     "Second Year/First Semester/Adversarial Machine Learning/Paper AML.md",
     "zz. Attachments/Pasted image 20241121183908.png",
-    "zz. Attachments/Pasted image 20241121175958.png",
     "Personal Notes/Introduction to Algorithms.md",
     "Second Year/First Semester/Adversarial Machine Learning",
     "Ethical Hacking.md",

@@ -116,7 +116,6 @@ Then we obtain the following chain rule:
 Which can be written as:
 
 	$H[X,Y]=H[X]+H[Y|X]$
-
 ##### Mutual Information
 The mutual information between $X$ and $Y$ is defined as:
 
@@ -202,7 +201,7 @@ Prefix codes are in a 1 to 1 correspondance with complete binary trees. Take for
 By just following assigning a 0 or 1 to any branch after a split, we actually create a prefix code. The average length of the prefix code is the average length of the tree, which is: $L[E,X]=\sum_{i}p_{i}l_{i}=\frac{1}{2}\cdot1+\frac{1}{4}\cdot2+\frac{2}{8}\cdot3=1.75=H[X]$. Here the equality holds beacuse the probabilities are powers of 2.
 For more complex cases, the Shannon Entropy is not exactly equal to the achieved average length, but it is very close.
 ##### Kraft Inequality
-Unique decodability imposes a contraint (upper bound) on the length of strings created with the lossless method. The inequality is:
+Unique decodability imposes a constraint (upper bound) on the length of strings created with the lossless method. The inequality is:
 
 $\sum_{i}2^{-l_{i}}\leq 1$
 
