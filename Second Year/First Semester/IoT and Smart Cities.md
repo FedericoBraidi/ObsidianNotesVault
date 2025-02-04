@@ -562,3 +562,131 @@ There are also Graph-based databases. They represent well network structures and
 Data can be analyzed for a variety of reasons, namely gaining insight on the system, predicting future behaviour, understanding what is happening at the present time or define a course of action to get to a desired result.
 
 A big part of analysis is showing the results to humans for them to take action. This is done in data visualization and usually shown in a dashboard.
+
+Analytics systems have an endless number of applications, such as monitoring and keeping in line temperatures in buildings. To adress this and many other problems, a combination of handwritten programs and machine learning is used.
+### Security
+Since IoT devices and networks are more and more present in the world around us, naturally there are security concerns regarding them. These concerns come from different reasons:
+
+- IoT devices are deployed in a distributed fashion and communicate across long distances.
+- IoT devices can impact the health and safety of people by actuating something in the real world.
+- IoT devices are constrained, which makes it harder to implement security on the device.
+- IoT devices are often deployed in unprotected places.
+- IoT devices may deal with confidential data.
+
+However, IoT devices also have some useful characteristics in this regard:
+
+- They usually are very simple devices, not whole computers with multi purpose systems.
+- We can restrict most of the useless and possibly dangerous things that they can do (close unused ports, allow only to communicate with specific other devices removing os features for remote access).
+
+The things we want to keep an eye on are:
+
+- Security: allow the collected data to be seen only by authorized parties.
+- Integrity: secure that the data is untampered. 
+- Availability: ensure that data is available whenever needed by authorized parties.
+
+Attcks can roughly be devided into three parts:
+
+- Physical attacks: Substituting or cloning a node, breaking one, tampering with data collection physically.
+- Software attacks: Viruses, Worms, Trojans, Code injections, phishing.
+- Network attacks: Sniffing or eavesdropping, spoofing, man-in-the-middle attacks, DoS, Sinkhole (a node says it has resources and eats all messages), Wormhole (two nodes say they are close and all other nodes choose to pass through them).
+
+The most important properties an IoT system needs to have are Safety, Reliability and Resilience.
+
+Saltzer and Schroeder outlined general design principles for protection:
+
+- Least privilege: Every user should use the least privileges necessary for a task.
+- Separation of privilege: satisfy more than one condition (e.g., 2 keys for a vault).
+- Least common mechanism: minimize the number of mechanisms shared among users.
+- Economy of mechanism: keep the design simple.
+- Complete mediation: every access should be checked for authorization.
+- Fail-safe default: the default condition should be lack of access.
+- Open design: the design should not be secret (do not rely on the ignorance of attackers).
+- User acceptability: the mechanism needs to be user-friendly.
+- Work factor: stronger security measures should make attackers work harder.
+- Compromise recording: system keeps attack records to discover unauthorized use.
+
+Let’s do some definitions:
+
+>[!definition] Threat
+>A threat is any activity or event that causes an unwanted outcome.
+
+>[!definition] Vulnerability
+>A vulnerability is a software or hardware bug or misconfiguration that some malicious individual might exploit.
+
+>[!definition] Risk
+>The possibility that a threat agent will exploit a vulnerability to damage an asset. The amount of risk that a vulnerability presents depends on:
+>- Number of systems afftected.
+>- Criticality of the affected systems to the whole systems. 
+>- Exposure that the attacked systems present to the organization.
+
+Since risk cannot be avoided completely, there are different approaches to risk mitigation:
+
+- Risk avoidance: Try to eliminate risk by eliminating exposure (for example eliminating nonessential features).
+- Risk acceptance: Avoid wasting resources on protecting from very rare attacks or attacks that can be easily managed.
+- Risk transferance: Transfer the burden of the risk to someone else (i.e. insurance).
+
+The work flow for risk mitigation includes modeling the system by thinking about its components and how they interact, enumerate threats (from the STRIDE model) and finally mitigating and validating the mitigations.
+
+The known types of threats are summarized by STRIDE:
+
+- Spoofing
+- Tampering
+- Repudiation
+- Information disclosure
+- Denial of Service
+- Elevation of privilege
+
+and their threat level is measured by DREAD:
+
+- Damage potential
+- Reproducibility
+- Exploitability
+- Affected users
+- Discoverability
+
+A common solution to confidentiality, integrity and authentication is cryptography. It can be symmetric (use same key for encoding and decoding, needs to pass keys) or asymmetric (different ancoding and decoding keys, private and public).
+The idea is that every node creates a couple of keys, one (public) is used for encrypting and one (provate) for decrypting. Then Sender A decrypts message with its own private key, and encrypts it with Receiver B’s public key, then B decrypts with its own private key and encrypts with A’s public key to get the original message.
+
+IoT devices are constrained so we should use Lightweight Cryptography and only use computationally intense asymmetric cryptography to exchange symmetric keys.
+
+Since one might not want to setup a whole communicating system just to exchange symmetric keys, nodes can compute the commonly agreed upon key using a program that they both have, of which they can each exchange partial outputs across an unsecure connection. Anyone in the middle doesn’t have the algorithm and can’t infer the key just from partial outputs.
+
+The double transformation cryptography has all the properties we want, but some other methods don’t have Authentication, for example. The Message Authentication Code (MAC) is a code that is computed using a shared private key and a common knowledge algorithm by the sender, the computation of the code makes it impossible to change the message without changing the MAC. A common way is to use hashing.
+
+Since IoT networks are very much distributed, a good part of the security is related to endpoints. Endpoint security can be accomplished in many ways, generally divided into:
+
+- Hardware
+- Software
+
+Hardware endpoint security can be provided, for example, by Hardware Security Modules (HMS) which are dedicated devices, with their memory and processor which are used to provide high levels of security. They usually provide safe isolated environments to manage security. They can be implemented in various ways:
+
+- Trusted Platform Module: consists in an additional chip which is embedded into devices and provides a secure processor for cryptographic calculations and for storing keys. Can also store good copies of software to check that it is not tampered with by anyone.
+- Trusted Execution Environment: Instead of having a different processor, as in TPM, we just divide the original processor into a Normal part and a Secure part.
+- Secure Element: It is a tamper resistant hardware component that has its own processor and memory.
+
+Since IoT networks are implemented using a layered design, we can secure communications at different layers, with different pros. If we have CoAp at the application layer, it doesn’t provide security. For this reason we either implement security before CoAp incapsulation or at a lower level.
+If security is applied at the application layer, we can guarantee end to end protection and simplify the work for underlying layers.
+If instead we implement security at transport/network layer we can reuse it for multiple applications.
+
+Transport Layer Security (TLS) is a way to implement security at the transport layer and is designed to work with TCP. It:
+
+- Authenticates the endpoints and defines keys.
+- Exchanges confidential data with symmetric encryption.
+- Authenticates messages trough hashing.
+
+The first thing it does is the Handshake which is used to set up secure comunication, then the Record protocol is used that uses the exchanged information during the Handshake to secure the communications.
+
+Datagram Transport Layer Security (DTLS) is another way to implement security at the transport layer, designed to work with UDP. It causes overhead so packet optimization and compression mechanisms are used. It creates point-to-point secure associations not compatible with multicast IP comms and also provides three modes of security:
+
+- PreSharedKey: Devices store pre-shared symmetric keys.
+- RawPublicKey: Devices have asymmetric key pairs but not certified.
+- Certificate: Devices store certificates.
+
+Internet Protocol Security (IPsec) provides confidentiality, integrity, data-origin authentication and protection against replay attacks. This protocol suite includes two principal protocols: Authentication Header (which provides source authentication and data integrity) and Encapsulation Security Payload (which also provides confidentiality).
+Also, IPsec can operate with two different packet forms: 
+
+- Tunnel mode: IP packet is incapsulated into another IP packet so routing nodes only see the info of the outer packet.
+- Transport mode: normal, but is less complex than tunneling.
+
+Before communicating with IPsec a Security Association (SA), which is unilateral must be created. This SA contains info about wheter it is an AH or a ESP SA, the type of encryption, the type of integrity check. 
+
