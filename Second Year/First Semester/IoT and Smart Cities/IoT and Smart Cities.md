@@ -17,8 +17,8 @@ There can be different architectures, the most used are:
 
 Properites of IoT systems are:
 
-- Trustworthiness: availability, resilience, confidentiality, safety
-- Architectural: modularity, scalability, distribution, legacy support, heterogeneity
+- Trustworthiness: availability, resilience, confidentiality, safety.
+- Architectural: modularity, scalability, distribution, legacy support, heterogeneity.
 - Functional: auto-configuration, service subscription etc.
 
 Six functional domains are created:
@@ -39,7 +39,7 @@ The network architecture can be mainly of three types:
 
 - One-level architecture: The endpoints know about the addressing scheme, typically implemented with cellular network technology.
 - Two-level architecture (LPWAN): The endpoints know nothing about the routing protocol, they just send messages to a gateway which handles the routing. This is used when endpoints have energy or resources constraints (i.e. sensors) and a Low Power WAN (LPWAN) is used to connect them to the gateway. Ex. LoRa, SigFox, NB-IoT
-- Two-level architecture (LAN): The enpoints are not resource constrained and implement the TCP/IP protocol stack. The local network is managed by an intermediate router.
+- Two-level architecture (LAN): The enpoints are not resource constrained and implement the TCP/IP protocol stack. The local network is managed by an intermediate router. Implemented with Ethernet LAN or Wi-fi
 
 ##### Topologies
 
@@ -120,7 +120,7 @@ These functionalities are provided either by the Fog node or advanced gateways, 
 The decision on wether to put analysis at the edge or at the center of a network depends on many variables, namely: bandwidth, latency, value of local autonomy, security, energy and computational capacity.
 
 #### Control plane functions
-![[Pasted image 20241011105736.png]]\
+![[Pasted image 20241011105736.png]]
 
 Fully functional gateways may be fairly sophisticated computational and communications nodes that host and execute a variety of services: they need to be properly secured and managed.
 Main control functionalities:
@@ -183,6 +183,7 @@ Energy can be delivered in various ways:
 - Power over Ethernet: Ethernet can also transport power in the same cable as LAN. No need for transformers and only one cable is needed for connection and power.
 - Powerline communication: opposite to PoE, data carried on the power line.
 - Batteries: useful to attach to sensors that need it, use rechargeable batteries, use at little as possible and attach generators to recharge the batteries (if the battery runs out completely it is often impossible to recharge).
+- Energy harvesting.
 #### Spectrum
 Spectrum is a finite resource due to collision and interference. The States regulate the use of parts of the spectrum based on geographical position.
 
@@ -690,3 +691,105 @@ Also, IPsec can operate with two different packet forms:
 
 Before communicating with IPsec a Security Association (SA), which is unilateral must be created. This SA contains info about wheter it is an AH or a ESP SA, the type of encryption, the type of integrity check. 
 
+A useful approach is Segmenting different parts of the network and using different securities for each. For example actuators might need to have higher security. These divisions are called Trust Zones.
+
+Authorization is a fundamental part of network security. When we are in the process of granting a resource we should ask ourselves if the user can do/obtain what it is trying to do/obtain. There are differnt approaches:
+
+- Discretionary Access Control (DAC): Access is granted based on who asks specifically.
+- Role-based Access Control (RBAC): Maps permissions to roles which are assigned.
+- Attribute-based Access Control (ABAC): Maps permissions to specific attributes.
+
+Many IoT-related authorization mechanisms exist and are developed starting from OpenAuthorization (OAuth) which defines roles:
+
+- Resource owner: Who owns the information that needs to be accessed.
+- Resource server: Server hosting user-related info.
+- Client: Who asks to see something.
+- Authorization Server: Issues access tokens after checking information about client.
+
+Privacy is a big problem in IoT networks, because of all the devices that are able to measure private and sensitive data about our lives.
+The user should consent to data being collected and should know which data is collected, if data is secure, how long it is kept and what is the procedure in cases of breach.
+Easy approaches are providing these informations online or at the time of purchase since IoT devices are not very interactive with the customer. Furthermore devices should only collect necessary data, delete it as soon as possible and trying to deidentify it.
+
+EU data privacy regulations state their priorities as being:
+
+- Achieving cyber resilience.
+- Reducing cybercrime.
+- Developing cyberdefence policies.
+- Developing industrial resources for cybersecurity.
+- Establishing coherent policies EU wide.
+
+### IoT Platforms
+An IoT platform is a collection of components which provide some functionality agnostically to what type of IoT system requires it.
+
+The important properties an IoT platform should have are:
+
+- Reliability
+- Customizability
+- Scalability
+- Resilience
+
+Furthermore, an IoT platform can include different functionalities:
+
+- Data acquisition (from the edge)
+- Data routing
+- Integration with other Cloud services (processing, storage, visualization etc.)
+- Security management
+- Device management
+- Developement Tools and kits (SDKs)
+
+Usually a hub (platform) is used to establish connectivity and security between edge and cloud services. The burden of designing a code for the platform to be able to communicate to a specific raw device is on the client (the owner of the device). Examples of these are Azure IoT or AWS IoT.
+
+AWS IoT is an example of Infrastructure as a Service (IaaS) which is composed of:
+
+- An IoT core which offers cloud-hosted functionalities.
+- An Edge gateway (GreenGrass) which is hosted by the client.
+- A Real Time OS (FreeRTOS) for microcontroller-based devices.
+
+The IoT core part is then divided into:
+
+- Data plane: drives the sensor data to the cloud for processing/storage.
+- Control plane: provides security and management.
+
+AWS IoT also supports Publish/Subscribe paradigm using MQTT. Other components of the data plane also contain digital Shadow copies of the devices containing the last obtained state and the desired one.
+
+Shadows help the system deal with disconnections of endpoints, they contain the last received reading which cloud components can read, then if the cloud component needs a specific action to be done by the endpoint it says so to the shadow which prompts the endpoint to do what’s needed.
+
+Management part allows to register devices and do remote management, while the security part provides secure connections, authentication and authorization.
+
+AWS also provides integration with:
+
+- Databases (S3)
+- Notification service (SMS, Social) using the Simple Notification Service (SNS)
+- Queue stored data to be retrieved by application
+- IoT analytics using Amazon’s tools
+- Visualization (QuickSight)
+
+Real Time OS (RTOS) is designed to be mounted on constrained processor devices and to help them communicate easily with AWS or GreenGrass softwares. GreenGrass is a software that acts as a digital Gateway and is hosted on the edge.
+
+Microsoft Azure IoT is another example of Infrastructure as a Service. The main component is the IoT Hub which connects the data sources to the cloud back-end services. The IoT Hub:
+
+- Secures and authenticates communications between the data sources and the back-end services.
+- Provides data routing.
+- Provides digital twins.
+- Provides a control plane which is concerned with security and management.
+
+Device connectivity can be HTTP posting, AMQPP or MQTT.
+It then funnels data into either (or both) a Warm path which is used for Online computations or a Cold Path which goes towards storage.
+For security, TLS and DTLS are used for TCP or UDP, respectively.
+
+Azure provides integrated access to:
+
+- NoSQL Database (CosmosDB).
+- Time series Insight (TSI) analytics and visualization tool.
+- Azure monitor: allows accessing device logs and monitoring system operations.
+- Azure IoT Edge: helps dealing with the network when offline (queuing messages) and allows cloud connectivity. It runs on the edge.
+
+More recent and powerful devices can directly conncet to the IoT Hub while legacy devices usually employ an IoT Edge to manage cloud communication. The Edge provides TPM, HSM, security, local execution and upward connctivity. The Edge also supports two OS:
+
+- Windows IoT Core: a scaled down and essential version of windows for embedded devices which is more familiar to users.
+- Azure Sphere: OS designed for constrained devices that supports local real-time processing, security, connctivity and over-the-air updating.
+
+Azure also provides other options instead of IaaS, such as:
+
+- SaaS Azure IoT Central: Useful for much simpler applications where not much customization is needed. Inner workings are not exposed but dashboards for conncting and managing devices are provided.
+- PaaS Azure IoT solutions accellerator: Midpoint between SaaS and IaaS. Provides preconfigured templates for common IoT scenarios that can be readily deployed. It also provides the possibility of customizing them thanks to the open source code.

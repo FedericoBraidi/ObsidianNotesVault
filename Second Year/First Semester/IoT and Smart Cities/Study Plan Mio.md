@@ -1,0 +1,34 @@
+
+
+- Definition of IoT
+- Functions of IoT devices
+- Type of communication paradigms
+- General properties of IoT systems
+- Six domains of IoT systems
+- Types of IoT network architectures
+- Topologies with pros and cons
+- Types of sensors (mobility and collection wise)
+- Typese of actuators
+- Difference between gateways and fog nodes
+- What is the Data plane
+- Most important functions of Data plane
+- What problems does Data acquisition and processing part deal with
+- Modes of Data communication and ways to compact data
+- What is Local Control used for
+- What is the Data Storage part used for and who provides it
+- What is the Edge Analytics part used for and who provides it
+- Most important functions of Control plane
+- Definition of a threat
+- Definition of a vulnerability
+- Possible security measures
+- What does the Provisioning and Authentication function entail
+- How is Metering and Supervision carried out
+- How to measure the performance of a network
+- Where does energy consumption come from
+- Types of power delivery
+- Different types of spectrum
+- How is a technology classified as Short Range
+- How does RFID work and what are some applications
+- Overview of how PHY and MAC layers work in RFID tags
+- Difference from RFID and NFC
+- 
