@@ -1,34 +1,91 @@
 
 
-- Definition of IoT
-- Functions of IoT devices
-- Type of communication paradigms
-- General properties of IoT systems
-- Six domains of IoT systems
-- Types of IoT network architectures
-- Topologies with pros and cons
-- Types of sensors (mobility and collection wise)
-- Typese of actuators
-- Difference between gateways and fog nodes
-- What is the Data plane
-- Most important functions of Data plane
-- What problems does Data acquisition and processing part deal with
-- Modes of Data communication and ways to compact data
-- What is Local Control used for
-- What is the Data Storage part used for and who provides it
-- What is the Edge Analytics part used for and who provides it
-- Most important functions of Control plane
-- Definition of a threat
-- Definition of a vulnerability
-- Possible security measures
-- What does the Provisioning and Authentication function entail
-- How is Metering and Supervision carried out
-- How to measure the performance of a network
-- Where does energy consumption come from
-- Types of power delivery
-- Different types of spectrum
-- How is a technology classified as Short Range
-- How does RFID work and what are some applications
-- Overview of how PHY and MAC layers work in RFID tags
-- Difference from RFID and NFC
-- 
+- 1) Definition of IoT
+- 2) Functions of IoT devices
+- 3) Type of communication paradigms
+- 4) General properties of IoT systems
+- 5) Six domains of IoT systems
+- 6) Types of IoT network architectures
+- 7) Topologies with pros and cons
+- 8) Types of sensors (mobility and collection wise)
+- 9) Typese of actuators
+- 10) Difference between gateways and fog nodes
+- 11) What is the Data plane
+- 12) Most important functions of Data plane
+- 13) What problems does Data acquisition and processing part deal with
+- 14) Modes of Data communication and ways to compact data
+- 15) What is Local Control used for
+- 16) What is the Data Storage part used for and who provides it
+- 17) What is the Edge Analytics part used for and who provides it
+- 18) Most important functions of Control plane
+- 19) Definition of a threat
+- 20) Definition of a vulnerability
+- 21) Possible security measures
+- 22) What does the Provisioning and Authentication function entail
+- 23) How is Metering and Supervision carried out
+- 24) How to measure the performance of a network
+- 25) Where does energy consumption come from
+- 26) Types of power delivery
+- 27) Different types of spectrum
+- 28) How is a technology classified as Short Range
+- 29) How does RFID work and what are some applications
+- 30) Overview of how PHY and MAC layers work in RFID tags
+- 31) Difference between RFID and NFC
+- 32) Types of Bluetooth
+- 33) How does BR/EDR work
+- 34) How does BLE work and what are its comm roles
+- 35) What are the advantages of LRWPAN
+- 36) How are devices categorized in LRWPAN
+- 37) Whare are the modes of a LRWPAN network and how do they work
+- 38) What does ZigBee offer on top of LRWPAN
+- 39) What functions does the APS part of the Application Layer have
+- 40) What functions does the ZDO part of the Application Layer have
+- 41) What is AF used for
+- 42) How does 6LowPAN differ from ZigBee and what are pros and cons
+- 43) How is routing done and what does it require from nodes
+- 44) What is a LPWAN
+- 45) What is the innovation in SigFox’s PHY layer
+- 46) What is SigFox good for
+- 47) What are the specifications for LoRa
+- 48) What is the innovation in LoRa’s PHY layer
+- 49) What are the implications of choosing a spreading factor
+- 50) How are LoRa’s messages built
+- 51) What is LoRaWAN and what does it define
+- 52) What are the object types in LoRaWAN
+- 53) Three working modes of NB-IoT regarding bands
+- 54) What does the PHY layer implement in NB-IoT
+- 55) What are Power Saving Mode and Extended Idle Mode DRX for in MAC (NB-IoT)
+- 56) How does data repetition help and how is it managed
+- 57) What are the problems of classical Ethernet in industrial settings
+- 58) Classes of Industrial Ethernet
+- 59) How does timing signal distribution work
+- 60) What is Single Pair Ethernet
+- 61) What is EtherCAT
+- 62) What is HTTP and what is the difference with HTTPS
+- 63) Why is HTTP bad for IoT
+- 64) What are WebSockets and why are they good for IoT
+- 65) What is a WebSocket frame structure
+- 66) What is MQTT and what is it used for
+- 67) How is the MQTT packet formed
+- 68) What are the allowed packet types
+- 69) How do the different levels of QoS work
+- 70) What is CoAp and pros and cons wrt MQTT
+- 71) What is the structure of CoAp messages
+- 72) How is resource observation managed
+- 73) How is virtualization important for cloud computing
+- 74) Definitions of IaaS, PaaS and SaaS
+- 75) Cloud Components
+- 76) Cloud Analytics and Visualization
+- 77) Main security concerns in IoT
+- 78) Types of security attacks and useful guidelines
+- 79) Ways of dealing with risk
+- 80) Risk mitigation work flow, STRIDE for threat types and DREAD for level measure
+- 81) Types of cryptography
+- 82) Smart ways to adapt cryptography to constrained devices
+- 83) Ways to provide endpoint security (HSM or software)
+- 84) TLS, DTLS and IPsec
+- 85) Network Segmentation
+- 86) Types of Authorization
+- 87) Platform properties and functionalities
+- 88) What does AWS IoT provide
+- 89) What does Azure IoT provide

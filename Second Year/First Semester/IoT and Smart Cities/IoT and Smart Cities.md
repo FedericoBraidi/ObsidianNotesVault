@@ -206,6 +206,8 @@ With short range we address those IoT technologies that employ cells which have 
 Radio Frequency IDentificiation (RFID) is a method of storing and reading data using devices such as RFID tags and readers. Tags can store the information and readers can read/write information wirelessly. These devices are very useful and versatile but come with some security criticisms.
 Tags have chips in which the information is stored but can be not powered. When a Reader tries to read the info, it sends a radio wave which powers the chip and gets coupled with it magnetically. Through this coupling the information can be transferred.
 The transfer distance is usually $15\%$ of the wavelenght used so that it can be adjusted between some $cm$ and some $m$. 
+The PHY layer codifies the communications in the amplitude change of the readers signal. The signal should stay high most of the time because it powers the tag so a 0 is codified by turning off the signal for a brief moment and letting it on for the rest of the symbol, 1 is codified by turning it off a bit longer.
+
 ##### Near Field Communications (NFC)
 Near Field Communication (NFC) comprehends devices that mix the functionalities of RFID readers and tags.
 ##### Bluetooth
@@ -215,14 +217,14 @@ Bluetooth is a technology that was developed to substitute wired connections bet
 - Bluetooth High Speed: Used in video streaming and tethering.
 - Bluetooth Low Energy: Used in wearables, location totems or smart home appliances.
 ###### BR/EDR
-In this kind of Bluetooth devices organize into smaller networks called piconets which are combined into the whole scatternet. Each piconet can host 8 active devices and up to 255 sleeping devices. One unit works as the master and uses a polling algorithm to orchestrate the connections.
+In this kind of Bluetooth devices organize into smaller networks called piconets which are combined into the whole scatternet. Each piconet can host 8 active devices and up to 255 sleeping devices. One unit works as the master and uses a pooling algorithm to orchestrate the connections.
 It is built onto a Radio Layer with 3 different modulation schemes:
 
 - GFSK
 - 4-DQPSK
 - 8-DQPSK
 
-It works on the $2.4 \,GHz$ band which is divided into 79 channels of $1\,MHz$ each. Around $1600\,\text{times}/s$ the frequency of the communication is changed to avoid collisions (this needs coordination).
+It works on the $2.4 \,GHz$  ISM band which is divided into 79 channels of $1\,MHz$ each. Around $1600\,\text{times}/s$ the frequency of the communication is changed to avoid collisions (this needs coordination).
 Over the Radio Layer there is a Baseband Layer that directs communication following a Time Division Duplex which allows for bi-directional communication where each slot is alternatively used by the master or the slave.
 When the connection is initialized by the Master, the pattern of the frequency hops is generated and shared.
 On top of these 2 layers there is a Logical Link Control and Adaptation Protocol (L2CAP) which supports 2 types of communication:
@@ -230,7 +232,7 @@ On top of these 2 layers there is a Logical Link Control and Adaptation Protocol
 - Synchronous Connection Oriented (SCO): a synchronous, simmetric, connection oriented service used when latency is more important than integrity.
 - Asynchronous Connection Less (ACL): Sends packets that can be 1,3 or 5 slots long and that are retransmitted if corrupted. Multislot packets reduce overhead. This method is used when integrity is more important than latency.
 ###### BLE
-Specifically created for IoT low power devices. Only has $40$ chennels of size $2\,MHz$ and only supports GPSK modulation. 
+Specifically created for IoT low power devices. Only has $40$ chennels of size $2\,MHz$ and only supports GFSK modulation. 
 Differently from the BR/EDR case, where nodes can only be either master or slave, in BLE there are 4 communication roles:
 
 - Broadcaster: It periodically transmits advertisement, but doesn’t allow connections to start.
@@ -316,8 +318,7 @@ Obviously we also have some disadvantages:
 In regards to routing, the topology may change rapidly and the classical IPv6 routing is resource intensive (not good for IoT). We need to develop a new routing scheme: Routing Protocol for Low Power and Lossy Networks (RPL).
 This protocol works by creating proactively (not on demand) a routing topology by creating Destination-Oriented Directed Acyclic Graphs (DODAGs) that show the best path to go the the edge router from any specific node. In case of multiple routers, multiple DODAGs are calculated and the traffic is split.
 
-In order to create and maintain the DODAG, the RPL protocol requires each node to
-send the following control packets, together with their own IPv6 address:
+In order to create and maintain the DODAG, the RPL protocol requires each node to send the following control packets, together with their own IPv6 address:
 
 - DAO (Destination Advertisment Object): establish the downlink path (towards leafs).
 - DIO (DODAG Informaton Object): establish the upward path (towards roots).
@@ -468,16 +469,16 @@ It is usually layered on top of TCP or TLS. It implements the publish-subscribe 
 
 ![[Pasted image 20241124000559.png]]
 
-The Remaining Length part contains the sum of the dimension of the rest of the message in a data type called Variable Byte Integer. This method uses 1-4 bytes to store the information. In each byte only the last 7 bits are used for a numbe, while the first is used to say wether there are other bytes later or not.
+The Remaining Length part contains the sum of the dimension of the rest of the message in a data type called Variable Byte Integer. This method uses 1-4 bytes to store the information. In each byte only the last 7 bits are used for a number, while the first is used to say wether there are other bytes later or not.
 
 Packet type is about the type of message that is being sent, for example Connect, Connack, Subscribe and Publish. Let’s see them:
 
 - Connect: The variable header contains the protocol name, version, properties, flags and keepalive. Between the flags we have Username, Password and Clean start which are self explanatory. The Will retain flag is used to make the broker remember the message, if it is the last one arrived. This is useful so that new subscribers don’t have to wait for the next message but get one instantly. The Will message flag is to indicate that a message should be sent out to subscribers if the connection terminates ungracefully. The KeepAlive value in the header tells the most amount of time that can pass between two messages, since TCP is  known for having problems in one-sided discconnection.
 - Connack: It is sent by the server after a conncetion attempt to inform about the status of the connection. It has no payload. There is a Reason Code part where the code relative to the status of the connection is written.
 - Subscribe: It is a request of a client to be subscribed to a certain topic. It is followed by Suback, same with Unsubsrcibe and Unsuback. There is a part that signals whether or not to send Retained messages to the new device. There is also a QoS value which determines the maximum QoS that the server can use when forwarding messages to this device. It can be used to subscribe to multiple topics at the same time.
-- Publish: It is used when a client is puclishing data to a topic and also when the server is forwarding the data to subscribed clients. It is followed by Puback, Pubrec, Pubrel and Pubcomp. It contains a DUP flag that signals whether the message is a resent duplicate or not. A QoS value which determines the QoS value of the message. Also contains a retain flag and the topic name.
+- Publish: It is used when a client is publishing data to a topic and also when the server is forwarding the data to subscribed clients. It is followed by Puback, Pubrec, Pubrel and Pubcomp. It contains a DUP flag that signals whether the message is a resent duplicate or not. A QoS value which determines the QoS value of the message. Also contains a retain flag and the topic name.
 
-We talked about a certain QoS level. If the subscription is initiated with level 0, then when sending messages from the topic, the messages are sent only once by the serve, not stored and retransmitted (sender doesn’t wait for acknowledgement).
+We talked about a certain QoS level. If the subscription is initiated with level 0, then when sending messages from the topic, the messages are sent only once by the server, not stored and retransmitted (sender doesn’t wait for acknowledgement).
 If QoS level is 1, a message is stored after being sent until an acknowledge message is received by the server, otherwise it is retransmitted.
 In QoS 2 the package is stored until a PUBREC is sent back, then the copy of the packet is cacelled and the server sends a PUBREL to release the index of the message, if the receiver sends back a PUBCOMP then the server frees the ID. 
 ##### CoAp
@@ -486,7 +487,7 @@ It is usually built on top of UDP and allows scarce resource devices to interact
 It allows clients to contact CoAp or HTTP servers and also allows peer to peer communications.
 Since it is built on top of UDP it requires error handling. The messages are more compact than HTTP but not than MQTT.
 
-The structure includes a Version value, a Type value which can indicate if and ACK is needed for this Request or if the message is an ACK or an error if it is a Response. It also has a code relative to the type of request or response, a message ID and a token needed to match requests to their responses.
+The structure includes a Version value, a Type value which can indicate if an ACK is needed for this Request or if the message is an ACK or an error if it is a Response. It also has a code relative to the type of request or response, a message ID and a token needed to match requests to their responses.
 
 The thing that is particular about this protocol is that a client can observe the status of a resource. This can be done with a GET message with the observer flag set to 0, which gives back a series of messages containing the measurements of the resource.
 ### Cloud
@@ -506,7 +507,7 @@ Cloud services can either be:
 
 Virtualization is an important concept that allows for decoupling of hardware and software making it possible to run different virtual machines on a single physical machine. These virtual machines can also be created dynamically and scaled at will.
 
-Clouds are usually spread on different data centers in different places/countrie. This is good for latency, redundancy and privacy regulations.
+Clouds are usually spread on different data centers in different places/countries. This is good for latency, redundancy and privacy regulations.
 Some negative characteristics are lower availability wrt local computing, higher latency, no propriety.
 
 There are different paradigms of cloud computing, namely Infrastructure as a Service (IaaS), Platform as a Service (PaaS) and Software as a Service (SaaS).
@@ -646,7 +647,7 @@ and their threat level is measured by DREAD:
 - Discoverability
 
 A common solution to confidentiality, integrity and authentication is cryptography. It can be symmetric (use same key for encoding and decoding, needs to pass keys) or asymmetric (different ancoding and decoding keys, private and public).
-The idea is that every node creates a couple of keys, one (public) is used for encrypting and one (provate) for decrypting. Then Sender A decrypts message with its own private key, and encrypts it with Receiver B’s public key, then B decrypts with its own private key and encrypts with A’s public key to get the original message.
+The idea is that every node creates a couple of keys, one (public) is used for encrypting and one (private) for decrypting. Then Sender A decrypts message with its own private key, and encrypts it with Receiver B’s public key, then B decrypts with its own private key and encrypts with A’s public key to get the original message.
 
 IoT devices are constrained so we should use Lightweight Cryptography and only use computationally intense asymmetric cryptography to exchange symmetric keys.
 
@@ -665,7 +666,7 @@ Hardware endpoint security can be provided, for example, by Hardware Security Mo
 - Trusted Execution Environment: Instead of having a different processor, as in TPM, we just divide the original processor into a Normal part and a Secure part.
 - Secure Element: It is a tamper resistant hardware component that has its own processor and memory.
 
-Since IoT networks are implemented using a layered design, we can secure communications at different layers, with different pros. If we have CoAp at the application layer, it doesn’t provide security. For this reason we either implement security before CoAp incapsulation or at a lower level.
+Since IoT networks are implemented using a layered design, we can secure communications at different layers, with different pros. If we have CoAp at the application layer, it doesn’t provide security. For this reason we either implement security before CoAp encapsulation or at a lower level.
 If security is applied at the application layer, we can guarantee end to end protection and simplify the work for underlying layers.
 If instead we implement security at transport/network layer we can reuse it for multiple applications.
 

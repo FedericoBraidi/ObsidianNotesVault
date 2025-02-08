@@ -150,13 +150,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities/IoT and Smart Cities.md",
+                "file": "Second Year/First Semester/IoT and Smart Cities/Study Plan Mio.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of IoT and Smart Cities"
+              "title": "Outline of Study Plan Mio"
             }
           },
           {
@@ -198,10 +198,10 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "a0076fed86bbc869",
+  "active": "4e9c6b6b1af8a40f",
   "lastOpenFiles": [
-    "Second Year/First Semester/IoT and Smart Cities/Study Plan Mio.md",
     "Second Year/First Semester/IoT and Smart Cities/IoT and Smart Cities.md",
+    "Second Year/First Semester/IoT and Smart Cities/Study Plan Mio.md",
     "Second Year/First Semester/IoT and Smart Cities/Study Plan Fake.md",
     "Second Year/First Semester/Adversarial Machine Learning/Study plan.md",
     "Second Year/First Semester/Adversarial Machine Learning/Adversarial Machine Learning.md",
