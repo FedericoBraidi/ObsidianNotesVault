@@ -4,41 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "d6e66e56d86ddcdf",
+        "id": "5d603043d568d48a",
         "type": "tabs",
         "children": [
           {
-            "id": "4e9c6b6b1af8a40f",
+            "id": "9856c8f63df224ac",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities/Study Plan Mio.md",
+                "file": "Personal Notes/Introduction to Algorithms.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Study Plan Mio"
-            }
-          }
-        ]
-      },
-      {
-        "id": "42a73db8a6387b53",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "a0076fed86bbc869",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities/IoT and Smart Cities.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "IoT and Smart Cities"
+              "title": "Introduction to Algorithms"
             }
           }
         ]
@@ -150,13 +130,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Second Year/First Semester/IoT and Smart Cities/Study Plan Mio.md",
+                "file": "Personal Notes/Introduction to Algorithms.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Study Plan Mio"
+              "title": "Outline of Introduction to Algorithms"
             }
           },
           {
@@ -198,8 +178,20 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "4e9c6b6b1af8a40f",
+  "active": "9856c8f63df224ac",
   "lastOpenFiles": [
+    "zz. Attachments/Pasted image 20250226180008.png",
+    "zz. Attachments/Pasted image 20250226162940.png",
+    "zz. Attachments/Pasted image 20250226162916.png",
+    "zz. Attachments/Pasted image 20250226003101.png",
+    "zz. Attachments/Pasted image 20250226003020.png",
+    "zz. Attachments/Pasted image 20250224170217.png",
+    "Second Year/Second Semester/Thesis/Thesis Papers Notes.md",
+    "zz. Attachments/Pasted image 20250217115516.png",
+    "zz. Attachments/Pasted image 20250217113535.png",
+    "zz. Attachments/Pasted image 20250217113529.png",
+    "zz. Attachments/Pasted image 20250217112818.png",
+    "zz. Attachments/Pasted image 20250217110401.png",
     "Second Year/First Semester/IoT and Smart Cities/IoT and Smart Cities.md",
     "Second Year/First Semester/IoT and Smart Cities/Study Plan Mio.md",
     "Second Year/First Semester/IoT and Smart Cities/Study Plan Fake.md",
@@ -209,22 +201,11 @@
     "Second Year/First Semester/IoT and Smart Cities",
     "Second Year/First Semester/Vision and Cognitive Systems.md",
     "Second Year/First Semester/Information Theory and Inference.md",
-    "zz. Attachments/Pasted image 20241226170310.png",
-    "zz. Attachments/Pasted image 20241226115058.png",
     "Second Year/First Semester/Game theory.md",
-    "Second Year/Second Semester/Thesis/Thesis Papers Notes.md",
-    "zz. Attachments/Pasted image 20241210153206.png",
-    "zz. Attachments/Pasted image 20241210152643.png",
-    "zz. Attachments/Pasted image 20241205135944.png",
-    "zz. Attachments/Pasted image 20241205135732.png",
-    "zz. Attachments/Pasted image 20241204140421.png",
-    "zz. Attachments/Pasted image 20241203113250.png",
-    "zz. Attachments/Pasted image 20241203104856.png",
     "Second Year/First Semester/Ethical Hacking.md",
     "Second Year/Second Semester/Thesis/Untitled",
     "Second Year/Second Semester/Thesis",
     "Second Year/Second Semester",
-    "zz. Attachments/Pasted image 20241121183908.png",
     "Personal Notes/Introduction to Algorithms.md",
     "Second Year/First Semester/Adversarial Machine Learning",
     "Ethical Hacking.md",
@@ -245,7 +226,6 @@
     "MAPD/Data Management.md",
     "ASP/Stat theory.md",
     "ASP/Statistics.md",
-    "DLCN/Domande.md",
     "Untitled.canvas"
   ]
 }
