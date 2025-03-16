@@ -192,9 +192,36 @@ Sensorymotor RNNs are trained on a set of 50 interrelated tasks. Information abo
 
 - Linguistic communications between networks: An output channel is added, which is trained to produce instructions based on the state of the network units. Its performance is tested by giving the instructions to a partner model and make it perfom the task. Copying the embedding is bad and doesn’t have the expected transferability. By passing through natural langugage we can get highly transferrable instructions.
 ## Conclusions
-
 Achieved:
 
 - Language Models are able to translate Natural Language instructions to embeddings capable of teaching RNNs new, unseen tasks.
 - Language Models are able to read RNN activations to produce an explanation of the task it is performing.
 - There are some units that condify specific information which is fundamental for tasks. These units are able to switch behaviour based on semantic information obtained from the task embeddings.
+# 5.  The role of population structure in computations through neural dynamics
+## Main idea
+There are two main paradigms to study how RNNs learn cognitive tasks:
+
+- Determining the computational role of recurrent units and sorting them into functional populations based on their responses.
+- Studying the dynamics of the whole RNN in terms of low-dimensional trajectories of activity.
+
+Two different studies found contraddicting results to the question of whether or not functional populations existed in certain real brain sections. Raposo et al. found no evidence of non-random population structures in posterior parietal cortex while Hirokawa et al. found evidence of it in prefrontal cortex. Hirokawa’s conjecture is that in order to see functional populations emerge in higher cortical areas more complex tasks should be employed.
+
+The question that emerges is: Are there some tasks that require functional populations or can any task be learned with random population structure?
+
+The results of the experiments showed that most tasks can be learned with a random pupulation structure but situations that required reconfiguration of input-output (specific tasks or multitasking settings) were show to require the emergence of functional populations.
+## Experiments
+First, each neuron is represented as a point in a selectivity space. This space has different dimensions depending on the task and the coordinates of a point representing a neuron are the coefficients of the linear fits between the neuron’s firing and task specific variables such as context, stimulus, etc.
+These points are then compared with a null distribution represented by a multivariate gaussian with same covariance as the real points. Using the ePAIRS test we can easily see which tasks show random (similar to the multivariate gaussian) behaviour and which have developed functional groups.
+
+Next, the same study is applied in the connectivity space. When training simple tasks, the recurrent connectivity matrix usually ends up being of low rank, which helps in having a low dimensional connectivity space. Analogous results to before are obtained.
+
+The two previous approaches demonstrate correlation but not causation. To prove the latter, we start by creating, for each task, new low rank networks with connectivities randomly sampled from a multivariate gaussian with same mean and covariance obtained by the real networks trained on those tasks. Networks for tasks which we believed not to need any non-random structure still had near-perfect performance, while the others had bad performances. In the second case, the need of these non-random structures in connectivity influences the emergence of non-random functional groups in selectivity.
+
+SOMETHING ABOUT LATENT DYNAMICS
+
+First, the latent dynamics for random population networks is studied. For these types of networks, the connectivity is fully characterized by a series of covariances between connectivity parameters which can be interpreted as the overlap between them. A mean-field analysis shows that the latent low-dimensional dynamics can be reduced to a latent circuit where **internal variables** $k_{r}$ intergrate external inputs $u_{s}$ and interact with each other via **effective couplings** which depend on the overlaps and on activity dependant gain factors.
+With this method it is shown that networks for tasks for which random structure is sufficient are the ones that can be implemented by a fixed effective circuit. If the latent circuit is fixed and the population structure is random, the dynamics is strongly constrained and can’t solve more complex tasks.
+
+Networks developing subpopulations can give more freedom to the possible dynamics of the latent circuit. First, networks trained on tasks that showed population formation were represented in connectivity space and clustered with a Gaussian mixture clustering algorithm. Then, each population is assigned a series of covariances between the connectivity vectors of the points that belong to the cluster. Finally we can modify the creation of models with same characteristics we’ve done before by creating them by first sampling which population a neuron is in and then sampling its connectivity parameters using the covariances of that populations. By repeating this with different numbers of fitted populations and comparing performance with the original fully trained network, we can determine the lowest number of populations possible.
+Tho show why networks which have subpopulations of neurons allow for more complex dynamics we once again use a mean field analysis and find out that they can still be represented by effective circuits where internal variables integrate inputs and interact with one another through effective couplings. What changes this time is the form of the effective couplings, before they were defined by the overlaps and a global gain parameter, while now each population has its own overlaps and its specific gain value. The general overlaps are then obtained as sum of populations specific overlaps weighted by their gains. The tasks observed to have multiple subpopulations show very different overlaps between context inputs and input selection vectors in the 2 subpopulations, this completely changes the effective circuit based on the context and allows to integrate only the needed information.
+## Conclusions

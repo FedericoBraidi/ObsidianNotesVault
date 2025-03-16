@@ -405,6 +405,39 @@ An example of a topological order is:
 
 >[!definition] Reverse Finishing order
 >A reverse finishing order is the ordering of the nodes which a Full DFS visits, reversed.
+## Weighted Graphs
+We can generalize the notion of graphs by adding integer (they could also be real) numbers to edges.
 
+$w(e)=w(u,v)$
 
+where $e$ is the edge from $u$ to $v$.
+Weights can either be stored by agumenting adjacency lists (which are stored on each node) with the weights associated with every edge or by storing another DS which maps edge to weight. In any case, given the couple of vertices, we can query in constant time the value of the weight.
 
+We can now try to generalize the problems we have already seen for normal graphs to weighted ones. For example the Shortest Path search problem could be rephrased by defining the length (or weight) of a path as being the sum of the weights of the edges that compose it.
+
+There are some caveat, since if there is a cycle with negative total length (it can happen since negative weights are allowed) no finite path is minimum because one continues doing the cycle infinitely and the total length is $-\infty$. Also, if two vertices are not connected by any path, their distance is $\infty$.
+## Shortest-Path Trees
+By knowing all of the distances of the reacheable nodes from a specific source node $\delta(s,v)$, we can reconstruct a shortest-path tree ins $O(|V|+|E|)$ time. To do this we can just take every $u \in V$ such that $\delta(s,u)$ is finite and loop over its outgoing nodes. If the outgoing node $v$ doesn’t have an assigned parent and $\delta(s,v)=\delta(s,u)+w(u,v)$, then $P(v)=u$.
+
+This demonstrates that knowing the distances is enough of an output of a shortest-path finding algorithm since we can compute parents later.
+## DAG Relaxation Algorithm
+If the graph we are dealing with is a DAG, we can compute the distances of all the recheable nodes from a chosen node by using the DAG Relaxation algorithm. The idea is that we have estimates $d(s,v)$ of the distances (initially $\infty$ for every $v$) which always upper bound the real minimum distances and gradually approach them.
+
+The updating works by checking the triangle inequality on our estimates of the minimum distances. This means that if we find that at some point $d(s,v)>d(s,u)+w(u,v)$, then we should update $d(s,v)=d(s,u)+w(u,v)$.
+## Bellman-Ford Algorithm
+Unfortunately, we can’t always be sure to have acyclic graphs with positive weights, because of this we need to devise more general algorithms.
+
+To arrive to the formulation of this algorithm we need to first introduce some concepts and observations. For example, we can observe that if $\delta(s,v)$ is finite, then there exists a shortest path which is also a simple path (no node repetition). A simple path has at most $|V|-1$ edges.
+
+We define a $\delta_{k}(s,v)$ (**k-Edge distance**) which is the weight of a shortest path from $s$ to $v$ that uses at most $k$ edges.
+
+We can also observe that if $\delta_{|V|}(s,v)<\delta_{|V|-1}(s,v)$ then the true minimum distance is $\delta(s,v)=-\infty$ and $v$ is called a **witness**. Furthermore, any node that has $-\infty$ distance is reached through a witness because every negative weight cycle contains a witness.
+
+The idea of the algorithm is to use **Graph Duplication**. This techinique consists in building a bigger graph from the original one, which ends up being a DAG. The new graph has $|V|\cdot(|V|+1)$ vertices ($|V|$ for each level, ranging from $0$ to $|V|$) and ($|V|\cdot(|V|+|E|)$). $v_{k}$ indicates node $v$ at level $k$.
+
+![[Pasted image 20250302190025.png]]
+
+After having created this, we run DAG Relaxation to compute all the distances from $s_{0}$ to any $v_{k}$. If $\delta(s_{0},u_{|V|})<\delta(s_{0},u_{|V|-1})$ then $u$ is a witness and we set $d(s,v)=-\infty$ for any $v$ reacheable from $u$, otherwise $d(s,v)=\delta(s_{0},v_{|V|-1})$.
+
+All of this takes $O(|V|\cdot|V|)$ time for setting the distances and $O(|V|\cdot|E|)$ time for checking the nodes reacheable from the witnesses. This means the algorithm runs ins $O(|V|\cdot(|V|+|E|))$ time. 
+Now, if we first run DFS or BFS to eliminate everything that isn’t in the same connected block as the source, we have that $O(|V|)$ is equivalente to $O(|E|)$ and the runtime becomes $O(|V|\cdot|E|)$.
